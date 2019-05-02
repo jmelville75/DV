@@ -1,0 +1,561 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="copyResourceAnnotations" path="/shared/ASAssets/Utilities/repository/copyResourceAnnotations" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <annotation>copyResourceAnnotations:
+
+    This procedure copies the annotations from one resource to another. If both resources are of
+    type &quot;TABLE&quot;, the column annotations are copied as well (where the column names are the same,
+    ignoring case.) This procedure is NOT recursive when resources of type &quot;CONTAINER&quot; are
+    specified as input. There are a couple of Utilities that can walk a resource or dependency
+    tree and can be used in conjunction with this procedure.
+
+
+    Input:
+        inSourcePath - Path to the resource to get annotations from.
+            Values: Any resource path
+
+        inSourceType - The resource type of the resource to get annotations from.
+            Values: Any resource type
+
+        inDestPath - Path to the resource to get annotations from.
+            Values: Any resource path
+
+        inDestType - The resource type of the resource to get annotations from.
+            Values: Any resource type
+
+
+    Output:
+        N/A (throws an exception if the destination resource can&apos;t be updated.)
+
+
+    Exceptions:
+        System.IllegalArgumentException - Thrown when inputs can&apos;t be validated.
+
+        System.NotSupportedExceptions   - Copying annotations TO a data source table is not supported at this time.
+
+
+    (c) 2017 TIBCO Software Inc.  All rights reserved.
+	
+	Except as specified below, this software is licensed pursuant to the Eclipse Public License v. 1.0.
+	The details can be found in the file LICENSE.
+	
+	The following proprietary files are included as a convenience, and may not be used except pursuant
+	to valid license to Composite Information Server or TIBCO® Data Virtualization Server:
+	csadmin-XXXX.jar, csarchive-XXXX.jar, csbase-XXXX.jar, csclient-XXXX.jar, cscommon-XXXX.jar,
+	csext-XXXX.jar, csjdbc-XXXX.jar, csserverutil-XXXX.jar, csserver-XXXX.jar, cswebapi-XXXX.jar,
+	and customproc-XXXX.jar (where -XXXX is an optional version number).  Any included third party files
+	are licensed under the terms contained in their own accompanying LICENSE files, generally named .LICENSE.txt.
+	
+	This software is licensed AS-IS. Support for this software is not covered by standard maintenance agreements with TIBCO.
+	If you would like to obtain assistance with this software, such assistance may be obtained through a separate paid consulting
+	agreement with TIBCO.</annotation>
+  <parameters>
+    <parameter name="inSourcePath" direction="IN" nullable="true">
+      <datatype name="ResourcePath" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+    </parameter>
+    <parameter name="inSourceType" direction="IN" nullable="true">
+      <datatype name="ResourceType" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+    </parameter>
+    <parameter name="inDestPath" direction="IN" nullable="true">
+      <datatype name="ResourcePath" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+    </parameter>
+    <parameter name="inDestType" direction="IN" nullable="true">
+      <datatype name="ResourceType" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+    </parameter>
+    <parameter name="success" direction="OUT" nullable="true">
+      <datatype name="BIT" type="INTEGER" minValue="0" maxValue="1"/>
+    </parameter>
+    <parameter name="copyResponse" direction="OUT" nullable="true">
+      <datatype name="XML" referenceType="XML" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="TYPE" componentName="XML">
+        <schemaDatatype>
+          <datatype name="XML" type="TREE" refId="1"></datatype>
+        </schemaDatatype>
+      </datatype>
+      <attribute name="Customized" type="STRING">datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed</attribute>
+    </parameter>
+    <parameter name="faultResponse" direction="OUT" nullable="true">
+      <datatype name="XML" referenceType="XML" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="TYPE" componentName="XML">
+        <schemaDatatype>
+          <datatype name="XML" type="TREE" refId="1"></datatype>
+        </schemaDatatype>
+      </datatype>
+      <attribute name="Customized" type="STRING">datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed</attribute>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="all" domain="composite" privileges="READ EXECUTE"/>
+  </security>
+  <dependency target="/lib/debug/Print" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToPrint" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/resource" type="CONTAINER">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/resource/ResourceDefs" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/resource/ResourceExists" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="path" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="type" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+      </element>
+      <element name="version" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceVersion" type="STRING" maxLength="255"/>
+      </element>
+      <element name="exists" direction="OUT">
+        <datatype type="BOOLEAN"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/util/System" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities" type="CONTAINER">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/TypeDefinitions" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/_debug" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/getResourceAnnotations" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="resourcePath" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="resourceType" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="TABLE" refId="2">
+          <element name="columnName">
+            <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceName" type="STRING" maxLength="255"/>
+          </element>
+          <element name="columnType">
+            <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+          </element>
+          <element name="annotation">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/updateResourceAnnotations" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="resourcePath" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="resourceType" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+      </element>
+      <element name="annotation" direction="IN">
+        <datatype type="STRING" maxLength="2147483647"/>
+      </element>
+      <element name="columnAnnotations" direction="IN">
+        <datatype type="ARRAY" maxLength="0">
+          <itemDatatype>
+            <datatype name="ColumnAnnotationRow" referenceDefinitionSet="/shared/ASAssets/Utilities/TypeDefinitions" referenceType="ColumnAnnotationRow" type="TREE" refId="2">
+              <element name="columnName">
+                <datatype name="ResourceName" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceName" type="STRING" maxLength="255"/>
+              </element>
+              <element name="columnType">
+                <datatype name="ResourceType" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+              </element>
+              <element name="annotation">
+                <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+              </element>
+            </datatype>
+          </itemDatatype>
+        </datatype>
+      </element>
+      <element name="success" direction="OUT">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="updateResponse" direction="OUT">
+        <datatype name="XML" referenceType="XML" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="TYPE" componentName="XML">
+          <schemaDatatype>
+            <datatype name="XML" type="TREE" refId="3"></datatype>
+          </schemaDatatype>
+        </datatype>
+      </element>
+      <element name="faultResponse" direction="OUT">
+        <datatype name="XML" referenceType="XML" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="TYPE" componentName="XML">
+          <schemaDatatype>
+            <reference refId="3"/>
+          </schemaDatatype>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="Script" type="STRING">/*
+    copyResourceAnnotations:
+
+    This procedure copies the annotations from one resource to another. If both resources are of
+    type &quot;TABLE&quot;, the column annotations are copied as well (where the column names are the same,
+    ignoring case.)  If the column name matches (case insensitive) and the source annotation has a value,
+    set the destination annotation. otherwise destination annotation is preserved.
+
+	This procedure is NOT recursive when resources of type &quot;CONTAINER&quot; are
+    specified as input. There are a couple of Utilities that can walk a resource or dependency
+    tree and can be used in conjunction with this procedure.
+
+
+    Input:
+        inSourcePath - Path to the resource to get annotations from.
+            Values: Any resource path
+
+        inSourceType - The resource type of the resource to get annotations from.
+            Values: Any resource type
+
+        inDestPath - Path to the resource to get annotations from.
+            Values: Any resource path
+
+        inDestType - The resource type of the resource to get annotations from.
+            Values: Any resource type
+
+
+    Output:
+        N/A (throws an exception if the destination resource can&apos;t be updated.)
+
+
+    Exceptions:
+        System.NotFoundException      - Thrown when inputs can&apos;t be validated.
+
+        System.NotSupportedExceptions - Copying annotations TO a data source table is not supported at this time.
+
+
+	Modified Date:	Modified By:		CSW Version:	Reason:
+	07/17/2012		Calvin Goodirch		6.0.0			Created new
+	01/10/2018		Mike Tinius			7.0.5			Modified so that column annotations are not modified on a published resource as this is not valid.
+
+	(c) 2017 TIBCO Software Inc.  All rights reserved.
+	
+	Except as specified below, this software is licensed pursuant to the Eclipse Public License v. 1.0.
+	The details can be found in the file LICENSE.
+	
+	The following proprietary files are included as a convenience, and may not be used except pursuant
+	to valid license to Composite Information Server or TIBCO® Data Virtualization Server:
+	csadmin-XXXX.jar, csarchive-XXXX.jar, csbase-XXXX.jar, csclient-XXXX.jar, cscommon-XXXX.jar,
+	csext-XXXX.jar, csjdbc-XXXX.jar, csserverutil-XXXX.jar, csserver-XXXX.jar, cswebapi-XXXX.jar,
+	and customproc-XXXX.jar (where -XXXX is an optional version number).  Any included third party files
+	are licensed under the terms contained in their own accompanying LICENSE files, generally named .LICENSE.txt.
+	
+	This software is licensed AS-IS. Support for this software is not covered by standard maintenance agreements with TIBCO.
+	If you would like to obtain assistance with this software, such assistance may be obtained through a separate paid consulting
+	agreement with TIBCO.
+
+
+TYPES / SUBTYPES:
+=================
+The following resource types/subtypes are supported by this operation.
+
+(Basic CIS folder)
+* CONTAINER / FOLDER_CONTAINER - A Composite folder.   Cannot be created anywhere under /services except in another FOLDER under /services/webservices.
+* CONTAINER / DIRECTORY_CONTAINER - A Composite directory.
+(Database)
+* CONTAINER / CATALOG_CONTAINER - A Composite catalog folder under a data source.  Can only be created within a data source under /services/databases.
+* CONTAINER / SCHEMA_CONTAINER - A Composite schema container.  Can only be created within a CATALOG that is under /services/databases.
+(Web Services)
+* CONTAINER / SERVICE_CONTAINER - A web service container for the service.  Can only be created within a Composite Web Services data source that is under /services/webservices.
+* CONTAINER / OPERATIONS_CONTAINER - A web service container for the operations
+* CONTAINER / PORT_CONTAINER - A Composite web service container for port.   Can only be created within a SERVICE under /services/webservices.
+(Connectors)
+* CONTAINER / CONNECTOR_CONTAINER - A Composite container for connectors.
+
+* CONNECTOR / JMS - A Composite JMS Connector.  Created with no connection information
+* CONNECTOR / HTTP - A Composite HTTP Connector.  Created with no connection information
+
+* DATA_SOURCE / RELATIONAL_DATA_SOURCE - A relational database source.
+* DATA_SOURCE / FILE_DATA_SOURCE - A comma separate file data source.
+* DATA_SOURCE / XML_FILE_DATA_SOURCE - An XML file data source.
+* DATA_SOURCE / WSDL_DATA_SOURCE - A Composite web service data source.
+* DATA_SOURCE / XML_HTTP_DATA_SOURCE - An HTTP XML data source.
+* DATA_SOURCE / NONE - A custom java procedure data source.
+
+* DEFINITION_SET / SQL_DEFINITION_SET - A Composite SQL Definition set.
+* DEFINITION_SET / XML_SCHEMA_DEFINITION_SET - A Composite XML Schema Defintion set.
+* DEFINITION_SET / WSDL_DEFINITION_SET - A Composite WSDL Definition set.
+* DEFINITION_SET / ABSTRACT_WSDL_DEFINITION_SET - A Composite Abstract WSDL Definition set such as the ones imported from Designer.
+* DEFINITION_SET / SCDL_DEFINITION_SET - A Composite SCA composite Definition set imported from Designer.
+
+* LINK / unknown at this time
+
+(CIS procedures)
+* PROCEDURE / SQL_SCRIPT_PROCEDURE - A Composite SQL Procedure.  Created with a simple default script body that is runnable.
+(Custom procedures)
+* PROCEDURE / JAVA_PROCEDURE - A Composite java data source procedure.  Created from a java data source (jar file).
+(Database procedures)
+* PROCEDURE / EXTERNAL_SQL_PROCEDURE - A Composite Packaged Query.  Created with no SQL text, so it is not runnable.
+* PROCEDURE / DATABASE_PROCEDURE - A database stored procedure.
+(XML procedures)
+* PROCEDURE / BASIC_TRANSFORM_PROCEDURE - A Composite Basic XSLT Transformation procedure.  Created with no target procedure and no output columns, so it is not runnable.
+* PROCEDURE / XSLT_TRANSFORM_PROCEDURE - A Composite XSLT Transformation procedure.  Created with no target procedure and no output columns, so it is not runnable.
+* PROCEDURE / STREAM_TRANSFORM_PROCEDURE - A Composite XSLT Streaming Transformation procedure.  Created with no target procedure and no output columns, so it is not runnable.
+* PROCEDURE / XQUERY_TRANSFORM_PROCEDURE - A Composite XQUERY Transformation Procedure.  Created with no target schema and no model, so it is not runnable.
+(Misc procedures)
+* PROCEDURE / OPERATION_PROCEDURE - A Composite web service or HTTP procedure operation.
+
+* TABLE / SQL_TABLE - A Composite View.  Created with no SQL text or model, so it is not runnable.
+* TABLE / DATABASE_TABLE - A Composite database table.
+* TABLE / DELIMITED_FILE_TABLE - A Composite delimited file table
+* TABLE / SYSTEM_TABLE - A Composite system table view.
+
+* TREE / XML_FILE_TREE - The XML tree structure associated with a file-XML data source.
+
+* TRIGGER / NONE - A Composite trigger.   Created disabled.
+*/
+PROCEDURE copyResourceAnnotations(
+    IN inSourcePath /lib/resource/ResourceDefs.ResourcePath,
+    IN inSourceType /lib/resource/ResourceDefs.ResourceType,
+    IN inDestPath /lib/resource/ResourceDefs.ResourcePath,
+    IN inDestType /lib/resource/ResourceDefs.ResourceType,
+    OUT success BIT,
+	OUT copyResponse 	 XML,
+	OUT faultResponse    XML
+)
+BEGIN
+    PATH /lib/resource;
+    PATH /shared/ASAssets/Utilities;
+	DECLARE moduleName		VARCHAR DEFAULT &apos;copyResourceAnnotations&apos;;
+	DECLARE debug			CHAR(1) DEFAULT /shared/ASAssets/Utilities/repository/&quot;_debug&quot;.debug;
+	DECLARE destType		VARCHAR DEFAULT inDestType;
+    DECLARE resourceExists 	BOOLEAN;
+    DECLARE destSubtype 	ResourceDefs.ResourceType;
+    DECLARE resourceAnnotation LONGVARCHAR DEFAULT &apos;&apos;;
+    DECLARE sourceColumns, destColumns VECTOR(/shared/ASAssets/Utilities/TypeDefinitions.ColumnAnnotationRow) DEFAULT VECTOR[];
+    DECLARE i,j 			INTEGER;
+
+	-- If the destination path is within /services/databases/ or /services/webservices/ and the destType is not LINK then change it to LINK
+	IF (INSTR(inDestPath, &apos;/services/databases/&apos;) = 1 OR INSTR(inDestPath, &apos;/services/webservices/&apos;) = 1 AND destType &lt;&gt; &apos;LINK&apos;) THEN
+		SET destType = &apos;LINK&apos;;
+	END IF;
+
+    -- make sure source resource exists
+    --
+    CALL ResourceExists (inSourcePath, inSourceType, NULL, resourceExists);
+    IF (NOT resourceExists) THEN
+        RAISE System.NotFoundException VALUE &apos;Resource &apos; || inSourcePath || &apos; of type &apos; || inSourceType || &apos; does not exist.&apos;;
+    END IF;
+
+    -- make sure destination resource exists
+    --
+    CALL ResourceExists (inDestPath, destType, NULL, resourceExists);
+    IF (NOT resourceExists) THEN
+        RAISE System.NotFoundException VALUE &apos;Resource &apos; || inDestPath || &apos; of type &apos; || destType || &apos; does not exist.&apos;;
+    END IF;
+
+	IF (debug = &apos;Y&apos;) THEN
+		call print(moduleName||&apos; : inSourcePath=&apos;||NVL(inSourcePath, &apos;null&apos;));
+		call print(moduleName||&apos; : inSourceType=&apos;||NVL(inSourceType, &apos;null&apos;));
+		call print(moduleName||&apos; :   inDestPath=&apos;||NVL(inDestPath, &apos;null&apos;));
+		call print(moduleName||&apos; :     destType=&apos;||NVL(destType, &apos;null&apos;));
+	END IF;
+
+    -- get the annotations from the source resource
+    --
+    SET i = 1;
+    FOR r AS
+        SELECT * FROM /shared/ASAssets/Utilities/repository/getResourceAnnotations(inSourcePath,inSourceType)
+    DO
+        -- if columnn name is null then we&apos;ve got the table row or the resource is not a table.
+        --
+        IF (r.columnName IS NULL) THEN
+
+            -- only update the destination annotation if the source is not null
+            --
+            IF (r.annotation IS NOT NULL) THEN
+                SET resourceAnnotation = r.annotation;
+            END IF;
+			IF (debug = &apos;Y&apos;) THEN
+				call print(moduleName||&apos; : resourceAnnotation=&apos;||NVL(resourceAnnotation, &apos;null&apos;));
+			END IF;
+
+        -- otherwise we&apos;re dealing with a column and need to add it to the updateSqlTable request XML structure
+        --
+        ELSE
+			-- Store the source column annotation as long as we know that the destination is not a published resource.
+            IF (r.annotation IS NOT NULL AND LENGTH(r.annotation) &gt; 0 AND INSTR(inDestPath,&apos;/services/databases/&apos;) = 0 AND INSTR(inDestPath,&apos;/services/webservices/&apos;) = 0) THEN
+                SET sourceColumns = EXTEND(sourceColumns, 1);
+                SET sourceColumns[i] = r;
+ 				IF (debug = &apos;Y&apos;) THEN
+					call print(moduleName||&apos; : sourceColumns[&apos;||i||&apos;].annotation=&apos;||NVL(sourceColumns[i].annotation, &apos;null&apos;));
+				END IF;
+               SET i = i + 1;
+            END IF;
+        END IF;
+    END FOR;
+
+    -- if the destination resource is a TABLE and the source resource had any column annotations defined.
+    -- Do not build up a destination column list for published resources of type LINK.
+    IF (destType = &apos;TABLE&apos; AND CARDINALITY(sourceColumns) &gt; 0) THEN
+        -- build up the column definitions of the destination
+        --
+        SET j = 1;
+        FOR r AS
+            SELECT * FROM /shared/ASAssets/Utilities/repository/getResourceAnnotations(inDestPath,destType) WHERE columnName IS NOT NULL
+        DO
+            SET destColumns = EXTEND(destColumns, 1);
+            SET destColumns[j] = r;
+
+            -- see if there was an annotation for this column in the source resource column
+            --
+            SET i = 1;
+            srcColLoop: WHILE (i &lt;= CARDINALITY(sourceColumns)) DO
+
+                -- if the column name matches (case insensitive) and the source annotation has a value,
+                -- set the destination annotation. otherwise destination annotation is preserved.
+                --
+                IF (UPPER(r.columnName) = UPPER(sourceColumns[i].ColumnName) AND
+                    sourceColumns[i].annotation IS NOT NULL AND
+                    LENGTH(sourceColumns[i].annotation) &gt; 0) THEN
+
+                    SET destColumns[j].annotation = sourceColumns[i].annotation;
+
+                    LEAVE srcColLoop;
+                END IF;
+
+                SET i = i + 1;
+            END WHILE;
+			IF (debug = &apos;Y&apos;) THEN
+				call print(moduleName||&apos; : i=&apos;||i||&apos;  &apos;||NVL(destColumns[j].columnname, &apos;null&apos;)||&apos;  destColumns[&apos;||j||&apos;].annotation=&apos;||NVL(destColumns[j].annotation, &apos;null&apos;));
+			END IF;
+
+            SET j = j + 1;
+        END FOR;
+
+    END IF;
+
+    CALL /shared/ASAssets/Utilities/repository/updateResourceAnnotations(
+        inDestPath,
+        destType,
+        resourceAnnotation,
+        CASE -- only when copying annotated columns from one table to another do we pass the destination column annotations
+            WHEN (CARDINALITY(sourceColumns) &gt; 0 AND CARDINALITY(destColumns) &gt; 0) THEN destColumns
+            ELSE NULL
+        END,
+        success,
+        copyResponse,
+        faultResponse
+    ); 
+END
+</attribute>
+  <attribute name="creationDate" type="LONG">0</attribute>
+  <attribute name="creatorUserDomain" type="STRING"/>
+  <attribute name="creatorUserName" type="STRING"/>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1521509360776</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="native_only" type="STRING">false</attribute>
+  <attribute name="p:5:Customized" type="STRING">datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed</attribute>
+  <attribute name="p:6:Customized" type="STRING">datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed;datatype.changed</attribute>
+  <attribute name="references" type="MAP">
+    <item>
+      <key type="STRING">26/134</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>resource</item>
+        <item>ResourceDefs</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/153</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>resource</item>
+        <item>ResourceExists</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/181</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/146</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>resource</item>
+        <item>ResourceExists</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">15/148</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>util</item>
+        <item>System</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/159</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/231</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">15/155</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>util</item>
+        <item>System</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/162</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">11/192</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/161</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/160</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+  </attribute>
+</metadata>

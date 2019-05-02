@@ -1,0 +1,549 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="DemoTransformation" path="/shared/ElasticSearch/Transformation/DemoTransformation" type="PROCEDURE" subtype="XSLT_TRANSFORM_PROCEDURE" changeToken="-7082005148133752684">
+  <parameters>
+    <parameter name="outputs" direction="OUT" nullable="false">
+      <datatype name="outputs" type="TABLE" refId="1">
+        <element name="Latitude">
+          <datatype name="DOUBLE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="Longitude">
+          <datatype name="DOUBLE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="Score">
+          <datatype name="TINYINT" type="INTEGER" minValue="-128" maxValue="127"/>
+        </element>
+        <element name="City">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="Country">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="EntireAddress">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="Level">
+          <datatype name="TINYINT" type="INTEGER" minValue="-128" maxValue="127"/>
+        </element>
+        <element name="LevelInfo">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="State">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="StateCode">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="Street">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="StreetName">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="StreetNb">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="StreetType">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/WebServices/Physical/Maps/laodjson" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="OUT" direction="OUT" nullable="unknown">
+        <datatype name="wrap" referenceDefinitionSet="/shared/WebServices/Physical/Maps/laodjsonDefinitions" referenceType="wrap" subType="ELEMENT_DECL" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="ELEMENT" componentName="wrap">
+          <schemaDatatype>
+            <datatype name="wrap" superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="ELEMENT_DECL" anonymous="true" type="TREE" refId="2">
+              <element name="wrapItem" maxOccurs="2147483647" minOccurs="0">
+                <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="3">
+                  <element name="BoundingBox">
+                    <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="4">
+                      <element name="NorthEast">
+                        <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="5">
+                          <element name="Latitude">
+                            <datatype name="float" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="FLOAT"/>
+                          </element>
+                          <element name="Longitude">
+                            <datatype name="float" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="FLOAT"/>
+                          </element>
+                        </datatype>
+                      </element>
+                      <element name="SouthWest">
+                        <reference refId="5"/>
+                      </element>
+                    </datatype>
+                  </element>
+                  <element name="City">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="Country">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="EntireAddress">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="Level">
+                    <datatype name="byte" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="short" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-128" maxValue="127"/>
+                  </element>
+                  <element name="LevelInfo">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="Location">
+                    <reference refId="5"/>
+                  </element>
+                  <element name="Score">
+                    <datatype name="byte" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="short" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-128" maxValue="127"/>
+                  </element>
+                  <element name="State">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="StateCode">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="Street">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="StreetName">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="StreetNb">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="StreetType">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="Zip">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                </datatype>
+              </element>
+            </datatype>
+          </schemaDatatype>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="creationDate" type="LONG">1543873808307</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1543874142821</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1543873808307</attribute>
+  <attribute name="sourcePath" type="STRING">/shared/WebServices/Physical/Maps/laodjson</attribute>
+  <attribute name="sourceType" type="SHORT">3</attribute>
+  <attribute name="transformModel" type="STRING">
+&lt;transformModel customized=&quot;false&quot;&gt;
+  &lt;signature&gt;
+    &lt;datatype type=&quot;TREE&quot; refId=&quot;1&quot;&gt;
+      &lt;element name=&quot;inputs&quot;&gt;
+        &lt;datatype name=&quot;inputs&quot; type=&quot;TREE&quot; refId=&quot;2&quot;&gt;
+          &lt;element name=&quot;wrap&quot; nullable=&quot;false&quot;&gt;
+            &lt;datatype name=&quot;wrap&quot; referenceDefinitionSet=&quot;/shared/WebServices/Physical/Maps/laodjsonDefinitions&quot; referenceType=&quot;wrap&quot; subType=&quot;ELEMENT_DECL&quot; type=&quot;XML&quot; contentConstraint=&quot;SEQUENCE&quot; schemaConstraint=&quot;ANY&quot; componentType=&quot;ELEMENT&quot; componentName=&quot;wrap&quot;&gt;
+              &lt;schemaDatatype&gt;
+                &lt;datatype name=&quot;wrap&quot; superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;ELEMENT_DECL&quot; anonymous=&quot;true&quot; type=&quot;TREE&quot; refId=&quot;3&quot;&gt;
+                  &lt;element name=&quot;wrapItem&quot; maxOccurs=&quot;2147483647&quot; minOccurs=&quot;0&quot;&gt;
+                    &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;4&quot;&gt;
+                      &lt;element name=&quot;BoundingBox&quot;&gt;
+                        &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;5&quot;&gt;
+                          &lt;element name=&quot;NorthEast&quot;&gt;
+                            &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;6&quot;&gt;
+                              &lt;element name=&quot;Latitude&quot;&gt;
+                                &lt;datatype name=&quot;float&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;FLOAT&quot;/&gt;
+                              &lt;/element&gt;
+                              &lt;element name=&quot;Longitude&quot;&gt;
+                                &lt;datatype name=&quot;float&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;FLOAT&quot;/&gt;
+                              &lt;/element&gt;
+                            &lt;/datatype&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;SouthWest&quot;&gt;
+                            &lt;reference refId=&quot;6&quot;/&gt;
+                          &lt;/element&gt;
+                        &lt;/datatype&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;City&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Country&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;EntireAddress&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Level&quot;&gt;
+                        &lt;datatype name=&quot;byte&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;short&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;LevelInfo&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Location&quot;&gt;
+                        &lt;reference refId=&quot;6&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Score&quot;&gt;
+                        &lt;datatype name=&quot;byte&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;short&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;State&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;StateCode&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Street&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;StreetName&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;StreetNb&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;StreetType&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;Zip&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                    &lt;/datatype&gt;
+                  &lt;/element&gt;
+                &lt;/datatype&gt;
+              &lt;/schemaDatatype&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+      &lt;element name=&quot;outputs&quot;&gt;
+        &lt;datatype name=&quot;outputs&quot; type=&quot;TREE&quot; refId=&quot;7&quot;&gt;
+          &lt;element name=&quot;outputs&quot;&gt;
+            &lt;datatype name=&quot;outputs&quot; type=&quot;TABLE&quot; refId=&quot;8&quot;&gt;
+              &lt;element name=&quot;Latitude&quot;&gt;
+                &lt;datatype name=&quot;DOUBLE&quot; type=&quot;FLOAT&quot; minValue=&quot;2.2250738585072014E-308&quot; maxValue=&quot;1.7976931348623157E308&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Longitude&quot;&gt;
+                &lt;datatype name=&quot;DOUBLE&quot; type=&quot;FLOAT&quot; minValue=&quot;2.2250738585072014E-308&quot; maxValue=&quot;1.7976931348623157E308&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Score&quot;&gt;
+                &lt;datatype name=&quot;TINYINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;City&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Country&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;EntireAddress&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Level&quot;&gt;
+                &lt;datatype name=&quot;TINYINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;LevelInfo&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;State&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;StateCode&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Street&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;StreetName&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;StreetNb&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;StreetType&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+    &lt;/datatype&gt;
+  &lt;/signature&gt;
+  &lt;xslt&gt;
+&amp;lt;xslt:stylesheet version=&amp;quot;2.0&amp;quot; xmlns:csw-xform=&amp;quot;http://www.compositesw.com/2003/xform&amp;quot; xmlns:xs=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; xmlns:xslt=&amp;quot;http://www.w3.org/1999/XSL/Transform&amp;quot;&amp;gt;
+  &amp;lt;xslt:template match=&amp;quot;/&amp;quot;&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Latitude&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Longitude&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Score&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_City&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Country&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_EntireAddress&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Level&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_LevelInfo&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_State&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_StateCode&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Street&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_StreetName&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_StreetNb&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_StreetType&amp;quot;/&amp;gt;
+    &amp;lt;xslt:element name=&amp;quot;results&amp;quot;&amp;gt;
+      &amp;lt;xslt:for-each select=&amp;quot;wrap&amp;quot;&amp;gt;
+        &amp;lt;xslt:for-each select=&amp;quot;wrapItem&amp;quot;&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_City&amp;quot; select=&amp;quot;City&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_Country&amp;quot; select=&amp;quot;Country&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_EntireAddress&amp;quot; select=&amp;quot;EntireAddress&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_Level&amp;quot; select=&amp;quot;Level&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_LevelInfo&amp;quot; select=&amp;quot;LevelInfo&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_Score&amp;quot; select=&amp;quot;Score&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_State&amp;quot; select=&amp;quot;State&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_StateCode&amp;quot; select=&amp;quot;StateCode&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_Street&amp;quot; select=&amp;quot;Street&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_StreetName&amp;quot; select=&amp;quot;StreetName&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_StreetNb&amp;quot; select=&amp;quot;StreetNb&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_StreetType&amp;quot; select=&amp;quot;StreetType&amp;quot;/&amp;gt;
+          &amp;lt;xslt:for-each select=&amp;quot;Location&amp;quot;&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_Latitude&amp;quot; select=&amp;quot;Latitude&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_Longitude&amp;quot; select=&amp;quot;Longitude&amp;quot;/&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;result&amp;quot;&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Latitude&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Latitude&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Longitude&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Longitude&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Score&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Score&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;City&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_City&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Country&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Country&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;EntireAddress&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_EntireAddress&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Level&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Level&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;LevelInfo&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_LevelInfo&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;State&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_State&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;StateCode&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_StateCode&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Street&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Street&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;StreetName&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_StreetName&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;StreetNb&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_StreetNb&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;StreetType&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_StreetType&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+          &amp;lt;/xslt:for-each&amp;gt;
+          &amp;lt;xslt:element name=&amp;quot;result&amp;quot;&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Latitude&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Latitude&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Longitude&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Longitude&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Score&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Score&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;City&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_City&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Country&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Country&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;EntireAddress&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_EntireAddress&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Level&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Level&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;LevelInfo&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_LevelInfo&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;State&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_State&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;StateCode&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_StateCode&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;Street&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_Street&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;StreetName&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_StreetName&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;StreetNb&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_StreetNb&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;StreetType&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_StreetType&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+          &amp;lt;/xslt:element&amp;gt;
+        &amp;lt;/xslt:for-each&amp;gt;
+      &amp;lt;/xslt:for-each&amp;gt;
+    &amp;lt;/xslt:element&amp;gt;
+  &amp;lt;/xslt:template&amp;gt;
+&amp;lt;/xslt:stylesheet&amp;gt;&lt;/xslt&gt;
+  &lt;links&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/EntireAddress&quot; target=&quot;/outputs/outputs/EntireAddress&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Location/Longitude&quot; target=&quot;/outputs/outputs/Longitude&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Location/Latitude&quot; target=&quot;/outputs/outputs/Latitude&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/StreetNb&quot; target=&quot;/outputs/outputs/StreetNb&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Score&quot; target=&quot;/outputs/outputs/Score&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/City&quot; target=&quot;/outputs/outputs/City&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/StreetName&quot; target=&quot;/outputs/outputs/StreetName&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Level&quot; target=&quot;/outputs/outputs/Level&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/StreetType&quot; target=&quot;/outputs/outputs/StreetType&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/LevelInfo&quot; target=&quot;/outputs/outputs/LevelInfo&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Country&quot; target=&quot;/outputs/outputs/Country&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/StateCode&quot; target=&quot;/outputs/outputs/StateCode&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/State&quot; target=&quot;/outputs/outputs/State&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/Street&quot; target=&quot;/outputs/outputs/Street&quot;/&gt;
+  &lt;/links&gt;
+&lt;/transformModel&gt;</attribute>
+  <attribute name="xqueryModel" type="NULL"/>
+  <attribute name="xslt" type="STRING">
+&lt;xslt:stylesheet version=&quot;2.0&quot; xmlns:csw-xform=&quot;http://www.compositesw.com/2003/xform&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xslt=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+  &lt;xslt:template match=&quot;/&quot;&gt;
+    &lt;xslt:variable name=&quot;_Latitude&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Longitude&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Score&quot;/&gt;
+    &lt;xslt:variable name=&quot;_City&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Country&quot;/&gt;
+    &lt;xslt:variable name=&quot;_EntireAddress&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Level&quot;/&gt;
+    &lt;xslt:variable name=&quot;_LevelInfo&quot;/&gt;
+    &lt;xslt:variable name=&quot;_State&quot;/&gt;
+    &lt;xslt:variable name=&quot;_StateCode&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Street&quot;/&gt;
+    &lt;xslt:variable name=&quot;_StreetName&quot;/&gt;
+    &lt;xslt:variable name=&quot;_StreetNb&quot;/&gt;
+    &lt;xslt:variable name=&quot;_StreetType&quot;/&gt;
+    &lt;xslt:element name=&quot;results&quot;&gt;
+      &lt;xslt:for-each select=&quot;wrap&quot;&gt;
+        &lt;xslt:for-each select=&quot;wrapItem&quot;&gt;
+          &lt;xslt:variable name=&quot;_City&quot; select=&quot;City&quot;/&gt;
+          &lt;xslt:variable name=&quot;_Country&quot; select=&quot;Country&quot;/&gt;
+          &lt;xslt:variable name=&quot;_EntireAddress&quot; select=&quot;EntireAddress&quot;/&gt;
+          &lt;xslt:variable name=&quot;_Level&quot; select=&quot;Level&quot;/&gt;
+          &lt;xslt:variable name=&quot;_LevelInfo&quot; select=&quot;LevelInfo&quot;/&gt;
+          &lt;xslt:variable name=&quot;_Score&quot; select=&quot;Score&quot;/&gt;
+          &lt;xslt:variable name=&quot;_State&quot; select=&quot;State&quot;/&gt;
+          &lt;xslt:variable name=&quot;_StateCode&quot; select=&quot;StateCode&quot;/&gt;
+          &lt;xslt:variable name=&quot;_Street&quot; select=&quot;Street&quot;/&gt;
+          &lt;xslt:variable name=&quot;_StreetName&quot; select=&quot;StreetName&quot;/&gt;
+          &lt;xslt:variable name=&quot;_StreetNb&quot; select=&quot;StreetNb&quot;/&gt;
+          &lt;xslt:variable name=&quot;_StreetType&quot; select=&quot;StreetType&quot;/&gt;
+          &lt;xslt:for-each select=&quot;Location&quot;&gt;
+            &lt;xslt:variable name=&quot;_Latitude&quot; select=&quot;Latitude&quot;/&gt;
+            &lt;xslt:variable name=&quot;_Longitude&quot; select=&quot;Longitude&quot;/&gt;
+            &lt;xslt:element name=&quot;result&quot;&gt;
+              &lt;xslt:element name=&quot;Latitude&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Latitude&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Longitude&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Longitude&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Score&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Score&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;City&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_City&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Country&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Country&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;EntireAddress&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_EntireAddress&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Level&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Level&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;LevelInfo&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_LevelInfo&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;State&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_State&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;StateCode&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_StateCode&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Street&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Street&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;StreetName&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_StreetName&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;StreetNb&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_StreetNb&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;StreetType&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_StreetType&quot;/&gt;
+              &lt;/xslt:element&gt;
+            &lt;/xslt:element&gt;
+          &lt;/xslt:for-each&gt;
+          &lt;xslt:element name=&quot;result&quot;&gt;
+            &lt;xslt:element name=&quot;Latitude&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Latitude&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;Longitude&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Longitude&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;Score&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Score&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;City&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_City&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;Country&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Country&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;EntireAddress&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_EntireAddress&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;Level&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Level&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;LevelInfo&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_LevelInfo&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;State&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_State&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;StateCode&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_StateCode&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;Street&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_Street&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;StreetName&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_StreetName&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;StreetNb&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_StreetNb&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;StreetType&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_StreetType&quot;/&gt;
+            &lt;/xslt:element&gt;
+          &lt;/xslt:element&gt;
+        &lt;/xslt:for-each&gt;
+      &lt;/xslt:for-each&gt;
+    &lt;/xslt:element&gt;
+  &lt;/xslt:template&gt;
+&lt;/xslt:stylesheet&gt;</attribute>
+</metadata>

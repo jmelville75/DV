@@ -1,0 +1,182 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="xsltGetTempsAllToCursor" path="/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/L1_TransformToCursor/xsltGetTempsAllToCursor" type="PROCEDURE" subtype="XSLT_TRANSFORM_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="outputs" direction="OUT" nullable="false">
+      <datatype name="outputs" type="TABLE" refId="1">
+        <element name="City">
+          <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+        </element>
+        <element name="Date">
+          <datatype name="DATE" type="DATE"/>
+        </element>
+        <element name="HighTemp">
+          <datatype name="DECIMAL" type="DECIMAL" maxDigits="32" maxFractionalDigits="2"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsAll" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="outXML" direction="OUT" nullable="unknown">
+        <datatype name="TemperaturesByCityALLResponse" namespace="http://tempuri.org/" referenceDefinitionSet="/shared/Demoettes/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsAllDefinitions" referenceType="{http://tempuri.org/}TemperaturesByCityALLResponse" subType="ELEMENT_DECL" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="ELEMENT" componentName="{http://tempuri.org/}TemperaturesByCityALLResponse">
+          <schemaDatatype>
+            <datatype name="TemperaturesByCityALLResponse" namespace="http://tempuri.org/" superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="ELEMENT_DECL" anonymous="true" type="TREE" refId="2">
+              <element name="TemperaturesByCityALLOutput" namespace="http://tempuri.org/">
+                <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="3">
+                  <element name="row" namespace="http://tempuri.org/" maxOccurs="2147483647">
+                    <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="4">
+                      <element name="City" namespace="http://tempuri.org/">
+                        <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                      </element>
+                      <element name="Date" namespace="http://tempuri.org/">
+                        <datatype name="NMTOKEN" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="token" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                      </element>
+                      <element name="HighTemp" namespace="http://tempuri.org/">
+                        <datatype name="decimal" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="DECIMAL" minDigits="1" maxDigits="32" maxFractionalDigits="6" maxValue="-1"/>
+                      </element>
+                    </datatype>
+                  </element>
+                </datatype>
+              </element>
+            </datatype>
+          </schemaDatatype>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="creationDate" type="LONG">1518020595089</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1518020855502</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1518020595089</attribute>
+  <attribute name="sourcePath" type="STRING">/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsAll</attribute>
+  <attribute name="sourceType" type="SHORT">3</attribute>
+  <attribute name="transformModel" type="STRING">
+&lt;transformModel customized=&quot;false&quot;&gt;
+  &lt;signature&gt;
+    &lt;datatype type=&quot;TREE&quot; refId=&quot;1&quot;&gt;
+      &lt;element name=&quot;inputs&quot;&gt;
+        &lt;datatype name=&quot;inputs&quot; type=&quot;TREE&quot; refId=&quot;2&quot;&gt;
+          &lt;element name=&quot;TemperaturesByCityALLResponse&quot; namespace=&quot;http://tempuri.org/&quot; nullable=&quot;false&quot;&gt;
+            &lt;datatype name=&quot;TemperaturesByCityALLResponse&quot; namespace=&quot;http://tempuri.org/&quot; referenceDefinitionSet=&quot;/shared/Demoettes/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsAllDefinitions&quot; referenceType=&quot;{http://tempuri.org/}TemperaturesByCityALLResponse&quot; subType=&quot;ELEMENT_DECL&quot; type=&quot;XML&quot; contentConstraint=&quot;SEQUENCE&quot; schemaConstraint=&quot;ANY&quot; componentType=&quot;ELEMENT&quot; componentName=&quot;{http://tempuri.org/}TemperaturesByCityALLResponse&quot;&gt;
+              &lt;schemaDatatype&gt;
+                &lt;datatype name=&quot;TemperaturesByCityALLResponse&quot; namespace=&quot;http://tempuri.org/&quot; superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;ELEMENT_DECL&quot; anonymous=&quot;true&quot; type=&quot;TREE&quot; refId=&quot;3&quot;&gt;
+                  &lt;element name=&quot;TemperaturesByCityALLOutput&quot; namespace=&quot;http://tempuri.org/&quot;&gt;
+                    &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;4&quot;&gt;
+                      &lt;element name=&quot;row&quot; namespace=&quot;http://tempuri.org/&quot; maxOccurs=&quot;2147483647&quot;&gt;
+                        &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;5&quot;&gt;
+                          &lt;element name=&quot;City&quot; namespace=&quot;http://tempuri.org/&quot;&gt;
+                            &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;Date&quot; namespace=&quot;http://tempuri.org/&quot;&gt;
+                            &lt;datatype name=&quot;NMTOKEN&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;token&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;HighTemp&quot; namespace=&quot;http://tempuri.org/&quot;&gt;
+                            &lt;datatype name=&quot;decimal&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;DECIMAL&quot; minDigits=&quot;1&quot; maxDigits=&quot;32&quot; maxFractionalDigits=&quot;6&quot; maxValue=&quot;-1&quot;/&gt;
+                          &lt;/element&gt;
+                        &lt;/datatype&gt;
+                      &lt;/element&gt;
+                    &lt;/datatype&gt;
+                  &lt;/element&gt;
+                &lt;/datatype&gt;
+              &lt;/schemaDatatype&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+      &lt;element name=&quot;outputs&quot;&gt;
+        &lt;datatype name=&quot;outputs&quot; type=&quot;TREE&quot; refId=&quot;6&quot;&gt;
+          &lt;element name=&quot;outputs&quot;&gt;
+            &lt;datatype name=&quot;outputs&quot; type=&quot;TABLE&quot; refId=&quot;7&quot;&gt;
+              &lt;element name=&quot;City&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; type=&quot;STRING&quot; maxLength=&quot;255&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;Date&quot;&gt;
+                &lt;datatype name=&quot;DATE&quot; type=&quot;DATE&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;HighTemp&quot;&gt;
+                &lt;datatype name=&quot;DECIMAL&quot; type=&quot;DECIMAL&quot; maxDigits=&quot;32&quot; maxFractionalDigits=&quot;2&quot;/&gt;
+              &lt;/element&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+    &lt;/datatype&gt;
+  &lt;/signature&gt;
+  &lt;xslt&gt;
+&amp;lt;xslt:stylesheet version=&amp;quot;2.0&amp;quot; xmlns:csw-xform=&amp;quot;http://www.compositesw.com/2003/xform&amp;quot; xmlns:ns1=&amp;quot;http://tempuri.org/&amp;quot; xmlns:xs=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; xmlns:xslt=&amp;quot;http://www.w3.org/1999/XSL/Transform&amp;quot;&amp;gt;
+  &amp;lt;xslt:template match=&amp;quot;/&amp;quot;&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_City&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_Date&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_HighTemp&amp;quot;/&amp;gt;
+    &amp;lt;xslt:element name=&amp;quot;results&amp;quot;&amp;gt;
+      &amp;lt;xslt:for-each select=&amp;quot;ns1:TemperaturesByCityALLResponse&amp;quot;&amp;gt;
+        &amp;lt;xslt:for-each select=&amp;quot;ns1:TemperaturesByCityALLOutput&amp;quot;&amp;gt;
+          &amp;lt;xslt:for-each select=&amp;quot;ns1:row&amp;quot;&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_City&amp;quot; select=&amp;quot;ns1:City&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_Date&amp;quot; select=&amp;quot;ns1:Date&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_HighTemp&amp;quot; select=&amp;quot;ns1:HighTemp&amp;quot;/&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;result&amp;quot;&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;City&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_City&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;Date&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_Date&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;HighTemp&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_HighTemp&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+          &amp;lt;/xslt:for-each&amp;gt;
+        &amp;lt;/xslt:for-each&amp;gt;
+      &amp;lt;/xslt:for-each&amp;gt;
+    &amp;lt;/xslt:element&amp;gt;
+  &amp;lt;/xslt:template&amp;gt;
+&amp;lt;/xslt:stylesheet&amp;gt;&lt;/xslt&gt;
+  &lt;links&gt;
+    &lt;link source=&quot;/inputs/TemperaturesByCityALLResponse/TemperaturesByCityALLOutput/row/HighTemp&quot; target=&quot;/outputs/outputs/HighTemp&quot;/&gt;
+    &lt;link source=&quot;/inputs/TemperaturesByCityALLResponse/TemperaturesByCityALLOutput/row/City&quot; target=&quot;/outputs/outputs/City&quot;/&gt;
+    &lt;link source=&quot;/inputs/TemperaturesByCityALLResponse/TemperaturesByCityALLOutput/row/Date&quot; target=&quot;/outputs/outputs/Date&quot;/&gt;
+  &lt;/links&gt;
+&lt;/transformModel&gt;</attribute>
+  <attribute name="xqueryModel" type="NULL"/>
+  <attribute name="xslt" type="STRING">
+&lt;xslt:stylesheet version=&quot;2.0&quot; xmlns:csw-xform=&quot;http://www.compositesw.com/2003/xform&quot; xmlns:ns1=&quot;http://tempuri.org/&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xslt=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+  &lt;xslt:template match=&quot;/&quot;&gt;
+    &lt;xslt:variable name=&quot;_City&quot;/&gt;
+    &lt;xslt:variable name=&quot;_Date&quot;/&gt;
+    &lt;xslt:variable name=&quot;_HighTemp&quot;/&gt;
+    &lt;xslt:element name=&quot;results&quot;&gt;
+      &lt;xslt:for-each select=&quot;ns1:TemperaturesByCityALLResponse&quot;&gt;
+        &lt;xslt:for-each select=&quot;ns1:TemperaturesByCityALLOutput&quot;&gt;
+          &lt;xslt:for-each select=&quot;ns1:row&quot;&gt;
+            &lt;xslt:variable name=&quot;_City&quot; select=&quot;ns1:City&quot;/&gt;
+            &lt;xslt:variable name=&quot;_Date&quot; select=&quot;ns1:Date&quot;/&gt;
+            &lt;xslt:variable name=&quot;_HighTemp&quot; select=&quot;ns1:HighTemp&quot;/&gt;
+            &lt;xslt:element name=&quot;result&quot;&gt;
+              &lt;xslt:element name=&quot;City&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_City&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;Date&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_Date&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;HighTemp&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_HighTemp&quot;/&gt;
+              &lt;/xslt:element&gt;
+            &lt;/xslt:element&gt;
+          &lt;/xslt:for-each&gt;
+        &lt;/xslt:for-each&gt;
+      &lt;/xslt:for-each&gt;
+    &lt;/xslt:element&gt;
+  &lt;/xslt:template&gt;
+&lt;/xslt:stylesheet&gt;</attribute>
+</metadata>

@@ -1,0 +1,91 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="CreateFHIRTables" path="/shared/ComputeDB/FHIR/CreateFHIRTables" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+  <annotation/>
+  <parameters>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype name="CURSOR" type="TABLE" refId="1"></datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBJDBC" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
+CREATE SCHEMA IF NOT EXISTS FHIR_ORIGINAL; ;
+
+SET SCHEMA FHIR_ORIGINAL; ;
+
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_allergies ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_careplans ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_conditions ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_encounters ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_imaging_studies ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_immunizations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_medications ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_observations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_patients ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_procedures ; ;
+
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_organizations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.staging_providers ; ;
+
+DROP TABLE IF EXISTS FHIR_ORIGINAL.allergies ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.careplans ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.conditions ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.encounters ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.imaging_studies ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.immunizations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.medications ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.observations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.patients ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.procedures ; ;
+
+DROP TABLE IF EXISTS FHIR_ORIGINAL.organizations ; ;
+DROP TABLE IF EXISTS FHIR_ORIGINAL.providers ; ;
+
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_patients USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/patients.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_encounters USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/encounters.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_allergies USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/allergies.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_careplans USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/careplans.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_conditions USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/conditions.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_imaging_studies USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/imaging_studies.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_immunizations USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/immunizations.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_medications USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/medications.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_observations USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/observations.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_procedures USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/procedures.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_organizations USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/organizations.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+CREATE EXTERNAL TABLE FHIR_ORIGINAL.staging_providers USING csv OPTIONS (path &apos;s3a://&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;@computedb-synthetic-test-data/synthetic-patients/small-data/csv/csv/providers.csv&apos;, header &apos;true&apos;, inferSchema &apos;true&apos;); ;
+
+CREATE TABLE FHIR_ORIGINAL.patients using column options(PARTITION_BY &apos;ID&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_patients); ;
+CREATE TABLE FHIR_ORIGINAL.encounters using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_encounters); ;
+CREATE TABLE FHIR_ORIGINAL.allergies using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_allergies); ;
+CREATE TABLE FHIR_ORIGINAL.careplans using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_careplans); ;
+CREATE TABLE FHIR_ORIGINAL.conditions using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_conditions); ;
+CREATE TABLE FHIR_ORIGINAL.imaging_studies using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_imaging_studies); ;
+CREATE TABLE FHIR_ORIGINAL.immunizations using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_immunizations); ;
+CREATE TABLE FHIR_ORIGINAL.medications using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_medications); ;
+CREATE TABLE FHIR_ORIGINAL.observations using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_observations); ;
+CREATE TABLE FHIR_ORIGINAL.procedures using column options(PARTITION_BY &apos;PATIENT&apos;, colocate_with &apos;FHIR_ORIGINAL.PATIENTS&apos;, buckets &apos;12&apos;) as (select * from FHIR_ORIGINAL.staging_procedures); ;
+
+CREATE TABLE FHIR_ORIGINAL.organizations as (select * from FHIR_ORIGINAL.staging_organizations); ;
+CREATE TABLE FHIR_ORIGINAL.providers as (select * from FHIR_ORIGINAL.staging_providers); ;
+
+SELECT * from FHIR_ORIGINAL.providers limit 1; ;</attribute>
+  <attribute name="creationDate" type="LONG">1556807886666</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="impactLevel" type="INTEGER">64</attribute>
+  <attribute name="impactMessage" type="STRING">Package queries must have exactly one OUT parameter that is a cursor with at least one column</attribute>
+  <attribute name="isSingleSelect" type="STRING">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1556808010578</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBJDBC</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556807886666</attribute>
+</metadata>

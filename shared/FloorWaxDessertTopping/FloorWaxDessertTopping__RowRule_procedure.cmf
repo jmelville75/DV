@@ -1,0 +1,92 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="FloorWaxDessertTopping_RowRule" path="/shared/FloorWaxDessertTopping/FloorWaxDessertTopping_RowRule" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <annotation>Row Level Security Filter Policy
+
+Inputs:
+	Alias		The SQL alias to be used for the table to which this policy has been assigned
+	Result		The SQL predicate to be added to the consuming SQLs WHERE clause
+</annotation>
+  <parameters>
+    <parameter name="alias" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="16384"/>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege user="anonymous" domain="composite" privileges="READ EXECUTE"/>
+    <privilege group="all" domain="composite" privileges="READ EXECUTE"/>
+    <privilege group="all" domain="dynamic" privileges="READ EXECUTE"/>
+    <privilege group="floorwax_analysts" domain="composite" privileges="READ WRITE"/>
+    <privilege group="floorwax_cust_svc" domain="composite" privileges="READ WRITE"/>
+    <privilege group="floorwax_fraud" domain="composite" privileges="READ WRITE"/>
+    <privilege group="desserttopping_analysts" domain="composite" privileges="READ WRITE"/>
+    <privilege group="desserttopping_cust_svc" domain="composite" privileges="READ WRITE"/>
+    <privilege group="desserttopping_fraud" domain="composite" privileges="READ WRITE"/>
+  </security>
+  <dependency target="/lib/users/TestUserIdentity" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="type" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="name" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="domain" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="BOOLEAN"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="RbsFilterPolicy" type="STRING">&lt;ns1:FilterPolicy xmlns:ns1=&quot;http://www.compositesw.com/services/system/util/security&quot;&gt;&lt;ns1:name&gt;FloorWaxDessertTopping_RowRule&lt;/ns1:name&gt;&lt;ns1:folder&gt;/shared/FloorWaxDessertTopping&lt;/ns1:folder&gt;&lt;ns1:enabled&gt;true&lt;/ns1:enabled&gt;&lt;ns1:form&gt;RULE&lt;/ns1:form&gt;&lt;ns1:defaultRule&gt;&lt;ns1:filter&gt;ALL&lt;/ns1:filter&gt;&lt;/ns1:defaultRule&gt;&lt;ns1:memberRuleList&gt;&lt;ns1:memberRule&gt;&lt;ns1:member&gt;&lt;ns1:domain&gt;composite&lt;/ns1:domain&gt;&lt;ns1:name&gt;desserttopping_analysts&lt;/ns1:name&gt;&lt;ns1:type&gt;GROUP&lt;/ns1:type&gt;&lt;/ns1:member&gt;&lt;ns1:filter&gt;PREDICATE&lt;/ns1:filter&gt;&lt;ns1:data&gt;product_category = &amp;apos;DT&amp;apos;&lt;/ns1:data&gt;&lt;/ns1:memberRule&gt;&lt;ns1:memberRule&gt;&lt;ns1:member&gt;&lt;ns1:domain&gt;composite&lt;/ns1:domain&gt;&lt;ns1:name&gt;desserttopping_cust_svc&lt;/ns1:name&gt;&lt;ns1:type&gt;GROUP&lt;/ns1:type&gt;&lt;/ns1:member&gt;&lt;ns1:filter&gt;PREDICATE&lt;/ns1:filter&gt;&lt;ns1:data&gt;( product_category = &amp;apos;DT&amp;apos; ) AND ( order_date &amp;gt; &amp;apos;2017/00/00&amp;apos; )&lt;/ns1:data&gt;&lt;/ns1:memberRule&gt;&lt;ns1:memberRule&gt;&lt;ns1:member&gt;&lt;ns1:domain&gt;composite&lt;/ns1:domain&gt;&lt;ns1:name&gt;desserttopping_fraud&lt;/ns1:name&gt;&lt;ns1:type&gt;GROUP&lt;/ns1:type&gt;&lt;/ns1:member&gt;&lt;ns1:filter&gt;PREDICATE&lt;/ns1:filter&gt;&lt;ns1:data&gt;( product_category = &amp;apos;DT&amp;apos; ) AND ( quantity &amp;gt; 10 )&lt;/ns1:data&gt;&lt;/ns1:memberRule&gt;&lt;/ns1:memberRuleList&gt;&lt;ns1:assignmentList&gt;&lt;ns1:assignment&gt;/shared/FloorWaxDessertTopping/L2_Business/L2_CUSTOMER_ORDERS&lt;/ns1:assignment&gt;&lt;/ns1:assignmentList&gt;&lt;ns1:notes&gt;Restricts users in our Dessert Topping subsidiary to see only data involving Dessert Topping transactions.  In addition, restrictions vary by group.  Analysts can see all Dessert Topping rows.  Customer Service can only see Dessert Topping rows with dates of 2017 and later.  Fraud group can only see Dessert Topping rows where quantity is greater than 10.&lt;/ns1:notes&gt;&lt;/ns1:FilterPolicy&gt;</attribute>
+  <attribute name="Script" type="STRING">PROCEDURE FloorWaxDessertTopping_RowRule (IN alias VARCHAR, OUT result VARCHAR(16384))
+BEGIN
+	DECLARE temp VARCHAR;
+	DECLARE test BOOLEAN;
+	SET result = &apos;&apos;;
+	CALL /lib/users/TestUserIdentity(&apos;GROUP&apos;,&apos;desserttopping_analysts&apos;,&apos;composite&apos;,test);
+	IF(test) THEN 
+		SET result = &apos;(&apos; || alias || &apos;.product_category = &apos;&apos;DT&apos;&apos;)&apos;;
+	END IF;
+ 	CALL /lib/users/TestUserIdentity(&apos;GROUP&apos;,&apos;desserttopping_cust_svc&apos;,&apos;composite&apos;,test);
+	IF(test) THEN 
+		SET temp = &apos;((&apos; || alias || &apos;.product_category = &apos;&apos;DT&apos;&apos; AND &apos; || alias || &apos;.order_date &gt; &apos;&apos;2017/00/00&apos;&apos;))&apos;;
+		IF (result = &apos;&apos;) THEN
+			SET result = temp;
+		ELSE
+			SET result = result || &apos; OR &apos; || temp;
+		END IF;
+	END IF;
+ 	CALL /lib/users/TestUserIdentity(&apos;GROUP&apos;,&apos;desserttopping_fraud&apos;,&apos;composite&apos;,test);
+	IF(test) THEN 
+		SET temp = &apos;((&apos; || alias || &apos;.product_category = &apos;&apos;DT&apos;&apos; AND &apos; || alias || &apos;.quantity &gt; 10))&apos;;
+		IF (result = &apos;&apos;) THEN
+			SET result = temp;
+		ELSE
+			SET result = result || &apos; OR &apos; || temp;
+		END IF;
+	END IF;
+ 	IF ( result = &apos;&apos;) THEN
+		SET result = &apos;TRUE&apos;;
+	END IF;
+END
+</attribute>
+  <attribute name="creationDate" type="LONG">1490885898587</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="disallowUIEditing" type="BOOLEAN">true</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1490898186095</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="procedureGenerator" type="STRING">RbsFilterPolicy</attribute>
+  <attribute name="references" type="NULL"/>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1490885898587</attribute>
+</metadata>

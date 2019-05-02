@@ -1,0 +1,157 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="SalesCountryAggregationsAvg" path="/shared/ComputeDB/Sales/SalesCountryAggregationsAvg" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
+  <columns>
+    <column name="REGION" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="COUNTRY" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="ITEMTYPE" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="SALESCHANNEL" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="ORDERPRIORITY" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitssold" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+  </columns>
+  <indexes></indexes>
+  <foreignKeys></foreignKeys>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="united states of america" domain="composite" privileges="READ SELECT"/>
+    <privilege group="north america" domain="composite" privileges="READ SELECT"/>
+    <privilege group="regional" domain="composite" privileges="READ SELECT"/>
+  </security>
+  <dependency target="/shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="COUNTRY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERDATE">
+        <datatype type="DATE"/>
+      </element>
+      <element name="ORDERID">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SHIPDATE">
+        <datatype type="DATE"/>
+      </element>
+      <element name="UNITSSOLD">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="UNITPRICE">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="UNITCOST">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALREVENUE">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALCOST">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALPROFIT">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">SELECT 
+    records.REGION, 
+    records.COUNTRY, 
+    records.ITEMTYPE, 
+    records.SALESCHANNEL, 
+    records.ORDERPRIORITY, 
+    avg(records.UNITSSOLD) as avg_unitssold, 
+    avg(records.UNITPRICE) as avg_unitprice, 
+    avg(records.UNITCOST) as avg_unitcost, 
+    avg(records.TOTALREVENUE) as avg_totalrevenue, 
+    avg(records.TOTALCOST) as avg_totalcost, 
+    avg(records.TOTALPROFIT) as avg_totalprofit
+FROM      
+    /shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records records
+GROUP BY 
+    records.region, records.country, records.itemtype, records.saleschannel, records.orderpriority  
+ORDER BY 
+	records.region, records.country, records.itemtype, records.saleschannel, records.orderpriority</attribute>
+  <attribute name="creationDate" type="LONG">1556041901601</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="impactLevel" type="INTEGER">0</attribute>
+  <attribute name="impactMessage" type="NULL"/>
+  <attribute name="lastModifiedDate" type="LONG">1556317935839</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556041901601</attribute>
+</metadata>

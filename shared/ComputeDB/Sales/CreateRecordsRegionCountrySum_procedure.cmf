@@ -1,0 +1,70 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="CreateRecordsRegionCountrySum" path="/shared/ComputeDB/Sales/CreateRecordsRegionCountrySum" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+  <annotation/>
+  <parameters>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype type="TABLE" refId="1">
+        <element name="REGION">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="COUNTRY">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="ITEMTYPE">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="SALESCHANNEL">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="ORDERPRIORITY">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="SUM_UNITSSOLD">
+          <datatype name="BIGINT" extendedName="BIGINT" subType="DATASOURCE_TYPE" type="INTEGER"/>
+        </element>
+        <element name="SUM_UNITPRICE">
+          <datatype name="DECIMAL" extendedName="DECIMAL(20,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="20" maxFractionalDigits="2"/>
+        </element>
+        <element name="SUM_UNITCOST">
+          <datatype name="DECIMAL" extendedName="DECIMAL(20,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="20" maxFractionalDigits="2"/>
+        </element>
+        <element name="SUM_TOTALREVENUE">
+          <datatype name="DECIMAL" extendedName="DECIMAL(20,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="20" maxFractionalDigits="2"/>
+        </element>
+        <element name="SUM_TOTALCOST">
+          <datatype name="DECIMAL" extendedName="DECIMAL(20,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="20" maxFractionalDigits="2"/>
+        </element>
+        <element name="SUM_TOTALPROFIT">
+          <datatype name="DECIMAL" extendedName="DECIMAL(20,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="20" maxFractionalDigits="2"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBJDBC" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
+DROP TABLE IF EXISTS SALES.RecordsRegionCountrySum; ;
+CREATE TABLE SALES.RecordsRegionCountrySum
+USING COLUMN OPTIONS (BUCKETS &apos;7&apos;, PARTITION_BY &apos;REGION&apos;, PERSISTENCE &apos;SYNCHRONOUS&apos;)
+AS (SELECT REGION, COUNTRY, ITEMTYPE, SALESCHANNEL, ORDERPRIORITY, sum(unitssold) as sum_unitssold, sum(unitprice) as sum_unitprice, sum(unitcost) as sum_unitcost, sum(totalrevenue) as sum_totalrevenue, sum(totalcost) as sum_totalcost, sum(totalprofit) as sum_totalprofit 
+FROM SALES.RECORDS GROUP BY REGION, COUNTRY, ITEMTYPE, SALESCHANNEL, ORDERPRIORITY ORDER BY REGION, COUNTRY, ITEMTYPE, SALESCHANNEL, ORDERPRIORITY); ;	  
+SELECT * FROM SALES.RecordsRegionCountrySum LIMIT 1; ;</attribute>
+  <attribute name="creationDate" type="LONG">1556805778871</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="impactLevel" type="INTEGER">0</attribute>
+  <attribute name="impactMessage" type="NULL"/>
+  <attribute name="isSingleSelect" type="STRING">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1556807337878</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBJDBC</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556805778871</attribute>
+</metadata>

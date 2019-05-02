@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="getDataDefinitions" path="/shared/LearningPathways/Intermediate/JSON/JSON_TABLE/REST_JSON2XML/getDataDefinitions" type="DEFINITION_SET" subtype="XML_SCHEMA_DEFINITION_SET" changeToken="0">
+  <definitions>
+    <definition name="store" type="ELEMENT">
+      <attribute name="creationDate" type="LONG">0</attribute>
+      <attribute name="creatorUserDomain" type="STRING"/>
+      <attribute name="creatorUserId" type="INTEGER">0</attribute>
+      <attribute name="creatorUserName" type="STRING"/>
+      <attribute name="lastModifiedDate" type="LONG">0</attribute>
+      <attribute name="lastModifiedUserDomain" type="STRING"/>
+      <attribute name="lastModifiedUserId" type="INTEGER">0</attribute>
+      <attribute name="lastModifiedUserName" type="STRING"/>
+      <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">0</attribute>
+    </definition>
+  </definitions>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <attribute name="creationDate" type="LONG">1447080645233</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">true</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1518190589040</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1447080645233</attribute>
+  <attribute name="sources" type="LIST">
+    <list type="OBJECT">rO0ABXNyADVjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuRGVmaW5pdGlvblNldFNv
+dXJjZVYpv6Zr2hqJAgACTAAIbG9jYXRpb250ABJMamF2YS9sYW5nL1N0cmluZztMAApzb3VyY2VU
+ZXh0cQB+AAF4cHQAC3NjaGVtYV9iYXNldAMbPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0i
+VVRGLTgiPz48eHM6c2NoZW1hIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNj
+aGVtYSIgYXR0cmlidXRlRm9ybURlZmF1bHQ9InVucXVhbGlmaWVkIiBlbGVtZW50Rm9ybURlZmF1
+bHQ9InF1YWxpZmllZCI+DQogIDx4czplbGVtZW50IG5hbWU9InN0b3JlIj4NCiAgICA8eHM6Y29t
+cGxleFR5cGU+DQogICAgICA8eHM6c2VxdWVuY2U+DQogICAgICAgIDx4czplbGVtZW50IG1heE9j
+Y3Vycz0idW5ib3VuZGVkIiBtaW5PY2N1cnM9IjAiIG5hbWU9ImJvb2siPg0KICAgICAgICAgIDx4
+czpjb21wbGV4VHlwZT4NCiAgICAgICAgICAgIDx4czpzZXF1ZW5jZT4NCiAgICAgICAgICAgICAg
+PHhzOmVsZW1lbnQgbWluT2NjdXJzPSIwIiBuYW1lPSJjYXRlZ29yeSIgdHlwZT0ieHM6c3RyaW5n
+Ii8+DQogICAgICAgICAgICAgIDx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbmFtZT0iYXV0aG9y
+IiB0eXBlPSJ4czpzdHJpbmciLz4NCiAgICAgICAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0idGl0
+bGUiIHR5cGU9InhzOnN0cmluZyIvPg0KICAgICAgICAgICAgICA8eHM6ZWxlbWVudCBtaW5PY2N1
+cnM9IjAiIG5hbWU9InByaWNlIiB0eXBlPSJ4czpmbG9hdCIvPg0KICAgICAgICAgICAgPC94czpz
+ZXF1ZW5jZT4NCiAgICAgICAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgICAgICA8L3hzOmVsZW1l
+bnQ+DQogICAgICA8L3hzOnNlcXVlbmNlPg0KICAgIDwveHM6Y29tcGxleFR5cGU+DQogIDwveHM6
+ZWxlbWVudD4NCjwveHM6c2NoZW1hPg0K</list>
+  </attribute>
+</metadata>

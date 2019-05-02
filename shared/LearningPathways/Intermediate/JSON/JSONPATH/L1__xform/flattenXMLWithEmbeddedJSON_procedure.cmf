@@ -1,0 +1,490 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="flattenXMLWithEmbeddedJSON" path="/shared/LearningPathways/Intermediate/JSON/JSONPATH/L1_xform/flattenXMLWithEmbeddedJSON" type="PROCEDURE" subtype="XSLT_TRANSFORM_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="outputs" direction="OUT" nullable="false">
+      <datatype name="outputs" type="TABLE" refId="1">
+        <element name="caseReference">
+          <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="casedata">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="summary">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="creationTimestamp">
+          <datatype name="TIMESTAMP" type="DATETIME"/>
+        </element>
+        <element name="modifiedBy">
+          <datatype name="SMALLINT" type="INTEGER" minValue="-32768" maxValue="32767"/>
+        </element>
+        <element name="modificationTimestamp">
+          <datatype name="TIMESTAMP" type="DATETIME"/>
+        </element>
+        <element name="lockType">
+          <datatype name="TINYINT" type="INTEGER" minValue="-128" maxValue="127"/>
+        </element>
+        <element name="lockedBy">
+          <datatype name="SMALLINT" type="INTEGER" minValue="-32768" maxValue="32767"/>
+        </element>
+        <element name="msLockExpiry">
+          <datatype name="BIGINT" type="INTEGER"/>
+        </element>
+        <element name="msSystemTime">
+          <datatype name="BIGINT" type="INTEGER"/>
+        </element>
+        <element name="markedForPurge">
+          <datatype name="VARCHAR" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+        </element>
+        <element name="applicationId">
+          <datatype name="SMALLINT" type="INTEGER" minValue="-32768" maxValue="32767"/>
+        </element>
+        <element name="typeId">
+          <datatype name="TINYINT" type="INTEGER" minValue="-128" maxValue="127"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/LearningPathways/Intermediate/JSON/JSONPATH/dsXMLWithEmbeddedJSON/XMLWithEmbeddedJSON.xml" type="TREE">
+    <datatype name="wrap" referenceDefinitionSet="/shared/LearningPathways/Intermediate/JSON/JSONPATH/dsXMLWithEmbeddedJSON/XMLWithEmbeddedJSONDefinitions" referenceType="wrap" subType="ELEMENT_DECL" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="ELEMENT" componentName="wrap">
+      <schemaDatatype>
+        <datatype name="wrap" superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="ELEMENT_DECL" anonymous="true" type="TREE" refId="1">
+          <element name="wrapItem" maxOccurs="2147483647" minOccurs="0">
+            <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="2">
+              <element name="caseReference">
+                <datatype name="int" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="long" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+              </element>
+              <element name="casedata">
+                <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+              </element>
+              <element name="summary">
+                <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+              </element>
+              <element name="metadata">
+                <datatype superTypeName="anyType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" subType="COMPLEX_TYPE" type="TREE" refId="3">
+                  <element name="creationTimestamp">
+                    <datatype name="dateTime" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="DATETIME"/>
+                  </element>
+                  <element name="modifiedBy">
+                    <datatype name="short" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="int" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-32768" maxValue="32767"/>
+                  </element>
+                  <element name="modificationTimestamp">
+                    <datatype name="dateTime" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="DATETIME"/>
+                  </element>
+                  <element name="lockType">
+                    <datatype name="byte" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="short" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-128" maxValue="127"/>
+                  </element>
+                  <element name="lockedBy">
+                    <datatype name="short" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="int" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-32768" maxValue="32767"/>
+                  </element>
+                  <element name="msLockExpiry">
+                    <datatype name="long" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="integer" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER"/>
+                  </element>
+                  <element name="msSystemTime">
+                    <datatype name="long" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="integer" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER"/>
+                  </element>
+                  <element name="markedForPurge">
+                    <datatype name="string" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="2147483647"/>
+                  </element>
+                  <element name="applicationId">
+                    <datatype name="short" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="int" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-32768" maxValue="32767"/>
+                  </element>
+                  <element name="typeId">
+                    <datatype name="byte" namespace="http://www.w3.org/2001/XMLSchema" superTypeName="short" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="INTEGER" minValue="-128" maxValue="127"/>
+                  </element>
+                </datatype>
+              </element>
+            </datatype>
+          </element>
+        </datatype>
+      </schemaDatatype>
+    </datatype>
+  </dependency>
+  <attribute name="creationDate" type="LONG">1518198179855</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1518198226942</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1518198179855</attribute>
+  <attribute name="sourcePath" type="STRING">/shared/LearningPathways/Intermediate/JSON/JSONPATH/dsXMLWithEmbeddedJSON/XMLWithEmbeddedJSON.xml</attribute>
+  <attribute name="sourceType" type="SHORT">4</attribute>
+  <attribute name="transformModel" type="STRING">
+&lt;transformModel customized=&quot;false&quot;&gt;
+  &lt;signature&gt;
+    &lt;datatype type=&quot;TREE&quot; refId=&quot;1&quot;&gt;
+      &lt;element name=&quot;inputs&quot;&gt;
+        &lt;datatype name=&quot;inputs&quot; type=&quot;TREE&quot; refId=&quot;2&quot;&gt;
+          &lt;element name=&quot;wrap&quot; nullable=&quot;false&quot;&gt;
+            &lt;datatype name=&quot;wrap&quot; referenceDefinitionSet=&quot;/shared/LearningPathways/Intermediate/JSON/JSONPATH/dsXMLWithEmbeddedJSON/XMLWithEmbeddedJSONDefinitions&quot; referenceType=&quot;wrap&quot; subType=&quot;ELEMENT_DECL&quot; type=&quot;XML&quot; contentConstraint=&quot;SEQUENCE&quot; schemaConstraint=&quot;ANY&quot; componentType=&quot;ELEMENT&quot; componentName=&quot;wrap&quot;&gt;
+              &lt;schemaDatatype&gt;
+                &lt;datatype name=&quot;wrap&quot; superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;ELEMENT_DECL&quot; anonymous=&quot;true&quot; type=&quot;TREE&quot; refId=&quot;3&quot;&gt;
+                  &lt;element name=&quot;wrapItem&quot; maxOccurs=&quot;2147483647&quot; minOccurs=&quot;0&quot;&gt;
+                    &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;4&quot;&gt;
+                      &lt;element name=&quot;caseReference&quot;&gt;
+                        &lt;datatype name=&quot;int&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;long&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-2147483648&quot; maxValue=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;casedata&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;summary&quot;&gt;
+                        &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                      &lt;/element&gt;
+                      &lt;element name=&quot;metadata&quot;&gt;
+                        &lt;datatype superTypeName=&quot;anyType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; subType=&quot;COMPLEX_TYPE&quot; type=&quot;TREE&quot; refId=&quot;5&quot;&gt;
+                          &lt;element name=&quot;creationTimestamp&quot;&gt;
+                            &lt;datatype name=&quot;dateTime&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;DATETIME&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;modifiedBy&quot;&gt;
+                            &lt;datatype name=&quot;short&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;int&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;modificationTimestamp&quot;&gt;
+                            &lt;datatype name=&quot;dateTime&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;DATETIME&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;lockType&quot;&gt;
+                            &lt;datatype name=&quot;byte&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;short&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;lockedBy&quot;&gt;
+                            &lt;datatype name=&quot;short&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;int&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;msLockExpiry&quot;&gt;
+                            &lt;datatype name=&quot;long&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;integer&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;msSystemTime&quot;&gt;
+                            &lt;datatype name=&quot;long&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;integer&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;markedForPurge&quot;&gt;
+                            &lt;datatype name=&quot;string&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;2147483647&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;applicationId&quot;&gt;
+                            &lt;datatype name=&quot;short&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;int&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+                          &lt;/element&gt;
+                          &lt;element name=&quot;typeId&quot;&gt;
+                            &lt;datatype name=&quot;byte&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;short&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+                          &lt;/element&gt;
+                        &lt;/datatype&gt;
+                      &lt;/element&gt;
+                    &lt;/datatype&gt;
+                  &lt;/element&gt;
+                &lt;/datatype&gt;
+              &lt;/schemaDatatype&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+      &lt;element name=&quot;outputs&quot;&gt;
+        &lt;datatype name=&quot;outputs&quot; type=&quot;TREE&quot; refId=&quot;6&quot;&gt;
+          &lt;element name=&quot;outputs&quot;&gt;
+            &lt;datatype name=&quot;outputs&quot; type=&quot;TABLE&quot; refId=&quot;7&quot;&gt;
+              &lt;element name=&quot;caseReference&quot;&gt;
+                &lt;datatype name=&quot;INTEGER&quot; type=&quot;INTEGER&quot; minValue=&quot;-2147483648&quot; maxValue=&quot;2147483647&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;casedata&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;summary&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;creationTimestamp&quot;&gt;
+                &lt;datatype name=&quot;TIMESTAMP&quot; type=&quot;DATETIME&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;modifiedBy&quot;&gt;
+                &lt;datatype name=&quot;SMALLINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;modificationTimestamp&quot;&gt;
+                &lt;datatype name=&quot;TIMESTAMP&quot; type=&quot;DATETIME&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;lockType&quot;&gt;
+                &lt;datatype name=&quot;TINYINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;lockedBy&quot;&gt;
+                &lt;datatype name=&quot;SMALLINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;msLockExpiry&quot;&gt;
+                &lt;datatype name=&quot;BIGINT&quot; type=&quot;INTEGER&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;msSystemTime&quot;&gt;
+                &lt;datatype name=&quot;BIGINT&quot; type=&quot;INTEGER&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;markedForPurge&quot;&gt;
+                &lt;datatype name=&quot;VARCHAR&quot; namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; superTypeName=&quot;anySimpleType&quot; superTypeNamespace=&quot;http://www.w3.org/2001/XMLSchema&quot; type=&quot;STRING&quot; maxLength=&quot;32768&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;applicationId&quot;&gt;
+                &lt;datatype name=&quot;SMALLINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-32768&quot; maxValue=&quot;32767&quot;/&gt;
+              &lt;/element&gt;
+              &lt;element name=&quot;typeId&quot;&gt;
+                &lt;datatype name=&quot;TINYINT&quot; type=&quot;INTEGER&quot; minValue=&quot;-128&quot; maxValue=&quot;127&quot;/&gt;
+              &lt;/element&gt;
+            &lt;/datatype&gt;
+          &lt;/element&gt;
+        &lt;/datatype&gt;
+      &lt;/element&gt;
+    &lt;/datatype&gt;
+  &lt;/signature&gt;
+  &lt;xslt&gt;
+&amp;lt;xslt:stylesheet version=&amp;quot;2.0&amp;quot; xmlns:csw-xform=&amp;quot;http://www.compositesw.com/2003/xform&amp;quot; xmlns:xs=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; xmlns:xslt=&amp;quot;http://www.w3.org/1999/XSL/Transform&amp;quot;&amp;gt;
+  &amp;lt;xslt:template match=&amp;quot;/&amp;quot;&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_caseReference&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_casedata&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_summary&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_creationTimestamp&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_modifiedBy&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_modificationTimestamp&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_lockType&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_lockedBy&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_msLockExpiry&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_msSystemTime&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_markedForPurge&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_applicationId&amp;quot;/&amp;gt;
+    &amp;lt;xslt:variable name=&amp;quot;_typeId&amp;quot;/&amp;gt;
+    &amp;lt;xslt:element name=&amp;quot;results&amp;quot;&amp;gt;
+      &amp;lt;xslt:for-each select=&amp;quot;wrap&amp;quot;&amp;gt;
+        &amp;lt;xslt:for-each select=&amp;quot;wrapItem&amp;quot;&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_caseReference&amp;quot; select=&amp;quot;caseReference&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_casedata&amp;quot; select=&amp;quot;casedata&amp;quot;/&amp;gt;
+          &amp;lt;xslt:variable name=&amp;quot;_summary&amp;quot; select=&amp;quot;summary&amp;quot;/&amp;gt;
+          &amp;lt;xslt:for-each select=&amp;quot;metadata&amp;quot;&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_creationTimestamp&amp;quot; select=&amp;quot;creationTimestamp&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_modifiedBy&amp;quot; select=&amp;quot;modifiedBy&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_modificationTimestamp&amp;quot; select=&amp;quot;modificationTimestamp&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_lockType&amp;quot; select=&amp;quot;lockType&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_lockedBy&amp;quot; select=&amp;quot;lockedBy&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_msLockExpiry&amp;quot; select=&amp;quot;msLockExpiry&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_msSystemTime&amp;quot; select=&amp;quot;msSystemTime&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_markedForPurge&amp;quot; select=&amp;quot;markedForPurge&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_applicationId&amp;quot; select=&amp;quot;applicationId&amp;quot;/&amp;gt;
+            &amp;lt;xslt:variable name=&amp;quot;_typeId&amp;quot; select=&amp;quot;typeId&amp;quot;/&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;result&amp;quot;&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;caseReference&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_caseReference&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;casedata&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_casedata&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;summary&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_summary&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;creationTimestamp&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_creationTimestamp&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;modifiedBy&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_modifiedBy&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;modificationTimestamp&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_modificationTimestamp&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;lockType&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_lockType&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;lockedBy&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_lockedBy&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;msLockExpiry&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_msLockExpiry&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;msSystemTime&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_msSystemTime&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;markedForPurge&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_markedForPurge&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;applicationId&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_applicationId&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+              &amp;lt;xslt:element name=&amp;quot;typeId&amp;quot;&amp;gt;
+                &amp;lt;xslt:value-of select=&amp;quot;$_typeId&amp;quot;/&amp;gt;
+              &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+          &amp;lt;/xslt:for-each&amp;gt;
+          &amp;lt;xslt:element name=&amp;quot;result&amp;quot;&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;caseReference&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_caseReference&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;casedata&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_casedata&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;summary&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_summary&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;creationTimestamp&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_creationTimestamp&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;modifiedBy&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_modifiedBy&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;modificationTimestamp&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_modificationTimestamp&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;lockType&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_lockType&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;lockedBy&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_lockedBy&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;msLockExpiry&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_msLockExpiry&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;msSystemTime&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_msSystemTime&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;markedForPurge&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_markedForPurge&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;applicationId&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_applicationId&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+            &amp;lt;xslt:element name=&amp;quot;typeId&amp;quot;&amp;gt;
+              &amp;lt;xslt:value-of select=&amp;quot;$_typeId&amp;quot;/&amp;gt;
+            &amp;lt;/xslt:element&amp;gt;
+          &amp;lt;/xslt:element&amp;gt;
+        &amp;lt;/xslt:for-each&amp;gt;
+      &amp;lt;/xslt:for-each&amp;gt;
+    &amp;lt;/xslt:element&amp;gt;
+  &amp;lt;/xslt:template&amp;gt;
+&amp;lt;/xslt:stylesheet&amp;gt;&lt;/xslt&gt;
+  &lt;links&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/creationTimestamp&quot; target=&quot;/outputs/outputs/creationTimestamp&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/caseReference&quot; target=&quot;/outputs/outputs/caseReference&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/msSystemTime&quot; target=&quot;/outputs/outputs/msSystemTime&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/summary&quot; target=&quot;/outputs/outputs/summary&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/lockType&quot; target=&quot;/outputs/outputs/lockType&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/applicationId&quot; target=&quot;/outputs/outputs/applicationId&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/msLockExpiry&quot; target=&quot;/outputs/outputs/msLockExpiry&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/casedata&quot; target=&quot;/outputs/outputs/casedata&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/modificationTimestamp&quot; target=&quot;/outputs/outputs/modificationTimestamp&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/lockedBy&quot; target=&quot;/outputs/outputs/lockedBy&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/typeId&quot; target=&quot;/outputs/outputs/typeId&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/markedForPurge&quot; target=&quot;/outputs/outputs/markedForPurge&quot;/&gt;
+    &lt;link source=&quot;/inputs/wrap/wrapItem/metadata/modifiedBy&quot; target=&quot;/outputs/outputs/modifiedBy&quot;/&gt;
+  &lt;/links&gt;
+&lt;/transformModel&gt;</attribute>
+  <attribute name="xqueryModel" type="NULL"/>
+  <attribute name="xslt" type="STRING">
+&lt;xslt:stylesheet version=&quot;2.0&quot; xmlns:csw-xform=&quot;http://www.compositesw.com/2003/xform&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xslt=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+  &lt;xslt:template match=&quot;/&quot;&gt;
+    &lt;xslt:variable name=&quot;_caseReference&quot;/&gt;
+    &lt;xslt:variable name=&quot;_casedata&quot;/&gt;
+    &lt;xslt:variable name=&quot;_summary&quot;/&gt;
+    &lt;xslt:variable name=&quot;_creationTimestamp&quot;/&gt;
+    &lt;xslt:variable name=&quot;_modifiedBy&quot;/&gt;
+    &lt;xslt:variable name=&quot;_modificationTimestamp&quot;/&gt;
+    &lt;xslt:variable name=&quot;_lockType&quot;/&gt;
+    &lt;xslt:variable name=&quot;_lockedBy&quot;/&gt;
+    &lt;xslt:variable name=&quot;_msLockExpiry&quot;/&gt;
+    &lt;xslt:variable name=&quot;_msSystemTime&quot;/&gt;
+    &lt;xslt:variable name=&quot;_markedForPurge&quot;/&gt;
+    &lt;xslt:variable name=&quot;_applicationId&quot;/&gt;
+    &lt;xslt:variable name=&quot;_typeId&quot;/&gt;
+    &lt;xslt:element name=&quot;results&quot;&gt;
+      &lt;xslt:for-each select=&quot;wrap&quot;&gt;
+        &lt;xslt:for-each select=&quot;wrapItem&quot;&gt;
+          &lt;xslt:variable name=&quot;_caseReference&quot; select=&quot;caseReference&quot;/&gt;
+          &lt;xslt:variable name=&quot;_casedata&quot; select=&quot;casedata&quot;/&gt;
+          &lt;xslt:variable name=&quot;_summary&quot; select=&quot;summary&quot;/&gt;
+          &lt;xslt:for-each select=&quot;metadata&quot;&gt;
+            &lt;xslt:variable name=&quot;_creationTimestamp&quot; select=&quot;creationTimestamp&quot;/&gt;
+            &lt;xslt:variable name=&quot;_modifiedBy&quot; select=&quot;modifiedBy&quot;/&gt;
+            &lt;xslt:variable name=&quot;_modificationTimestamp&quot; select=&quot;modificationTimestamp&quot;/&gt;
+            &lt;xslt:variable name=&quot;_lockType&quot; select=&quot;lockType&quot;/&gt;
+            &lt;xslt:variable name=&quot;_lockedBy&quot; select=&quot;lockedBy&quot;/&gt;
+            &lt;xslt:variable name=&quot;_msLockExpiry&quot; select=&quot;msLockExpiry&quot;/&gt;
+            &lt;xslt:variable name=&quot;_msSystemTime&quot; select=&quot;msSystemTime&quot;/&gt;
+            &lt;xslt:variable name=&quot;_markedForPurge&quot; select=&quot;markedForPurge&quot;/&gt;
+            &lt;xslt:variable name=&quot;_applicationId&quot; select=&quot;applicationId&quot;/&gt;
+            &lt;xslt:variable name=&quot;_typeId&quot; select=&quot;typeId&quot;/&gt;
+            &lt;xslt:element name=&quot;result&quot;&gt;
+              &lt;xslt:element name=&quot;caseReference&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_caseReference&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;casedata&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_casedata&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;summary&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_summary&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;creationTimestamp&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_creationTimestamp&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;modifiedBy&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_modifiedBy&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;modificationTimestamp&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_modificationTimestamp&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;lockType&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_lockType&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;lockedBy&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_lockedBy&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;msLockExpiry&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_msLockExpiry&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;msSystemTime&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_msSystemTime&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;markedForPurge&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_markedForPurge&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;applicationId&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_applicationId&quot;/&gt;
+              &lt;/xslt:element&gt;
+              &lt;xslt:element name=&quot;typeId&quot;&gt;
+                &lt;xslt:value-of select=&quot;$_typeId&quot;/&gt;
+              &lt;/xslt:element&gt;
+            &lt;/xslt:element&gt;
+          &lt;/xslt:for-each&gt;
+          &lt;xslt:element name=&quot;result&quot;&gt;
+            &lt;xslt:element name=&quot;caseReference&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_caseReference&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;casedata&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_casedata&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;summary&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_summary&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;creationTimestamp&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_creationTimestamp&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;modifiedBy&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_modifiedBy&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;modificationTimestamp&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_modificationTimestamp&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;lockType&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_lockType&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;lockedBy&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_lockedBy&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;msLockExpiry&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_msLockExpiry&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;msSystemTime&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_msSystemTime&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;markedForPurge&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_markedForPurge&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;applicationId&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_applicationId&quot;/&gt;
+            &lt;/xslt:element&gt;
+            &lt;xslt:element name=&quot;typeId&quot;&gt;
+              &lt;xslt:value-of select=&quot;$_typeId&quot;/&gt;
+            &lt;/xslt:element&gt;
+          &lt;/xslt:element&gt;
+        &lt;/xslt:for-each&gt;
+      &lt;/xslt:for-each&gt;
+    &lt;/xslt:element&gt;
+  &lt;/xslt:template&gt;
+&lt;/xslt:stylesheet&gt;</attribute>
+</metadata>

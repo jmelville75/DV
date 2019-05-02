@@ -1,0 +1,275 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="vwRaiseJSONFromRelational" path="/shared/LearningPathways/Intermediate/JSON/JSONPATH/L2_RaiseJSON/vwRaiseJSONFromRelational" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
+  <columns>
+    <column name="caseReference" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_CaseTag_v3" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_CaseInitiation_v7" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_CaseSummary_1_v4" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Customer_v1_FirstName_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Customer_v1_LastName_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Score_v1_FraudProbability_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Score_v1_FraudThreshold_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Score_v1_Oddity_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_Score_v1_OddityThreshold_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_DateInitiated_1_v6" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_TimeInitiated_1_v6" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_state" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="casedata_InvestigatorComments_v1" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="summary_state" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="summary_CaseTag_v3" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="summary_CaseInitiation_v7" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="summaryCaseSummary_1_v4" nullable="true">
+      <datatype type="STRING"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="summary" nullable="true">
+      <datatype namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="creationTimestamp" nullable="true">
+      <datatype type="DATETIME"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="modifiedBy" nullable="true">
+      <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="modificationTimestamp" nullable="true">
+      <datatype type="DATETIME"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="lockType" nullable="true">
+      <datatype type="INTEGER" minValue="-128" maxValue="127"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="lockedBy" nullable="true">
+      <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="msLockExpiry" nullable="true">
+      <datatype type="INTEGER"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="msSystemTime" nullable="true">
+      <datatype type="INTEGER"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="markedForPurge" nullable="true">
+      <datatype namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="applicationId" nullable="true">
+      <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="typeId" nullable="true">
+      <datatype type="INTEGER" minValue="-128" maxValue="127"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+  </columns>
+  <indexes></indexes>
+  <foreignKeys></foreignKeys>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/LearningPathways/Intermediate/JSON/JSONPATH/L1_xform/flattenXMLWithEmbeddedJSON" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="outputs" direction="OUT" nullable="false">
+        <datatype type="TABLE" refId="2">
+          <element name="caseReference">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="casedata">
+            <datatype namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+          </element>
+          <element name="summary">
+            <datatype namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+          </element>
+          <element name="creationTimestamp">
+            <datatype type="DATETIME"/>
+          </element>
+          <element name="modifiedBy">
+            <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+          </element>
+          <element name="modificationTimestamp">
+            <datatype type="DATETIME"/>
+          </element>
+          <element name="lockType">
+            <datatype type="INTEGER" minValue="-128" maxValue="127"/>
+          </element>
+          <element name="lockedBy">
+            <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+          </element>
+          <element name="msLockExpiry">
+            <datatype type="INTEGER"/>
+          </element>
+          <element name="msSystemTime">
+            <datatype type="INTEGER"/>
+          </element>
+          <element name="markedForPurge">
+            <datatype namespace="http://www.w3.org/2001/XMLSchema" superTypeName="anySimpleType" superTypeNamespace="http://www.w3.org/2001/XMLSchema" type="STRING" maxLength="32768"/>
+          </element>
+          <element name="applicationId">
+            <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+          </element>
+          <element name="typeId">
+            <datatype type="INTEGER" minValue="-128" maxValue="127"/>
+          </element>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">SELECT 
+    flattenXMLWithEmbeddedJSON.caseReference, 
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.CaseTag_v3&apos; ) casedata_CaseTag_v3,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.CaseInitiation_v7&apos; ) casedata_CaseInitiation_v7,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.CaseSummary_1_v4&apos; ) casedata_CaseSummary_1_v4,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Customer_v1.FirstName_v1&apos; ) casedata_Customer_v1_FirstName_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Customer_v1.LastName_v1&apos; ) casedata_Customer_v1_LastName_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Score_v1.FraudProbability_v1&apos; ) casedata_Score_v1_FraudProbability_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Score_v1.FraudThreshold_v1&apos; ) casedata_Score_v1_FraudThreshold_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Score_v1.Oddity_v1&apos; ) casedata_Score_v1_Oddity_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.Score_v1.OddityThreshold_v1&apos; ) casedata_Score_v1_OddityThreshold_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.DateInitiated_1_v6&apos; ) casedata_DateInitiated_1_v6,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.TimeInitiated_1_v6&apos; ) casedata_TimeInitiated_1_v6,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.state&apos; ) casedata_state,
+    JSONPATH( flattenXMLWithEmbeddedJSON.casedata, &apos;$.InvestigatorComments_v1&apos; ) casedata_InvestigatorComments_v1,
+    JSONPATH( flattenXMLWithEmbeddedJSON.summary, &apos;$.state&apos; ) summary_state,
+    JSONPATH( flattenXMLWithEmbeddedJSON.summary, &apos;$.CaseTag_v3&apos; ) summary_CaseTag_v3,
+    JSONPATH( flattenXMLWithEmbeddedJSON.summary, &apos;$.CaseInitiation_v7&apos; ) summary_CaseInitiation_v7,
+    JSONPATH( flattenXMLWithEmbeddedJSON.summary, &apos;$.CaseSummary_1_v4&apos; ) summaryCaseSummary_1_v4,
+    flattenXMLWithEmbeddedJSON.summary, 
+    flattenXMLWithEmbeddedJSON.creationTimestamp, 
+    flattenXMLWithEmbeddedJSON.modifiedBy, 
+    flattenXMLWithEmbeddedJSON.modificationTimestamp, 
+    flattenXMLWithEmbeddedJSON.lockType, 
+    flattenXMLWithEmbeddedJSON.lockedBy, 
+    flattenXMLWithEmbeddedJSON.msLockExpiry, 
+    flattenXMLWithEmbeddedJSON.msSystemTime, 
+    flattenXMLWithEmbeddedJSON.markedForPurge, 
+    flattenXMLWithEmbeddedJSON.applicationId, 
+    flattenXMLWithEmbeddedJSON.typeId
+FROM      
+    /shared/LearningPathways/Intermediate/JSON/JSONPATH/L1_xform/flattenXMLWithEmbeddedJSON() flattenXMLWithEmbeddedJSON</attribute>
+  <attribute name="creationDate" type="LONG">1518198542799</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1518206122977</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1518198542799</attribute>
+</metadata>

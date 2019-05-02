@@ -1,0 +1,230 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="xformGetTempsFilteredToCursor" path="/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/L1_TransformToCursor/xformGetTempsFilteredToCursor" type="PROCEDURE" subtype="TRANSFORM_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="inMinTemp" direction="IN" nullable="false">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="TempsFilteredAsCursor" direction="OUT" nullable="false">
+      <datatype name="TempsFilteredAsCursor" type="TABLE" refId="1">
+        <element name="City" nullable="false">
+          <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+        </element>
+        <element name="Date" nullable="false">
+          <datatype name="DATE" type="DATE"/>
+        </element>
+        <element name="HighTemp" nullable="false">
+          <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/Demoettes/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsFilteredDefinitions" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsFiltered" type="PROCEDURE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsFilteredDefinitions" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="creationDate" type="LONG">1418333207000</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1518019360682</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="transformModel" type="BYTE_ARRAY">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
+AAAAAHNQSwUGAAAAAAEAAQAvAAAAGBIAAAAA</attribute>
+  <attribute name="transformSource" type="STRING">declare copy-namespaces no-preserve,inherit;
+declare namespace xquery =  &quot;http://compositesw.com/transform/xquery&quot;;
+declare namespace ns =  &quot;http://tempuri.org/&quot;;
+declare namespace custom =  &quot;http://compositesw.com/transform/custom&quot;;
+declare namespace xs =  &quot;http://www.w3.org/2001/XMLSchema&quot;;
+declare namespace ext2 =  &quot;http://www.compositesw.com/extensions2&quot;;
+declare namespace sql =  &quot;http://compositesw.com/transform/sql&quot;;
+
+declare variable $inMinTemp external;
+declare function local:getTempsFiltered( $minTemp)
+{
+  (:invoke resource /shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsFiltered :)
+  let $query := &quot;/shared/LearningPathways/Intermediate/REST_Data_Source/AugmentedDataWarehouse/WebServiceAugmentations/TemperatureWebService/getTempsFiltered&quot;
+  let $var2 := composite:executeProcedure($query, ($minTemp))
+  return
+    $var2
+};
+
+declare function local:cast( $City)
+{
+  fn:substring($City, 0 ,256)
+};
+
+declare function local:cast2( $Date)
+{
+  $Date cast as xs:date
+};
+
+declare function local:cast3( $HighTemp)
+{
+  let $result := (xs:double($HighTemp) cast as xs:integer)
+  return (
+  if($result &gt; 2147483647)
+    then fn:error(fn:QName(&apos;http://compositesw.com/transform/xquery-error&apos;, &apos;error&apos;), fn:concat($result,&apos; exceed maximum value &apos;, 2147483647))
+  else if($result &lt; -2147483648)
+    then fn:error(fn:QName(&apos;http://compositesw.com/transform/xquery-error&apos;, &apos;error&apos;), fn:concat($result,&apos; exceed minimum value &apos;, -2147483648))
+  else $result
+  )
+};
+
+let $nodes := 
+(
+  let $var3 := element minTemp{$inMinTemp}
+  let $var2:= local:getTempsFiltered($var3)
+  return
+  (
+    for $var1 at $counter0 in $var2/self::ns:TemperaturesByCityFilteredResponse/ns:TemperaturesByCityFilteredResult/ns:row
+    return 
+      if (fn:not($counter0 &lt;= 2147483647 and fn:true()))
+      then ()
+      else 
+        element TempsFilteredAsCursor
+        {
+          (
+            let $var6 := $var1/ns:City/text()
+            let $var5:= local:cast(fn:data($var6))
+            return
+            element City
+            {
+              $var5
+            }
+            ,
+            let $var9 := $var1/ns:Date/text()
+            let $var8:= local:cast2(fn:data($var9))
+            return
+            element Date
+            {
+              $var8
+            }
+            ,
+            let $var12 := $var1/ns:HighTemp/text()
+            let $var11:= local:cast3(fn:data($var12))
+            return
+            element HighTemp
+            {
+              $var11
+            }
+          )
+        }
+    ,
+    let $counter := count($var2/self::ns:TemperaturesByCityFilteredResponse/ns:TemperaturesByCityFilteredResult/ns:row)
+    return
+      if ($counter &gt;= 0) then
+      ()
+      else 
+        for $k in (1 to ( 0 - $counter))
+        return
+          element TempsFilteredAsCursor
+          {
+            (
+              element City
+              {
+              }
+              ,
+              element Date
+              {
+              }
+              ,
+              element HighTemp
+              {
+              }
+            )
+          }
+  )
+)
+return
+$nodes</attribute>
+</metadata>

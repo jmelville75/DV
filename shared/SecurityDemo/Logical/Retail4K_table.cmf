@@ -1,0 +1,252 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="Retail4K" path="/shared/SecurityDemo/Logical/Retail4K" type="TABLE" subtype="SQL_TABLE" changeToken="-7082005148133752734" tableType="VIEW">
+  <columns>
+    <column name="Department" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Manager" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Salesperson" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Transaction Type" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Sale Amount" nullable="true">
+      <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Sale Date" nullable="true">
+      <datatype type="DATETIME"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Store Number" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Country" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="StateName" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="City_State" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Zipcode" nullable="true">
+      <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Division" nullable="true">
+      <datatype type="STRING" maxLength="32767"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+  </columns>
+  <indexes></indexes>
+  <foreignKeys></foreignKeys>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="north" domain="composite" privileges="READ WRITE SELECT UPDATE INSERT DELETE GRANT"/>
+  </security>
+  <dependency target="/shared/SecurityDemo/Logical/Retail4K/RetailNorthData" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="alias" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="resource" direction="IN">
+        <datatype type="STRING" maxLength="16384"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="STRING" maxLength="16384"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/SecurityDemo/Physical/Retail4KDataRBS/Retail_400k_combined_RBS.xlsx/Retail_400k_combined" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="Department">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Manager">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Salesperson">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Transaction Type">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Sale Amount">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Sale Date">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="Store Number">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Country">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="StateName">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="City_State">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+      <element name="Zipcode">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Division">
+        <datatype type="STRING" maxLength="32767"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">SELECT 
+    Retail_400k_combined.Department, 
+    Retail_400k_combined.Manager, 
+    Retail_400k_combined.Salesperson, 
+    Retail_400k_combined.&quot;Transaction Type&quot;, 
+    Retail_400k_combined.&quot;Sale Amount&quot;, 
+    Retail_400k_combined.&quot;Sale Date&quot;, 
+    Retail_400k_combined.&quot;Store Number&quot;, 
+    Retail_400k_combined.Country, 
+    Retail_400k_combined.StateName, 
+    Retail_400k_combined.City_State, 
+    Retail_400k_combined.Zipcode, 
+    Retail_400k_combined.Division
+FROM      
+    /shared/SecurityDemo/Physical/Retail4KDataRBS/&quot;Retail_400k_combined_RBS.xlsx&quot;/Retail_400k_combined Retail_400k_combined</attribute>
+  <attribute name="creationDate" type="LONG">1543529295946</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="impactLevel" type="INTEGER">0</attribute>
+  <attribute name="impactMessage" type="NULL"/>
+  <attribute name="lastModifiedDate" type="LONG">1543530426503</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="BYTE_ARRAY">EIEJBAAAAAEQUQYBABQAUgBlAHQAYQBpAGwAXwA0ADAAMABrAF8AYwBvAG0AYgBpAG4AZQBkBgIA
+FABSAGUAdABhAGkAbABfADQAMAAwAGsAXwBjAG8AbQBiAGkAbgBlAGQDC/////8DCgAAxPgDDP//
+//8LEQAGAAYAcwBoAGEAcgBlAGQADABTAGUAYwB1AHIAaQB0AHkARABlAG0AbwAIAFAAaAB5AHMA
+aQBjAGEAbAAPAFIAZQB0AGEAaQBsADQASwBEAGEAdABhAFIAQgBTAB0AUgBlAHQAYQBpAGwAXwA0
+ADAAMABrAF8AYwBvAG0AYgBpAG4AZQBkAF8AUgBCAFMALgB4AGwAcwB4ABQAUgBlAHQAYQBpAGwA
+XwA0ADAAMABrAF8AYwBvAG0AYgBpAG4AZQBk//8DBQAAAAAIAhAxBgH//wECAQEGAAEDAAEEAAEF
+AAMHAAAAAAcJAAAAAQAAAAAJCgAAAAwQQQYBAAoARABlAHAAYQByAHQAbQBlAG4AdAYCAAAGA///
+BgT//wMK/////wgMEBsGAgAHAFYAQQBSAEMASABBAFIDEgAAAAEEBAAAAAAAAH//ARMB//8DCwAA
+AAD//xBBBgEABwBNAGEAbgBhAGcAZQByBgIAAAYD//8GBP//Awr/////CAwQGwYCAAcAVgBBAFIA
+QwBIAEEAUgMSAAAAAQQEAAAAAAAAf/8BEwH//wMLAAAAAP//EEEGAQALAFMAYQBsAGUAcwBwAGUA
+cgBzAG8AbgYCAAAGA///BgT//wMK/////wgMEBsGAgAHAFYAQQBSAEMASABBAFIDEgAAAAEEBAAA
+AAAAAH//ARMB//8DCwAAAAD//xBBBgEAEABUAHIAYQBuAHMAYQBjAHQAaQBvAG4AIABUAHkAcABl
+BgIAAAYD//8GBP//Awr/////CAwQGwYCAAcAVgBBAFIAQwBIAEEAUgMSAAAAAQQEAAAAAAAAf/8B
+EwH//wMLAAAAAP//EEEGAQALAFMAYQBsAGUAIABBAG0AbwB1AG4AdAYCAAAGA///BgT//wMK////
+/wgMEC8DEv///B7//wMLAAAAAP//EEEGAQAJAFMAYQBsAGUAIABEAGEAdABlBgIAAAYD//8GBP//
+Awr/////CAwQLwMS///8I///AwsAAAAA//8QQQYBAAwAUwB0AG8AcgBlACAATgB1AG0AYgBlAHIG
+AgAABgP//wYE//8DCv////8IDBAbBgIABwBWAEEAUgBDAEgAQQBSAxIAAAABBAQAAAAAAAB//wET
+Af//AwsAAAAA//8QQQYBAAcAQwBvAHUAbgB0AHIAeQYCAAAGA///BgT//wMK/////wgMEBsGAgAH
+AFYAQQBSAEMASABBAFIDEgAAAAEEBAAAAAAAAH//ARMB//8DCwAAAAD//xBBBgEACQBTAHQAYQB0
+AGUATgBhAG0AZQYCAAAGA///BgT//wMK/////wgMEBsGAgAHAFYAQQBSAEMASABBAFIDEgAAAAEE
+BAAAAAAAAH//ARMB//8DCwAAAAD//xBBBgEACgBDAGkAdAB5AF8AUwB0AGEAdABlBgIAAAYD//8G
+BP//Awr/////CAwQGwYCAAcAVgBBAFIAQwBIAEEAUgMSAAAAAQQEAAAAAAAAf/8BEwH//wMLAAAA
+AP//EEEGAQAHAFoAaQBwAGMAbwBkAGUGAgAABgP//wYE//8DCv////8IDBAvAxL///we//8DCwAA
+AAD//xBBBgEACABEAGkAdgBpAHMAaQBvAG4GAgAABgP//wYE//8DCv////8IDBAbBgIABwBWAEEA
+UgBDAEgAQQBSAxIAAAABBAQAAAAAAAB//wETAf//AwsAAAAA/////wkGAAAAARCCAwoAAAL3AwsA
+AADxAwwAAADIAw0AAADI//8IAxBxAwEAAAALAwIAAAAyCQMAAAImEHQDBgAAAAD//xByBgT/////
+EHMDBQAAAAD//xB1AQcB//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2
+//8QdAMGAAAAAf//EHIGBP////8QcwMFAAAAAP//EHUBBwH//xB4Bgv/////EHcDCv///////xB5
+Bgz/////EHb//xB2//8Qdv//EHb//xB0AwYAAAAC//8QcgYE/////xBzAwUAAAAA//8QdQEHAf//
+EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHQDBgAAAAP//xByBgT/
+////EHMDBQAAAAD//xB1AQcB//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb/
+/xB2//8QdAMGAAAABP//EHIGBP////8QcwMFAAAAAP//EHUBBwH//xB4Bgv/////EHcDCv//////
+/xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0AwYAAAAF//8QcgYE/////xBzAwUAAAAA//8QdQEH
+Af//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHQDBgAAAAb//xBy
+BgT/////EHMDBQAAAAD//xB1AQcB//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//
+EHb//xB2//8QdAMGAAAAB///EHIGBP////8QcwMFAAAAAP//EHUBBwH//xB4Bgv/////EHcDCv//
+/////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0AwYAAAAI//8QcgYE/////xBzAwUAAAAA//8Q
+dQEHAf//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHQDBgAAAAn/
+/xByBgT/////EHMDBQAAAAD//xB1AQcB//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Q
+dv//EHb//xB2//8QdAMGAAAACv//EHIGBP////8QcwMFAAAAAP//EHUBBwH//xB4Bgv/////EHcD
+Cv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0AwYAAAAL//8QcgYE/////xBzAwUAAAAA
+//8QdQEHAf//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xBy
+BgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2
+//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2
+//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP//
+//8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr/////
+//8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////
+EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//
+EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP/
+/xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIG
+BP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb/
+/xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb/
+/xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM////
+/xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv//////
+/xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8Q
+dwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8Q
+eAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///
+EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE
+/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//
+EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//
+EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////
+EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////
+EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3
+Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4
+Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8Q
+dQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/
+////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8Q
+dP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Q
+dv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Q
+dv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8Q
+eQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcD
+Cv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgG
+C/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1
+AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP//
+//8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0
+//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2
+//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2
+//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5
+Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE/////xBz//8QdQEHAP//EHgGC/////8QdwMK
+////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT//xByBgT/////EHP//xB1AQcA//8QeAYL
+/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb//xB2//8QdP//EHIGBP////8Qc///EHUB
+BwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb//xB2//8Qdv//EHb//xB0//8QcgYE////
+/xBz//8QdQEHAP//EHgGC/////8QdwMK////////EHkGDP////8Qdv//EHb//xB2//8Qdv//EHT/
+/xByBgT/////EHP//xB1AQcA//8QeAYL/////xB3Awr///////8QeQYM/////xB2//8Qdv//EHb/
+/xB2//8QdP//EHIGBP////8Qc///EHUBBwD//xB4Bgv/////EHcDCv///////xB5Bgz/////EHb/
+/xB2//8Qdv//EHb///////8=</attribute>
+  <attribute name="rbsFilterProcedure" type="STRING">/shared/SecurityDemo/Logical/Retail4K/RetailNorthData</attribute>
+  <attribute name="rbsFilteredTablePath" type="STRING">/shared/SecurityDemo/Logical/Retail4K</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1543529295946</attribute>
+</metadata>

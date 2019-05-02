@@ -1,0 +1,128 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="Retail_400k_combined" path="/shared/SecurityDemo/Physical/Retail4KDataRBS/Retail_400k_combined_RBS.xlsx/Retail_400k_combined" type="TABLE" subtype="-3916" changeToken="-7082005148133752749" tableType="NONE">
+  <columns>
+    <column name="Department" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Manager" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Salesperson" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Transaction Type" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Sale Amount" nullable="true">
+      <datatype name="DOUBLE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Sale Date" nullable="true">
+      <datatype name="TIMESTAMP" type="DATETIME"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Store Number" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Country" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="StateName" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="City_State" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Zipcode" nullable="true">
+      <datatype name="DOUBLE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="Division" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="32767"/>
+      <attribute name="mandatory" type="BOOLEAN">false</attribute>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+  </columns>
+  <indexes></indexes>
+  <foreignKeys></foreignKeys>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="north" domain="composite" privileges="READ WRITE SELECT UPDATE INSERT DELETE GRANT"/>
+  </security>
+  <attribute name="blankAsNull" type="BOOLEAN">true</attribute>
+  <attribute name="blankColumnType" type="STRING">Varchar</attribute>
+  <attribute name="c:0:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:10:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:11:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:1:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:2:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:3:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:4:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:5:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:6:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:7:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:8:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="c:9:mandatory" type="BOOLEAN">false</attribute>
+  <attribute name="charset" type="STRING">iso-8859-1</attribute>
+  <attribute name="creationDate" type="LONG">1543529246215</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="dataRange" type="STRING">A1</attribute>
+  <attribute name="dataWysiwyg" type="BOOLEAN">true</attribute>
+  <attribute name="firstRowCategory" type="BOOLEAN">true</attribute>
+  <attribute name="hasHeaders" type="BOOLEAN">true</attribute>
+  <attribute name="ignoreInvalidateDataFetch" type="BOOLEAN">true</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1543529246215</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="path" type="STRING">C:\Demos\Data Virtualization\Retail_400k_combined_RBS.xlsx</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1543529246215</attribute>
+  <attribute name="sheetIndex" type="INTEGER">0</attribute>
+  <attribute name="sheetName" type="STRING">Retail_400k_combined</attribute>
+</metadata>

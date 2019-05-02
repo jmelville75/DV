@@ -1,0 +1,58 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="AirlineComputeDB" path="/shared/ComputeDB/Airline/AirlineComputeDB" type="DATA_SOURCE" subtype="RELATIONAL" changeToken="0">
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="united states of america" domain="composite" privileges="READ EXECUTE SELECT"/>
+    <privilege group="north america" domain="composite" privileges="READ EXECUTE SELECT"/>
+  </security>
+  <attribute name="authscheme" type="STRING">PLAIN</attribute>
+  <attribute name="commitOnFetchDone" type="BOOLEAN">true</attribute>
+  <attribute name="connPoolMaxSize" type="INTEGER">100</attribute>
+  <attribute name="connPoolMinSize" type="INTEGER">0</attribute>
+  <attribute name="connPoolTimeout" type="INTEGER">30</attribute>
+  <attribute name="connStaleTimeout" type="INTEGER">60</attribute>
+  <attribute name="creationDate" type="LONG">1556318091551</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="driverName" type="STRING">SparkSQL</attribute>
+  <attribute name="ds.conn_checkout_timeout" type="INTEGER">45</attribute>
+  <attribute name="execTimeout" type="INTEGER">0</attribute>
+  <attribute name="firewalltype" type="STRING">NONE</attribute>
+  <attribute name="httppath" type="STRING">cliservice</attribute>
+  <attribute name="isEnabled" type="BOOLEAN">true</attribute>
+  <attribute name="isPassThrough" type="STRING">Disabled</attribute>
+  <attribute name="jdbcds.comparisons_case_insensitive" type="BOOLEAN">false</attribute>
+  <attribute name="jdbcds.ignore_case_sensitivity_mismatch" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.ignore_trailing_spaces_mismatch" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.no_support_query_timeout" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.trailing_spaces_included_in_comparison" type="BOOLEAN">true</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1556318091551</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="maxrows" type="STRING">-1</attribute>
+  <attribute name="name" type="STRING">AirlineComputeDB</attribute>
+  <attribute name="password" type="PASSWORD_STRING">ENC(I6BlGL0AFDekT1rmoGtbZg==$f3/yAU1FBnu8Ly87o2tSqQ==)</attribute>
+  <attribute name="persistPassword" type="BOOLEAN">true</attribute>
+  <attribute name="port" type="STRING">10001</attribute>
+  <attribute name="protocolversion" type="STRING">8</attribute>
+  <attribute name="proxyauthscheme" type="STRING">BASIC</attribute>
+  <attribute name="proxyautodetect" type="BOOLEAN">true</attribute>
+  <attribute name="proxyport" type="STRING">80</attribute>
+  <attribute name="proxyssltype" type="STRING">AUTO</attribute>
+  <attribute name="querypassthrough" type="BOOLEAN">false</attribute>
+  <attribute name="readonly" type="BOOLEAN">false</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556318091551</attribute>
+  <attribute name="server" type="STRING">spotfiredscdh01.tibco.com</attribute>
+  <attribute name="timeout" type="STRING">60</attribute>
+  <attribute name="transportmode" type="STRING">BINARY</attribute>
+  <attribute name="txnIsolationLevel" type="STRING">Read Committed</attribute>
+  <attribute name="type" type="STRING">cloud_nosql</attribute>
+  <attribute name="useinsertselectsyntax" type="BOOLEAN">false</attribute>
+  <attribute name="user" type="STRING">app</attribute>
+  <attribute name="useshowdatabasesquery" type="BOOLEAN">false</attribute>
+  <attribute name="useshowtablesquery" type="BOOLEAN">false</attribute>
+  <attribute name="usessl" type="BOOLEAN">false</attribute>
+</metadata>

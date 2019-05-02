@@ -1,0 +1,219 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="AirlineDelayPackagedQuery" path="/shared/ComputeDB/Airline/AirlineDelayPackagedQuery" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+  <annotation/>
+  <parameters>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype name="cursor1" type="TABLE" refId="1">
+        <element name="AVGARRDELAY">
+          <datatype name="DOUBLE" extendedName="DOUBLE" subType="DATASOURCE_TYPE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="ABSOLUTEERRORARRDELAY">
+          <datatype name="DOUBLE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="RELATIVEERRORARRDELAY">
+          <datatype name="DOUBLE" extendedName="DOUBLE" subType="DATASOURCE_TYPE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="AVGDEPDELAY">
+          <datatype name="DOUBLE" extendedName="DOUBLE" subType="DATASOURCE_TYPE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="ABSOLUTEERRORDEPDELAY">
+          <datatype name="DOUBLE" extendedName="DOUBLE" subType="DATASOURCE_TYPE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="RELATIVEERRORDEPDELAY">
+          <datatype name="DOUBLE" extendedName="DOUBLE" subType="DATASOURCE_TYPE" type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+        </element>
+        <element name="UNIQUECARRIER">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="YEAR">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="MONTH">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="united states of america" domain="composite" privileges="READ EXECUTE"/>
+    <privilege group="north america" domain="composite" privileges="READ EXECUTE"/>
+  </security>
+  <dependency target="/lib/sources/defaultCacheDataSource" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/proc240218p1" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="cachekey" nullable="false">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="AVGARRDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="ABSOLUTEERRORARRDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="RELATIVEERRORARRDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="AVGDEPDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="ABSOLUTEERRORDEPDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="RELATIVEERRORDEPDELAY">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="UNIQUECARRIER">
+        <datatype type="STRING" maxLength="32672"/>
+      </element>
+      <element name="YEAR_">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="MONTH_">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBForAggregations" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">SELECT avg(ArrDelay) as AvgArrDelay, absolute_error(AvgArrDelay) as absoluteErrorArrDelay, 
+relative_error(AvgArrDelay) as relativeErrorArrDelay, 
+avg(DepDelay) as AvgDepDelay, absolute_error(AvgDepDelay) as absoluteErrorDepDelay, 
+relative_error(AvgDepDelay) as relativeErrorDepDelay,
+UniqueCarrier, year_ as year, month_ as month
+FROM APP.AIRLINE airline 
+GROUP BY UniqueCarrier, year, month with error 0.1;</attribute>
+  <attribute name="cacheClearRule" type="STRING">MANUAL</attribute>
+  <attribute name="cacheConfigured" type="BOOLEAN">true</attribute>
+  <attribute name="cacheDeltaLoader" type="NULL"/>
+  <attribute name="cacheEnabled" type="BOOLEAN">true</attribute>
+  <attribute name="cacheIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheLastTracking" type="STRING">/lib/sources/defaultCacheDataSource/ciscache/cstracking</attribute>
+  <attribute name="cachePostRefreshCallback" type="NULL"/>
+  <attribute name="cachePreRefreshCallback" type="NULL"/>
+  <attribute name="cacheProcedureLimit" type="INTEGER">32</attribute>
+  <attribute name="cachePullBasedIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheRefreshMode" type="STRING">MANUAL</attribute>
+  <attribute name="cacheSnapshotLoader" type="NULL"/>
+  <attribute name="cacheStorageSource" type="STRING">/lib/sources/defaultCacheDataSource</attribute>
+  <attribute name="cacheStorageTargets" type="MAP">
+    <item>
+      <key type="STRING">result</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/proc240218p1</value>
+    </item>
+  </attribute>
+  <attribute name="cacheStorageType" type="STRING">DATA_SOURCE</attribute>
+  <attribute name="creationDate" type="LONG">1556395850941</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="impactLevel" type="INTEGER">0</attribute>
+  <attribute name="impactMessage" type="NULL"/>
+  <attribute name="isSingleSelect" type="STRING">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1556471376834</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBForAggregations</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556395850941</attribute>
+  <trigger>
+    <security>
+      <owner user="admin" domain="composite"/>
+    </security>
+    <dependency target="/lib/resource/RefreshResourceCache" type="PROCEDURE">
+      <datatype name="Tree" type="TREE" refId="1"></datatype>
+    </dependency>
+    <dependency target="/shared/ComputeDB/Airline/AirlineDelayPackagedQuery" type="PROCEDURE">
+      <datatype type="PROCEDURE" refId="1">
+        <element name="result" direction="OUT">
+          <datatype type="TABLE" refId="2">
+            <element name="AVGARRDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="ABSOLUTEERRORARRDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="RELATIVEERRORARRDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="AVGDEPDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="ABSOLUTEERRORDEPDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="RELATIVEERRORDEPDELAY">
+              <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+            </element>
+            <element name="UNIQUECARRIER">
+              <datatype type="STRING" maxLength="32672"/>
+            </element>
+            <element name="YEAR">
+              <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+            </element>
+            <element name="MONTH">
+              <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+            </element>
+          </datatype>
+        </element>
+      </datatype>
+    </dependency>
+    <attribute name="actionProperties" type="MAP">
+      <item>
+        <key type="STRING">PATH</key>
+        <value type="STRING">/lib/resource/RefreshResourceCache</value>
+      </item>
+      <item>
+        <key type="STRING">PARAMETERS</key>
+        <value type="STRING">&apos;/shared/ComputeDB/Airline/AirlineDelayPackagedQuery&apos;,&apos;PROCEDURE&apos;</value>
+      </item>
+    </attribute>
+    <attribute name="actionType" type="STRING">PROCEDURE</attribute>
+    <attribute name="conditionSchedule" type="MAP">
+      <item>
+        <key type="STRING">mode</key>
+        <value type="STRING">CALENDAR</value>
+      </item>
+      <item>
+        <key type="STRING">period</key>
+        <value type="INTEGER">2</value>
+      </item>
+      <item>
+        <key type="STRING">count</key>
+        <value type="INTEGER">1</value>
+      </item>
+      <item>
+        <key type="STRING">startTime</key>
+        <value type="LONG">1556396462000</value>
+      </item>
+      <item>
+        <key type="STRING">interval</key>
+        <value type="INTEGER">0</value>
+      </item>
+      <item>
+        <key type="STRING">endTime</key>
+        <value type="LONG">0</value>
+      </item>
+      <item>
+        <key type="STRING">isCluster</key>
+        <value type="BOOLEAN">false</value>
+      </item>
+    </attribute>
+    <attribute name="conditionType" type="STRING">TIMER</attribute>
+    <attribute name="creationDate" type="LONG">1556396986876</attribute>
+    <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+    <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+    <attribute name="creatorUserName" type="STRING">admin</attribute>
+    <attribute name="enabled" type="BOOLEAN">false</attribute>
+    <attribute name="isChildTrigger" type="BOOLEAN">true</attribute>
+    <attribute name="lastModifiedDate" type="LONG">1556471376462</attribute>
+    <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+    <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+    <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+    <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556396986876</attribute>
+  </trigger>
+</metadata>

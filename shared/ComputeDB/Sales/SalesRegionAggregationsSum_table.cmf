@@ -1,0 +1,777 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="SalesRegionAggregationsSum" path="/shared/ComputeDB/Sales/SalesRegionAggregationsSum" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
+  <columns>
+    <column name="REGION" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="ITEMTYPE" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="SALESCHANNEL" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="ORDERPRIORITY" nullable="true">
+      <datatype type="STRING" maxLength="4000"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitssold" nullable="true">
+      <datatype type="INTEGER"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitssold" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="avg_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitssold" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_unitssold" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="max_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="year_orderdate" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="month_orderdate" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+  </columns>
+  <indexes></indexes>
+  <foreignKeys></foreignKeys>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="united states of america" domain="composite" privileges="READ SELECT GRANT"/>
+    <privilege group="north america" domain="composite" privileges="READ SELECT GRANT"/>
+    <privilege group="regional" domain="composite" privileges="READ WRITE SELECT GRANT"/>
+  </security>
+  <dependency target="/lib/sources/defaultCacheDataSource" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view280126_0" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="max_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="year_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="month_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view280126_1" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="max_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="year_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="month_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view280126_2" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="max_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="max_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="year_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="month_orderdate">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="COUNTRY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERDATE">
+        <datatype type="DATE"/>
+      </element>
+      <element name="ORDERID">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SHIPDATE">
+        <datatype type="DATE"/>
+      </element>
+      <element name="UNITSSOLD">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="UNITPRICE">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="UNITCOST">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALREVENUE">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALCOST">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+      <element name="TOTALPROFIT">
+        <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/Regional" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="alias" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="resource" direction="IN">
+        <datatype type="STRING" maxLength="16384"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="STRING" maxLength="16384"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">SELECT 
+    records.REGION,  
+    records.ITEMTYPE, 
+    records.SALESCHANNEL, 
+    records.ORDERPRIORITY, 
+    sum(records.UNITSSOLD) as sum_unitssold, 
+    sum(records.UNITPRICE) as sum_unitprice, 
+    sum(records.UNITCOST) as sum_unitcost, 
+    sum(records.TOTALREVENUE) as sum_totalrevenue, 
+    sum(records.TOTALCOST) as sum_totalcost, 
+    sum(records.TOTALPROFIT) as sum_totalprofit,
+    avg(records.UNITSSOLD) as avg_unitssold, 
+    avg(records.UNITPRICE) as avg_unitprice, 
+    avg(records.UNITCOST) as avg_unitcost, 
+    avg(records.TOTALREVENUE) as avg_totalrevenue, 
+    avg(records.TOTALCOST) as avg_totalcost, 
+    avg(records.TOTALPROFIT) as avg_totalprofit,
+	min(records.UNITSSOLD) as min_unitssold, 
+    min(records.UNITPRICE) as min_unitprice, 
+    min(records.UNITCOST) as min_unitcost, 
+    min(records.TOTALREVENUE) as min_totalrevenue, 
+    min(records.TOTALCOST) as min_totalcost, 
+    min(records.TOTALPROFIT) as min_totalprofit,
+	max(records.UNITSSOLD) as max_unitssold, 
+    max(records.UNITPRICE) as max_unitprice, 
+    max(records.UNITCOST) as max_unitcost, 
+    max(records.TOTALREVENUE) as max_totalrevenue, 
+    max(records.TOTALCOST) as max_totalcost, 
+    max(records.TOTALPROFIT) as max_totalprofit,
+    year(records.ORDERDATE) as year_orderdate,
+    month(records.ORDERDATE) as month_orderdate
+FROM      
+    /shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records records
+GROUP BY 
+    records.region, records.itemtype, records.saleschannel, records.orderpriority, year(records.ORDERDATE),month(records.ORDERDATE)  
+ORDER BY 
+	records.region, records.itemtype, records.saleschannel, records.orderpriority</attribute>
+  <attribute name="cacheBucketMode" type="STRING">AUTO_GEN</attribute>
+  <attribute name="cacheBucketPrefix" type="STRING">view280126_</attribute>
+  <attribute name="cacheBucketSchema" type="STRING">ciscache</attribute>
+  <attribute name="cacheClearRule" type="STRING">MANUAL</attribute>
+  <attribute name="cacheConfigured" type="BOOLEAN">true</attribute>
+  <attribute name="cacheDeltaLoader" type="NULL"/>
+  <attribute name="cacheDropCreateIdx" type="BOOLEAN">true</attribute>
+  <attribute name="cacheEnabled" type="BOOLEAN">true</attribute>
+  <attribute name="cacheIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheLastTracking" type="STRING">/lib/sources/defaultCacheDataSource/ciscache/cstracking</attribute>
+  <attribute name="cacheNumBuckets" type="INTEGER">3</attribute>
+  <attribute name="cachePostRefreshCallback" type="NULL"/>
+  <attribute name="cachePreRefreshCallback" type="NULL"/>
+  <attribute name="cachePullBasedIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheRefreshMode" type="STRING">MANUAL</attribute>
+  <attribute name="cacheSnapshotLoader" type="NULL"/>
+  <attribute name="cacheStorageSource" type="STRING">/lib/sources/defaultCacheDataSource</attribute>
+  <attribute name="cacheStorageTargets" type="MAP">
+    <item>
+      <key type="STRING">result</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view280126_0</value>
+    </item>
+    <item>
+      <key type="STRING">result1</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view280126_1</value>
+    </item>
+    <item>
+      <key type="STRING">result2</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view280126_2</value>
+    </item>
+  </attribute>
+  <attribute name="cacheStorageType" type="STRING">DATA_SOURCE_OTPS</attribute>
+  <attribute name="creationDate" type="LONG">1556744356905</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="impactLevel" type="INTEGER">0</attribute>
+  <attribute name="impactMessage" type="NULL"/>
+  <attribute name="lastModifiedDate" type="LONG">1556811435234</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="rbsFilterProcedure" type="STRING">/shared/Regional</attribute>
+  <attribute name="rbsFilteredTablePath" type="STRING">/shared/ComputeDB/Sales/SalesRegionAggregationsSum</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556744356905</attribute>
+  <trigger>
+    <security>
+      <owner user="admin" domain="composite"/>
+    </security>
+    <dependency target="/lib/resource/RefreshResourceCache" type="PROCEDURE">
+      <datatype name="Tree" type="TREE" refId="1"></datatype>
+    </dependency>
+    <dependency target="/shared/ComputeDB/Sales/SalesRegionAggregationsSum" type="TABLE">
+      <datatype type="TABLE" refId="1">
+        <element name="REGION">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="ITEMTYPE">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="SALESCHANNEL">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="ORDERPRIORITY">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="sum_unitssold">
+          <datatype type="INTEGER"/>
+        </element>
+        <element name="sum_unitprice">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_unitcost">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalcost">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalprofit">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_unitssold">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="avg_unitprice">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_unitcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalprofit">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="min_unitssold">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="min_unitprice">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="min_unitcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="min_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="min_totalcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="min_totalprofit">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="max_unitssold">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="max_unitprice">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="max_unitcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="max_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="max_totalcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="max_totalprofit">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="year_orderdate">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="month_orderdate">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+      </datatype>
+    </dependency>
+    <attribute name="actionProperties" type="MAP">
+      <item>
+        <key type="STRING">PATH</key>
+        <value type="STRING">/lib/resource/RefreshResourceCache</value>
+      </item>
+      <item>
+        <key type="STRING">PARAMETERS</key>
+        <value type="STRING">&apos;/shared/ComputeDB/Sales/SalesRegionAggregationsSum&apos;,&apos;TABLE&apos;</value>
+      </item>
+    </attribute>
+    <attribute name="actionType" type="STRING">PROCEDURE</attribute>
+    <attribute name="conditionSchedule" type="MAP">
+      <item>
+        <key type="STRING">mode</key>
+        <value type="STRING">CALENDAR</value>
+      </item>
+      <item>
+        <key type="STRING">period</key>
+        <value type="INTEGER">2</value>
+      </item>
+      <item>
+        <key type="STRING">count</key>
+        <value type="INTEGER">1</value>
+      </item>
+      <item>
+        <key type="STRING">startTime</key>
+        <value type="LONG">1556744363000</value>
+      </item>
+      <item>
+        <key type="STRING">interval</key>
+        <value type="INTEGER">0</value>
+      </item>
+      <item>
+        <key type="STRING">endTime</key>
+        <value type="LONG">0</value>
+      </item>
+      <item>
+        <key type="STRING">isCluster</key>
+        <value type="BOOLEAN">false</value>
+      </item>
+    </attribute>
+    <attribute name="conditionType" type="STRING">TIMER</attribute>
+    <attribute name="creationDate" type="LONG">1556746260770</attribute>
+    <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+    <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+    <attribute name="creatorUserName" type="STRING">admin</attribute>
+    <attribute name="enabled" type="BOOLEAN">false</attribute>
+    <attribute name="isChildTrigger" type="BOOLEAN">true</attribute>
+    <attribute name="lastModifiedDate" type="LONG">1556811435234</attribute>
+    <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+    <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+    <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+    <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556746260770</attribute>
+  </trigger>
+</metadata>

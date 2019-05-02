@@ -1,0 +1,1630 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="introspectResources" path="/shared/ASAssets/Utilities/repository/introspectResources" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <annotation>introspectResources:
+
+	This script is used to provide a consistent and generic interface for introspecting Relational datasources,
+		CSV files and Excel Non-ODBC files.
+	It creates a necessary transaction around introspectResourcesTask and introspectResourcesResult.
+	Since the output variable &quot;introspectionResult&quot; is a string result, the invoker of this procedure
+	may also invoke &quot;/shared/ASAssets/Utilities/repository/introspectResourcesResultCursor&quot; to extract the
+	results into a cursor format.
+
+	Input:
+		IN  dsPath 						/lib/resource/ResourceDefs.ResourcePath,	-- mandatory.   Full path to datasource
+		IN  catalogName 				VARCHAR,		-- optional (null) - 
+														--		Relational Database - database catalog Name if applicable.
+														--		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - leave this null as it is not applicable
+		IN  schemaNames					LONGVARCHAR,	-- optional (null) -  NULL=no specified schema list OR one or more comma separated schemas to introspect.
+														--	Note: If a list of schema names are provided and a list of table names are provided the list of table names
+														--	  will be applied in total to each schema name.  It is not currently in scope to correlate a list of tables to a list of schemas. 
+														-- 		Relational Database - schema name or list of schema names.
+														-- 		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - the excel file name or list of file names.
+		IN  schemaTablePatterns			VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all tables starting with D, E and F or
+														--		a bracketed correlated and comma-separated list of table patterns associated with each schema:
+														--			schemaNames=		SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			schemaTablePatterns=[M%]   [P%]		- The 1st set of bracketed table patterns goes with the 1st schema.  
+														--												- The 2nd bracketed set of table patterns goes with the 2nd schema 
+		IN  tableNames 					LONGVARCHAR,	-- optional.  NULL=no specified table list OR one or more comma separated table namess to introspect or	
+														--		a bracketed correlated and comma-separated list of table names associated with each schema:
+														--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			tableNames=		[T1,T2][T3,T4]	- The 1st set of bracketed tables goes with the 1st schema.  
+														--											- The 2nd bracketed set of tables goes with the 2nd schema
+														--		Relational Database - When NULL, all tables for the schema are introspected, otherwise the list of tables provided are introspected.
+														--		CSV - When NULL, all CSV files are introspected, otherwise the list of files provided are introspected.
+														--		Excel Non-ODBC - When NULL, all sheets are introspected, otherwise the list of sheets provided are introspected.
+														--		Table names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+		IN  schemaProcedurePatterns		VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all new procedure patterns starting with D, E and F or
+														--		a bracketed correlated and comma-separated list of procedure patterns associated with each schema:
+														--			schemaNames=			SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			schemaProcedurePatterns=[N%]   [O%]		- The 1st set of bracketed procedure patterns goes with the 1st schema.  
+														--													- The 2nd bracketed set of procedure patterns goes with the 2nd schema 
+		IN  procedureNames 				LONGVARCHAR,	-- optional. NULL=no specified procedure list OR 1 or more comma separated procedure names to introspect or 
+														--		a bracketed correlated and comma-separated list of procedure names associated with each schema:
+														--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			procedureNames=	[P1][P2,P3,P4]	- The 1st set of bracketed procedures goes with the 1st schema.  
+														--											- The 2nd bracketed set of procedures goes with the 2nd schema
+														-- 		Relational Database - When NULL, all procedures are introspected, otherwise the list of procedures provided are introspected.
+														-- 		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - leave this null as it is not applicable
+														--		Procedure names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+		IN	separator					VARCHAR,		-- Default=,  The separator used to separate lists for the input parameters: tableNames, schemaTablePatterns, schemaProcedurePatterns and procedureNames.
+														--		The separator value should not exist within the tableNames or procedureNames variable.
+		IN  inDebug						CHAR(1),		-- Y=debug on, N=debug off.
+
+	Output:
+		OUT errStatus 					VARCHAR,		-- SUCCESS or FAILED
+		OUT errMessage 					LONGVARCHAR,	-- Error message if errStatus=FAILED, otherwise null
+		OUT introspectionResult 		LONGVARCHAR,	-- A line (CHR(10)) delimited string of results.  Use introspectResourcesResultCursor() to  return a cursor.
+		OUT dataSourceType				VARCHAR,		-- The type of data source that was introspected.
+		OUT dataSourceSubtype			VARCHAR			-- The subtype of data source that was introspected.
+
+	Evaluate the results from IntrospectResourcesResult()
+			Values: CURSOR (
+                        status                  VARCHAR(32768),
+                        introspectorVersion     INTEGER,
+                        startTime               TIMESTAMP,
+                        endTime                 TIMESTAMP,
+                        addedCount              INTEGER,
+                        removedCount            INTEGER,
+                        updatedCount            INTEGER,
+                        skippedCount            INTEGER,
+                        totalCompletedCount     INTEGER,
+                        toBeAddedCount          INTEGER,
+                        toBeRemovedCount        INTEGER,
+                        toBeUpdatedCount        INTEGER,
+                        totalToBeCompletedCount INTEGER,
+                        warningCount            INTEGER,
+                        errorCount              INTEGER,
+                        &quot;path&quot;                  VARCHAR(4096),
+                        &quot;type&quot;                  VARCHAR(40),
+                        subtype                 VARCHAR(40),
+                        &quot;action&quot;                VARCHAR(32768),
+                        durationMs              INTEGER,
+                        entryStatus             VARCHAR(32768),
+                        code                    VARCHAR(32768),
+                        name                    VARCHAR(32768),
+                        message                 LONGVARCHAR,
+                        detail                  VARCHAR(32768),
+                        severity                VARCHAR(32768),
+                    )
+
+	Modified Date:	Modified By:		CIS Version:	Reason:
+	01/20/2014		Manny Bhatia		6.2.5			Created new
+	09/25/2014		Mike Tinius			6.2.6			Modified to make cache framework generic. 
+	02/12/2015		Mike Tinius			6.2.6			Modified to make a generic introspection utility.
+	02/20/2018		Mike Tinius			7.0.5			Adapted and modified for usage with the Utilities as a generic procedure.
+
+	(c) 2017 TIBCO Software Inc.  All rights reserved.
+	
+	Except as specified below, this software is licensed pursuant to the Eclipse Public License v. 1.0.
+	The details can be found in the file LICENSE.
+	
+	The following proprietary files are included as a convenience, and may not be used except pursuant
+	to valid license to Composite Information Server or TIBCO® Data Virtualization Server:
+	csadmin-XXXX.jar, csarchive-XXXX.jar, csbase-XXXX.jar, csclient-XXXX.jar, cscommon-XXXX.jar,
+	csext-XXXX.jar, csjdbc-XXXX.jar, csserverutil-XXXX.jar, csserver-XXXX.jar, cswebapi-XXXX.jar,
+	and customproc-XXXX.jar (where -XXXX is an optional version number).  Any included third party files
+	are licensed under the terms contained in their own accompanying LICENSE files, generally named .LICENSE.txt.
+	
+	This software is licensed AS-IS. Support for this software is not covered by standard maintenance agreements with TIBCO.
+	If you would like to obtain assistance with this software, such assistance may be obtained through a separate paid consulting
+	agreement with TIBCO.</annotation>
+  <parameters>
+    <parameter name="dsPath" direction="IN" nullable="true">
+      <datatype name="ResourcePath" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+    </parameter>
+    <parameter name="catalogName" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="schemaNames" direction="IN" nullable="true">
+      <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+    </parameter>
+    <parameter name="schemaTablePatterns" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="4096"/>
+    </parameter>
+    <parameter name="tableNames" direction="IN" nullable="true">
+      <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+    </parameter>
+    <parameter name="schemaProcedurePatterns" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="4096"/>
+    </parameter>
+    <parameter name="procedureNames" direction="IN" nullable="true">
+      <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+    </parameter>
+    <parameter name="separator" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="inDebug" direction="IN" nullable="true">
+      <datatype name="CHAR" type="STRING" minLength="1" maxLength="1"/>
+    </parameter>
+    <parameter name="errStatus" direction="OUT" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="errMessage" direction="OUT" nullable="true">
+      <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+    </parameter>
+    <parameter name="introspectionResult" direction="OUT" nullable="true">
+      <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+    </parameter>
+    <parameter name="dataSourceType" direction="OUT" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="dataSourceSubtype" direction="OUT" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="all" domain="composite" privileges="READ EXECUTE"/>
+  </security>
+  <dependency target="/lib/debug/Print" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToPrint" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/resource/ResourceDefs" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/resource/ResourceExists" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="path" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="type" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+      </element>
+      <element name="version" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceVersion" type="STRING" maxLength="255"/>
+      </element>
+      <element name="exists" direction="OUT">
+        <datatype type="BOOLEAN"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/copyResourcesPrivileges" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="updatePrivilegesRecursively" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="copyPrivilegeMode" direction="IN">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="copyPrivilegeEntry" direction="IN">
+        <datatype type="ARRAY" maxLength="0">
+          <itemDatatype>
+            <datatype name="copyPrivilegeEntryType" type="TREE" refId="2">
+              <element name="srcResource">
+                <datatype name="srcResource" type="ARRAY" maxLength="0">
+                  <itemDatatype>
+                    <datatype name="resourceType" type="TREE" refId="3">
+                      <element name="path">
+                        <datatype name="VARCHAR" referenceDefinitionSet="/shared/ASAssets/Utilities/TypeDefinitions" referenceType="pathType" type="STRING" maxLength="1000"/>
+                      </element>
+                      <element name="type">
+                        <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+                      </element>
+                    </datatype>
+                  </itemDatatype>
+                </datatype>
+              </element>
+              <element name="dstResource">
+                <datatype name="dstResource" type="ARRAY" maxLength="0">
+                  <itemDatatype>
+                    <reference refId="3"/>
+                  </itemDatatype>
+                </datatype>
+              </element>
+            </datatype>
+          </itemDatatype>
+        </datatype>
+      </element>
+      <element name="success" direction="OUT">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="faultResponse" direction="OUT">
+        <datatype name="XML" referenceType="XML" type="XML" contentConstraint="SEQUENCE" schemaConstraint="ANY" componentType="TYPE" componentName="XML">
+          <schemaDatatype>
+            <datatype name="XML" type="TREE" refId="4"></datatype>
+          </schemaDatatype>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/definitions/RepositoryDefinitions" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/getBasicResourceCursor" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="fullResourcePath" direction="IN">
+        <datatype referenceDefinitionSet="/shared/ASAssets/Utilities/TypeDefinitions" referenceType="pathType" type="STRING" maxLength="1000"/>
+      </element>
+      <element name="resourceType" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="resourceCursor" direction="OUT">
+        <datatype type="TABLE" refId="2">
+          <element name="name">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="path">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="type">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="subtype">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="enabled">
+            <datatype type="INTEGER" minValue="0" maxValue="1"/>
+          </element>
+          <element name="id">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="changeid">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="version">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="introspectState">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="ownerDomain">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="ownerName">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="impactLevel">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="impactMessage">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="annotation">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+          <element name="explicitlyDesigned">
+            <datatype type="INTEGER" minValue="0" maxValue="1"/>
+          </element>
+          <element name="tableType">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+          <element name="sqlText">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+          <element name="scriptText">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+          <element name="childCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="dataSourceType">
+            <datatype type="STRING" maxLength="255"/>
+          </element>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/lowerLevelProcedures/introspectResourcesResult" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="dsPath" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="taskId" direction="IN">
+        <datatype type="STRING" maxLength="2147483647"/>
+      </element>
+      <element name="block" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="pageSize" direction="IN">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="pageStart" direction="IN">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="TABLE" refId="2">
+          <element name="status">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="introspectorVersion">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="startTime">
+            <datatype type="DATETIME"/>
+          </element>
+          <element name="endTime">
+            <datatype type="DATETIME"/>
+          </element>
+          <element name="addedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="removedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="updatedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="skippedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="totalCompletedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="toBeAddedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="toBeRemovedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="toBeUpdatedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="totalToBeCompletedCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="warningCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="errorCount">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="path">
+            <datatype type="STRING" maxLength="4096"/>
+          </element>
+          <element name="type">
+            <datatype type="STRING" maxLength="40"/>
+          </element>
+          <element name="subtype">
+            <datatype type="STRING" maxLength="40"/>
+          </element>
+          <element name="action">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="durationMs">
+            <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+          </element>
+          <element name="entryStatus">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="code">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="name">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="message">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+          <element name="detail">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+          <element name="severity">
+            <datatype type="STRING" maxLength="32768"/>
+          </element>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/repository/lowerLevelProcedures/introspectResourcesTask" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="dsPath" direction="IN">
+        <datatype referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+      </element>
+      <element name="updateAllIntrospectedResources" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="failFast" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="commitOnFailure" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="autoRollback" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="scanForNewResourcesToAutoAdd" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="runInBackgroundTransaction" direction="IN">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+      <element name="entries" direction="IN">
+        <datatype type="ARRAY" maxLength="0">
+          <itemDatatype>
+            <datatype name="IntrospectionPlanEntry" type="TREE" refId="2">
+              <element name="path">
+                <datatype name="ResourcePath" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourcePath" type="STRING" maxLength="4096"/>
+              </element>
+              <element name="type">
+                <datatype name="ResourceType" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+              </element>
+              <element name="subtype">
+                <datatype name="ResourceType" referenceDefinitionSet="/lib/resource/ResourceDefs" referenceType="ResourceType" type="STRING" maxLength="40"/>
+              </element>
+              <element name="action">
+                <datatype name="VARCHAR" type="STRING" maxLength="40"/>
+              </element>
+              <element name="attributes">
+                <datatype name="AttributesVectorType" type="ARRAY" maxLength="0">
+                  <itemDatatype>
+                    <datatype name="Attribute" type="TREE" refId="3">
+                      <element name="name">
+                        <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+                      </element>
+                      <element name="type">
+                        <datatype name="VARCHAR" type="STRING" maxLength="40"/>
+                      </element>
+                      <element name="value">
+                        <datatype name="LONGVARCHAR" type="STRING" maxLength="2147483647"/>
+                      </element>
+                    </datatype>
+                  </itemDatatype>
+                </datatype>
+              </element>
+            </datatype>
+          </itemDatatype>
+        </datatype>
+      </element>
+      <element name="dsAttributes" direction="IN">
+        <datatype type="ARRAY" maxLength="0">
+          <itemDatatype>
+            <reference refId="3"/>
+          </itemDatatype>
+        </datatype>
+      </element>
+      <element name="taskId" direction="OUT">
+        <datatype type="STRING" maxLength="2147483647"/>
+      </element>
+      <element name="totalResults" direction="OUT">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="completed" direction="OUT">
+        <datatype type="INTEGER" minValue="0" maxValue="1"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/ASAssets/Utilities/string/extractDelimitedText" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="inputString" direction="IN">
+        <datatype type="STRING" maxLength="2147483647"/>
+      </element>
+      <element name="delimiter" direction="IN">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="occurrence" direction="IN">
+        <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      </element>
+      <element name="reverseInputText" direction="IN">
+        <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      </element>
+      <element name="reverseOutput" direction="IN">
+        <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      </element>
+      <element name="trimText" direction="IN">
+        <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      </element>
+      <element name="includeDelimiter" direction="IN">
+        <datatype type="INTEGER" minValue="-32768" maxValue="32767"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype type="TABLE" refId="2">
+          <element name="object">
+            <datatype type="STRING" maxLength="2147483647"/>
+          </element>
+        </datatype>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="Script" type="STRING">/* 
+	introspectResources:
+
+	This script is used to provide a consistent and generic interface for introspecting Relational datasources,
+		CSV files and Excel Non-ODBC files.
+	It creates a necessary transaction around introspectResourcesTask and introspectResourcesResult.
+	Since the output variable &quot;introspectionResult&quot; is a string result, the invoker of this procedure
+	may also invoke &quot;/shared/ASAssets/Utilities/repository/introspectResourcesResultCursor&quot; to extract the
+	results into a cursor format.
+
+	Input:
+		IN  dsPath 						/lib/resource/ResourceDefs.ResourcePath,	-- mandatory.   Full path to datasource
+		IN  catalogName 				VARCHAR,		-- optional (null) - 
+														--		Relational Database - database catalog Name if applicable.
+														--		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - leave this null as it is not applicable
+		IN  schemaNames					LONGVARCHAR,	-- optional (null) -  NULL=no specified schema list OR one or more comma separated schemas to introspect.
+														--	Note: If a list of schema names are provided and a list of table names are provided the list of table names
+														--	  will be applied in total to each schema name.  It is not currently in scope to correlate a list of tables to a list of schemas. 
+														-- 		Relational Database - schema name or list of schema names.
+														-- 		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - the excel file name or list of file names.
+		IN  schemaTablePatterns			VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all tables starting with D, E and F or
+														--		a bracketed correlated and comma-separated list of table patterns associated with each schema:
+														--			schemaNames=		SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			schemaTablePatterns=[M%]   [P%]		- The 1st set of bracketed table patterns goes with the 1st schema.  
+														--												- The 2nd bracketed set of table patterns goes with the 2nd schema 
+		IN  tableNames 					LONGVARCHAR,	-- optional.  NULL=no specified table list OR one or more comma separated table namess to introspect or	
+														--		a bracketed correlated and comma-separated list of table names associated with each schema:
+														--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			tableNames=		[T1,T2][T3,T4]	- The 1st set of bracketed tables goes with the 1st schema.  
+														--											- The 2nd bracketed set of tables goes with the 2nd schema
+														--		Relational Database - When NULL, all tables for the schema are introspected, otherwise the list of tables provided are introspected.
+														--		CSV - When NULL, all CSV files are introspected, otherwise the list of files provided are introspected.
+														--		Excel Non-ODBC - When NULL, all sheets are introspected, otherwise the list of sheets provided are introspected.
+														--		Table names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+		IN  schemaProcedurePatterns		VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all new procedure patterns starting with D, E and F or
+														--		a bracketed correlated and comma-separated list of procedure patterns associated with each schema:
+														--			schemaNames=			SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			schemaProcedurePatterns=[N%]   [O%]		- The 1st set of bracketed procedure patterns goes with the 1st schema.  
+														--													- The 2nd bracketed set of procedure patterns goes with the 2nd schema 
+		IN  procedureNames 				LONGVARCHAR,	-- optional. NULL=no specified procedure list OR 1 or more comma separated procedure names to introspect or 
+														--		a bracketed correlated and comma-separated list of procedure names associated with each schema:
+														--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+														--			procedureNames=	[P1][P2,P3,P4]	- The 1st set of bracketed procedures goes with the 1st schema.  
+														--											- The 2nd bracketed set of procedures goes with the 2nd schema
+														-- 		Relational Database - When NULL, all procedures are introspected, otherwise the list of procedures provided are introspected.
+														-- 		CSV - leave this null as it is not applicable
+														--		Excel Non-ODBC - leave this null as it is not applicable
+														--		Procedure names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+		IN	separator					VARCHAR,		-- Default=,  The separator used to separate lists for the input parameters: tableNames, schemaTablePatterns, schemaProcedurePatterns and procedureNames.
+														--		The separator value should not exist within the tableNames or procedureNames variable.
+		IN  inDebug						CHAR(1),		-- Y=debug on, N=debug off.
+
+	Output:
+		OUT errStatus 					VARCHAR,		-- SUCCESS or FAILED
+		OUT errMessage 					LONGVARCHAR,	-- Error message if errStatus=FAILED, otherwise null
+		OUT introspectionResult 		LONGVARCHAR,	-- A line (CHR(10)) delimited string of results.  Use introspectResourcesResultCursor() to  return a cursor.
+		OUT dataSourceType				VARCHAR,		-- The type of data source that was introspected.
+		OUT dataSourceSubtype			VARCHAR			-- The subtype of data source that was introspected.
+
+	Evaluate the results from IntrospectResourcesResult()
+			Values: CURSOR (
+                        status                  VARCHAR(32768),
+                        introspectorVersion     INTEGER,
+                        startTime               TIMESTAMP,
+                        endTime                 TIMESTAMP,
+                        addedCount              INTEGER,
+                        removedCount            INTEGER,
+                        updatedCount            INTEGER,
+                        skippedCount            INTEGER,
+                        totalCompletedCount     INTEGER,
+                        toBeAddedCount          INTEGER,
+                        toBeRemovedCount        INTEGER,
+                        toBeUpdatedCount        INTEGER,
+                        totalToBeCompletedCount INTEGER,
+                        warningCount            INTEGER,
+                        errorCount              INTEGER,
+                        &quot;path&quot;                  VARCHAR(4096),
+                        &quot;type&quot;                  VARCHAR(40),
+                        subtype                 VARCHAR(40),
+                        &quot;action&quot;                VARCHAR(32768),
+                        durationMs              INTEGER,
+                        entryStatus             VARCHAR(32768),
+                        code                    VARCHAR(32768),
+                        name                    VARCHAR(32768),
+                        message                 LONGVARCHAR,
+                        detail                  VARCHAR(32768),
+                        severity                VARCHAR(32768),
+                    )
+
+	Modified Date:	Modified By:		CIS Version:	Reason:
+	01/20/2014		Manny Bhatia		6.2.5			Created new
+	09/25/2014		Mike Tinius			6.2.6			Modified to make cache framework generic. 
+	02/12/2015		Mike Tinius			6.2.6			Modified to make a generic introspection utility.
+	02/20/2018		Mike Tinius			7.0.5			Adapted and modified for usage with the Utilities as a generic procedure.
+
+	(c) 2017 TIBCO Software Inc.  All rights reserved.
+	
+	Except as specified below, this software is licensed pursuant to the Eclipse Public License v. 1.0.
+	The details can be found in the file LICENSE.
+	
+	The following proprietary files are included as a convenience, and may not be used except pursuant
+	to valid license to Composite Information Server or TIBCO® Data Virtualization Server:
+	csadmin-XXXX.jar, csarchive-XXXX.jar, csbase-XXXX.jar, csclient-XXXX.jar, cscommon-XXXX.jar,
+	csext-XXXX.jar, csjdbc-XXXX.jar, csserverutil-XXXX.jar, csserver-XXXX.jar, cswebapi-XXXX.jar,
+	and customproc-XXXX.jar (where -XXXX is an optional version number).  Any included third party files
+	are licensed under the terms contained in their own accompanying LICENSE files, generally named .LICENSE.txt.
+	
+	This software is licensed AS-IS. Support for this software is not covered by standard maintenance agreements with TIBCO.
+	If you would like to obtain assistance with this software, such assistance may be obtained through a separate paid consulting
+	agreement with TIBCO.
+
+*/
+PROCEDURE introspectResources(
+	IN  dsPath 						/lib/resource/ResourceDefs.ResourcePath,	-- mandatory.   Full path to datasource
+	IN  catalogName 				VARCHAR,		-- optional (null) - 
+													--		Relational Database - database catalog Name if applicable.
+													--		CSV - leave this null as it is not applicable
+													--		Excel Non-ODBC - leave this null as it is not applicable
+	IN  schemaNames					LONGVARCHAR,	-- optional (null) -  NULL=no specified schema list OR one or more comma separated schemas to introspect.
+													--	Note: If a list of schema names are provided and a list of table names are provided the list of table names
+													--	  will be applied in total to each schema name.  It is not currently in scope to correlate a list of tables to a list of schemas. 
+													-- 		Relational Database - schema name or list of schema names.
+													-- 		CSV - leave this null as it is not applicable
+													--		Excel Non-ODBC - the excel file name or list of file names.
+	IN  schemaTablePatterns			VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all tables starting with D, E and F or
+													--		a bracketed correlated and comma-separated list of table patterns associated with each schema:
+													--			schemaNames=		SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+													--			schemaTablePatterns=[M%]   [P%]		- The 1st set of bracketed table patterns goes with the 1st schema.  
+													--												- The 2nd bracketed set of table patterns goes with the 2nd schema 
+	IN  tableNames 					LONGVARCHAR,	-- optional.  NULL=no specified table list OR one or more comma separated table namess to introspect or	
+													--		a bracketed correlated and comma-separated list of table names associated with each schema:
+													--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+													--			tableNames=		[T1,T2][T3,T4]	- The 1st set of bracketed tables goes with the 1st schema.  
+													--											- The 2nd bracketed set of tables goes with the 2nd schema
+													--		Relational Database - When NULL, all tables for the schema are introspected, otherwise the list of tables provided are introspected.
+													--		CSV - When NULL, all CSV files are introspected, otherwise the list of files provided are introspected.
+													--		Excel Non-ODBC - When NULL, all sheets are introspected, otherwise the list of sheets provided are introspected.
+													--		Table names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+	IN  schemaProcedurePatterns		VARCHAR(4096),	-- comma separated list of patterns such as D%, E%, F%.    Introspect all new procedure patterns starting with D, E and F or
+													--		a bracketed correlated and comma-separated list of procedure patterns associated with each schema:
+													--			schemaNames=			SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+													--			schemaProcedurePatterns=[N%]   [O%]		- The 1st set of bracketed procedure patterns goes with the 1st schema.  
+													--													- The 2nd bracketed set of procedure patterns goes with the 2nd schema 
+	IN  procedureNames 				LONGVARCHAR,	-- optional. NULL=no specified procedure list OR 1 or more comma separated procedure names to introspect or 
+													--		a bracketed correlated and comma-separated list of procedure names associated with each schema:
+													--			schemaNames=	SCHEMA1,SCHEMA2	- This is the list of comma-separated schemas 
+													--			procedureNames=	[P1][P2,P3,P4]	- The 1st set of bracketed procedures goes with the 1st schema.  
+													--											- The 2nd bracketed set of procedures goes with the 2nd schema
+													-- 		Relational Database - When NULL, all procedures are introspected, otherwise the list of procedures provided are introspected.
+													-- 		CSV - leave this null as it is not applicable
+													--		Excel Non-ODBC - leave this null as it is not applicable
+													--		Procedure names with spaces may be use double quotes to enclose the name but it is not necessary as spaces are preserved.
+	IN	separator					VARCHAR,		-- -- Default=,  The separator used to separate lists for the input parameters: tableNames, schemaTablePatterns, schemaProcedurePatterns and procedureNames.
+													--		The separator value should not exist within the tableNames or procedureNames variable.
+	IN  inDebug						CHAR(1),		-- Y=debug on, N=debug off.
+	OUT errStatus 					VARCHAR,		-- SUCCESS or FAILED
+	OUT errMessage 					LONGVARCHAR,	-- Error message if errStatus=FAILED, otherwise null
+	OUT introspectionResult 		LONGVARCHAR,	-- A line (CHR(10)) delimited string of results.  Use introspectResourcesResultCursor() to  return a cursor.
+	OUT dataSourceType				VARCHAR,		-- The type of data source that was introspected.
+	OUT dataSourceSubtype			VARCHAR			-- The subtype of data source that was introspected.
+)
+BEGIN
+	DECLARE moduleName 						VARCHAR(255) DEFAULT &apos;introspectResources&apos;;-- name of SQL Script
+	DECLARE debug							CHAR(1) DEFAULT NVL(UPPER(inDebug),&apos;N&apos;);
+	DECLARE debug2							CHAR(2) DEFAULT &apos;N&apos;; -- 2nd level of debug
+	DECLARE sep								VARCHAR DEFAULT NVL(separator,&apos;,&apos;);
+	DECLARE message							LONGVARCHAR;
+	DECLARE resultMessage					LONGVARCHAR;
+	DECLARE taskId 							VARCHAR(3000000000);
+	DECLARE totalResults 					INTEGER;
+	DECLARE isCompleted 					BIT;
+	DECLARE TYPE Attribute ROW(name VARCHAR(255), &quot;type&quot; VARCHAR(40), &quot;value&quot; LONGVARCHAR);
+	DECLARE TYPE AttributesVectorType VECTOR(Attribute);
+	DECLARE TYPE IntrospectionPlanEntry ROW (
+			&quot;path&quot; 					/lib/resource/ResourceDefs.ResourcePath,
+			&quot;type&quot; 					/lib/resource/ResourceDefs.ResourceType,	
+			&quot;subtype&quot; 				/lib/resource/ResourceDefs.ResourceType,
+			&quot;action&quot;	 			VARCHAR(40),
+			attributes 				AttributesVectorType);
+
+	DECLARE TYPE IntrospectionPlanVectorType VECTOR(IntrospectionPlanEntry);	
+    DECLARE vDSAttributes  					AttributesVectorType;
+    DECLARE vDSAttributesString				LONGVARCHAR 	DEFAULT &apos;&apos;;
+    DECLARE vSchemaAttributes  				AttributesVectorType;
+	DECLARE vSchemaAttributesString			LONGVARCHAR		DEFAULT &apos;&apos;;
+	DECLARE vTablesEntities 				IntrospectionPlanVectorType;
+	DECLARE vTablesEntitiesString			LONGVARCHAR 	DEFAULT &apos;&apos;;
+	DECLARE introspectionEntry 				LONGVARCHAR;
+	DECLARE schemaName						VARCHAR;
+	DECLARE tableName						VARCHAR;
+	DECLARE schemaTableNameList				LONGVARCHAR;
+	DECLARE schemaTablePatternList			LONGVARCHAR;
+	DECLARE schemaProcedureNameList			LONGVARCHAR;
+	DECLARE schemaProcedurePatternList		LONGVARCHAR;
+	DECLARE procedureName					VARCHAR;
+	DECLARE currentPath						VARCHAR(1024);
+	DECLARE previousPath					VARCHAR(1024)	DEFAULT &apos;&apos;;
+	DECLARE currentSubtype					VARCHAR;
+	DECLARE numSchemas						INTEGER;
+	DECLARE i, j							INTEGER;
+	DECLARE object							VARCHAR(1024);
+	DECLARE objectList1						LONGVARCHAR;
+
+	-- Variables for introspection of data source
+	DECLARE schemaEntryPath					VARCHAR 		DEFAULT &apos;&apos;;
+	DECLARE catalogEntryType				VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE catalogEntrySubtype				VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE schemaEntryType					VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE schemaEntrySubtype				VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE tableEntryPath					VARCHAR 		DEFAULT &apos;&apos;;
+	DECLARE tableEntryType					VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE tableEntrySubtype				VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE procEntryType					VARCHAR			DEFAULT &apos;&apos;;
+	DECLARE procEntrySubtype				VARCHAR			DEFAULT &apos;&apos;;
+    DECLARE updateAllIntrospectedResources	BIT 			DEFAULT 0;
+    DECLARE failFast						BIT 			DEFAULT 1;
+    DECLARE commitOnFailure					BIT 			DEFAULT 1;
+    DECLARE autoRollback					BIT 			DEFAULT 0;
+    DECLARE scanForNewResourcesToAutoAdd	BIT 			DEFAULT 0;
+    DECLARE runInBackgroundTransaction		BIT 			DEFAULT 0;
+    DECLARE block     						BIT 			DEFAULT 1;
+    DECLARE pageSize  						INTEGER 		DEFAULT 1;
+    DECLARE pageStart 						INTEGER 		DEFAULT 1;
+
+	-- Variables for applying privileges
+	DECLARE dsPathExists					BOOLEAN DEFAULT false; -- false=does not exist, true=exists
+	DECLARE catalogPathExists				BOOLEAN DEFAULT false; -- false=does not exist, true=exists
+	DECLARE schemaPathExists				BOOLEAN DEFAULT false; -- false=does not exist, true=exists
+	DECLARE targetPathExists				BOOLEAN DEFAULT false; -- false=does not exist, true=exists
+	DECLARE currContainer					LONGVARCHAR;
+	DECLARE prevContainer					LONGVARCHAR;
+	DECLARE catalogPath						LONGVARCHAR;
+	DECLARE schemaPath						LONGVARCHAR;
+	DECLARE updatePrivilegesRecursively		BIT DEFAULT 1;
+		-- 0=do not apply recursively.  Only apply on specified resource
+		-- 1=do apply recursively to children
+	DECLARE copyPrivilegeMode				BIT DEFAULT 1;
+		-- flag indicating the mode in which to copy privileges
+		-- null (default) - do not set any privileges at all
+		-- 0 - set mode to &quot;OVERWRITE_APPEND&quot; - merges and does not update privileges for users or groups not mentioned.
+		-- 1 - set the mode to &quot;SET_EXACTLY&quot; - makes privileges look exactly like those provided in the call.
+	DECLARE copyPrivilegeEntry				/shared/ASAssets/Utilities/repository/definitions/RepositoryDefinitions.copyPrivilegeEntryVector;
+	DECLARE srcPathVect						VECTOR(/shared/ASAssets/Utilities/repository/definitions/RepositoryDefinitions.resourceType);
+	DECLARE destPathsVect					VECTOR(/shared/ASAssets/Utilities/repository/definitions/RepositoryDefinitions.resourceType);
+	DECLARE numVect							INTEGER;
+	DECLARE privlegePathReady				BOOLEAN DEFAULT false;
+	DECLARE success							BIT;
+	DECLARE responseXML 					XML;
+	DECLARE faultResponse 					XML;
+
+	-- Exception variables
+	DECLARE exResourceNotFound				EXCEPTION;
+	DECLARE exNotNullParameter				EXCEPTION;
+	DECLARE exIntrospectionError			EXCEPTION;
+	DECLARE exCopyPrivilegeError			EXCEPTION;
+	DECLARE exInvalidSubtype				EXCEPTION;
+
+	IF (debug = &apos;Y&apos;) THEN
+		CALL PRINT(moduleName||&apos; : INPUT:&apos;);
+		CALL PRINT(moduleName||&apos; :   dsPath=[&apos;||NVL(dsPath,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   catalogName=[&apos;||NVL(catalogName,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   schemaNames=[&apos;||NVL(schemaNames,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   schemaTablePatterns=[&apos;||NVL(schemaTablePatterns,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   tableNames=[&apos;||NVL(tableNames,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   schemaProcedurePatterns=[&apos;||NVL(schemaProcedurePatterns,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   procedureNames=[&apos;||NVL(procedureNames,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   separator=[&apos;||NVL(separator,&apos;null&apos;)||&apos;]&apos;);
+	END IF;
+
+	BEGIN INDEPENDENT TRANSACTION
+
+	CALL /lib/resource/ResourceExists(dsPath, &apos;DATA_SOURCE&apos;, null, dsPathExists);
+	if (NOT dsPathExists) then
+		raise exResourceNotFound value &apos;Data source not found path=&apos;||dsPath;
+	end if;
+
+	/*****************************************************
+	 * STEP 1: Get the data source subtype
+	 *****************************************************/
+	SET dataSourceType = null;
+	FOR r AS SELECT * FROM /shared/ASAssets/Utilities/repository/getBasicResourceCursor(dsPath, &apos;DATA_SOURCE&apos;) DO
+		SET dataSourceSubtype = r.subtype;
+		SET dataSourceType = r.dataSourceType;
+	END FOR;
+	IF (debug = &apos;Y&apos;) THEN
+		CALL PRINT(moduleName||&apos; : DERIVED:&apos;);
+		CALL PRINT(moduleName||&apos; :   dataSourceSubtype=[&apos;||NVL(dataSourceSubtype,&apos;null&apos;)||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   dataSourceType=[&apos;||NVL(dataSourceType,&apos;null&apos;)||&apos;]&apos;);
+	END IF;
+
+	IF (dataSourceSubtype IS NULL) THEN
+		RAISE exInvalidSubtype VALUE &apos;This type of data source is not supported for introspection subtype=null  dsPath=&apos;||dsPath;
+	END IF;
+	CASE
+		WHEN dataSourceSubtype = &apos;RELATIONAL_DATA_SOURCE&apos; THEN
+			SET catalogEntryType = &apos;CONTAINER&apos;;
+			SET catalogEntrySubtype = &apos;CATALOG_CONTAINER&apos;;
+			SET schemaEntryType = &apos;CONTAINER&apos;;
+			SET schemaEntrySubtype = &apos;SCHEMA_CONTAINER&apos;;
+			SET tableEntryType = &apos;TABLE&apos;;
+			SET tableEntrySubtype = &apos;DATABASE_TABLE&apos;;
+			SET procEntryType = &apos;PROCEDURE&apos;;
+			SET procEntrySubtype = &apos;DATABASE_PROCEDURE&apos;;
+
+		WHEN dataSourceSubtype = &apos;FILE_DATA_SOURCE&apos; THEN
+			SET catalogEntryType = &apos;&apos;;
+			SET catalogEntrySubtype = &apos;&apos;;
+			SET schemaEntryType = &apos;&apos;;
+			SET schemaEntrySubtype = &apos;&apos;;
+			SET tableEntryType = &apos;TABLE&apos;;
+			SET tableEntrySubtype = &apos;DELIMITED_FILE_TABLE&apos;;
+			SET procEntryType = &apos;&apos;;
+			SET procEntrySubtype = &apos;&apos;;
+
+		WHEN dataSourceSubtype = &apos;POI_EXCEL_DATA_SOURCE&apos; THEN
+			SET catalogEntryType = &apos;&apos;;
+			SET catalogEntrySubtype = &apos;&apos;;
+			SET schemaEntryType = &apos;CONTAINER&apos;;
+			SET schemaEntrySubtype = &apos;DIRECTORY_CONTAINER&apos;;
+			SET tableEntryType = &apos;TABLE&apos;;
+			SET tableEntrySubtype = &apos;EXCEL_NON_ODBC_POI&apos;;
+			SET procEntryType = &apos;&apos;;
+			SET procEntrySubtype = &apos;&apos;;
+
+		ELSE
+			RAISE exInvalidSubtype VALUE &apos;This type of data source is not supported for introspection subtype=&apos;||dataSourceSubtype||&apos;  dsPath=&apos;||dsPath;
+	END CASE;
+
+	/*****************************************************
+	 * STEP 2: Set input vector values for Introspection 
+	 *****************************************************/
+	SET vDSAttributes = VECTOR[(&apos;autoAddChildren&apos;,  &apos;BOOLEAN&apos;, &apos;true&apos;),(&apos;patternSeparator&apos;, &apos;STRING&apos;,  &apos;,&apos;)];
+	SET vDSAttributesString = &apos;(&apos;&apos;autoAddChildren&apos;&apos;,  &apos;&apos;BOOLEAN&apos;&apos;, &apos;&apos;true&apos;&apos;),(&apos;&apos;patternSeparator&apos;&apos;, &apos;&apos;STRING&apos;&apos;,  &apos;&apos;,&apos;&apos;)&apos;;
+
+	SET vTablesEntities = VECTOR[];
+	SET i = 0;
+	-- Add catalog entry if applicable
+	IF (catalogName IS NOT NULL AND LENGTH(catalogName) &gt; 0) THEN
+		SET schemaEntryPath = schemaEntryPath || catalogName;
+		SET catalogPath = dsPath || &apos;/&apos; || schemaEntryPath;
+		CALL /lib/resource/ResourceExists(catalogPath, &apos;CONTAINER&apos;, null, catalogPathExists);
+		SET vTablesEntities = EXTEND(vTablesEntities, 1);
+		SET i = i + 1;
+		SET vTablesEntities[i].&quot;path&quot; = schemaEntryPath;
+		SET vTablesEntities[i].&quot;type&quot; = catalogEntryType;
+		SET vTablesEntities[i].&quot;subtype&quot; = catalogEntrySubtype;
+		SET vTablesEntities[i].&quot;action&quot; = &apos;ADD_OR_UPDATE&apos;;
+		SET vTablesEntities[i].attributes = null;
+		SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||schemaEntryPath||&apos;&apos;&apos;, &apos;&apos;&apos;||catalogEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||catalogEntrySubtype||&apos;&apos;&apos;, &apos;&apos;ADD_OR_UPDATE&apos;&apos;, NULL)&apos;;
+	END IF;
+
+	-- Add table and procedures entries if applicable
+	/****  
+		Apply the list of tables and/or procedures associated with each schema in the schemaNames list. 
+		The correlation of tables to schema uses the following format:
+		schemaNames=			SCHEMA1,SCHEMA2		- This is the list of comma-separated schemas 
+		tableNames=				[T1,T2][T3,T4,T5]	- The 1st set of bracketed table names goes with the 1st schema.  The 2nd bracketed set of table names goes with the 2nd schema
+		schemaTablePatterns=	[M%]   [P%]			- The 1st set of bracketed table patterns goes with the 1st schema.  The 2nd bracketed set of table patterns goes with the 2nd schema 
+		procedureNames=			[P1][P2,P3,P4]		- The 1st set of bracketed procedure names goes with the 1st schema.  The 2nd bracketed set of procedure names goes with the 2nd schema
+		schemaProcedurePatterns=[N%]   [O%]			- The 1st set of bracketed procedure patterns goes with the 1st schema.  The 2nd bracketed set of procedure patterns goes with the 2nd schema 
+	****/
+	-- Extract the object from the list of schemas
+	IF (schemaNames IS NOT NULL AND LENGTH(schemaNames) &gt; 0) THEN
+		SET objectList1 = schemaNames;
+	ELSE
+		-- There needs to be at least 1 object in the list in order to force processing of the tableNames list
+		SET objectList1 = &apos;*****DUMMY*****&apos;;
+	END IF;
+	SET numSchemas = 0;
+	-- Extract the object from the list of schemas
+	FOR o AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(objectList1, sep, 0, 0, 0, 1, 0) DO
+		SET schemaName = o.object;
+		SET numSchemas = numSchemas + 1;
+		SET vSchemaAttributesString = &apos;&apos;;
+
+		-- Get the table &quot;name&quot; list associated with the extracted schema as identified by &quot;numSchemas&quot; occurrence
+		SET schemaTableNameList = null;
+		FOR l AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(tableNames, &apos;]&apos;, numSchemas, 0, 0, 1, 0) DO
+			SET schemaTableNameList = l.object;
+			-- Remove the beginning &apos;[&apos; delimiter from the list.  Then end &apos;]&apos; delimiter was removed by the extractDelimitedText
+			IF (SUBSTRING(schemaTableNameList, 1, 1) = &apos;[&apos;) THEN
+				SET schemaTableNameList = SUBSTRING(schemaTableNameList, 2);
+			END IF;
+			IF (LENGTH(TRIM(schemaTableNameList)) = 0) THEN
+				SET schemaTableNameList = null;
+			END IF;
+		END FOR;
+
+		-- Get the table &quot;pattern&quot; list associated with the extracted schema as identified by &quot;numSchemas&quot; occurrence
+		SET schemaTablePatternList = null;
+		FOR l AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(schemaTablePatterns, &apos;]&apos;, numSchemas, 0, 0, 1, 0) DO
+			SET schemaTablePatternList = l.object;
+			-- Remove the beginning &apos;[&apos; delimiter from the list.  Then end &apos;]&apos; delimiter was removed by the extractDelimitedText
+			IF (SUBSTRING(schemaTablePatternList, 1, 1) = &apos;[&apos;) THEN
+				SET schemaTablePatternList = SUBSTRING(schemaTablePatternList, 2);
+			END IF;
+			IF (LENGTH(TRIM(schemaTablePatternList)) = 0) THEN
+				SET schemaTablePatternList = null;
+			END IF;
+		END FOR;
+
+		-- Get the procedure list associated with the extracted schema as identified by &quot;numSchemas&quot; occurrence
+		SET schemaProcedureNameList = null;
+		FOR l AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(procedureNames, &apos;]&apos;, numSchemas, 0, 0, 1, 0) DO
+			SET schemaProcedureNameList = l.object;
+			-- Remove the beginning &apos;[&apos; delimiter from the list.  Then end &apos;]&apos; delimiter was removed by the extractDelimitedText
+			IF (SUBSTRING(schemaProcedureNameList, 1, 1) = &apos;[&apos;) THEN
+				SET schemaProcedureNameList = SUBSTRING(schemaProcedureNameList, 2);
+			END IF;
+			IF (LENGTH(TRIM(schemaProcedureNameList)) = 0) THEN
+				SET schemaProcedureNameList = null;
+			END IF;
+		END FOR;
+
+		-- Get the procedure &quot;pattern&quot; list associated with the extracted schema as identified by &quot;numSchemas&quot; occurrence
+		SET schemaProcedurePatternList = null;
+		FOR l AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(schemaProcedurePatterns, &apos;]&apos;, numSchemas, 0, 0, 1, 0) DO
+			SET schemaProcedurePatternList = l.object;
+			-- Remove the beginning &apos;[&apos; delimiter from the list.  Then end &apos;]&apos; delimiter was removed by the extractDelimitedText
+			IF (SUBSTRING(schemaProcedurePatternList, 1, 1) = &apos;[&apos;) THEN
+				SET schemaProcedurePatternList = SUBSTRING(schemaProcedurePatternList, 2);
+			END IF;
+			IF (LENGTH(TRIM(schemaProcedurePatternList)) = 0) THEN
+				SET schemaProcedurePatternList = null;
+			END IF;
+		END FOR;
+
+
+		IF (debug = &apos;Y&apos;) THEN
+			CALL PRINT(moduleName||&apos; : INTROSPECT BUILD:&apos;);
+			CALL PRINT(moduleName||&apos; :   numSchemas[&apos;||numSchemas||&apos;]&apos;);
+			CALL PRINT(moduleName||&apos; :   schemaName[&apos;||NVL(schemaName,&apos;null&apos;)||&apos;]&apos;);
+			CALL PRINT(moduleName||&apos; :   schemaTableNameList[&apos;||NVL(schemaTableNameList,&apos;null&apos;)||&apos;]&apos;);
+			CALL PRINT(moduleName||&apos; :   schemaTablePatternList[&apos;||NVL(schemaTablePatternList,&apos;null&apos;)||&apos;]&apos;);
+			CALL PRINT(moduleName||&apos; :   schemaProcedureNameList[&apos;||NVL(schemaProcedureNameList,&apos;null&apos;)||&apos;]&apos;);
+			CALL PRINT(moduleName||&apos; :   schemaProcedurePatternList[&apos;||NVL(schemaProcedurePatternList,&apos;null&apos;)||&apos;]&apos;);
+		END IF;
+
+		-- Construct the schema entry path for each table
+		SET schemaEntryPath = &apos;&apos;;
+		IF (schemaName &lt;&gt; &apos;*****DUMMY*****&apos;) THEN
+			IF (catalogName IS NOT NULL AND LENGTH(catalogName) &gt; 0) THEN
+				SET schemaEntryPath = catalogName || &apos;/&apos;;
+			END IF;
+			SET schemaEntryPath = schemaEntryPath || schemaName || &apos;/&apos;;
+
+			-- Set the schema table patterns
+			SET vSchemaAttributes = null;
+			IF (schemaTablePatternList IS NOT NULL) THEN
+				SET vSchemaAttributes = VECTOR[(&apos;tablePatterns&apos;,  &apos;STRING&apos;, schemaTablePatternList)];
+				SET vSchemaAttributesString = vSchemaAttributesString || &apos;vSchemaAttributes[(&apos;&apos;tablePatterns&apos;&apos;,  &apos;&apos;STRING&apos;&apos;, &apos;&apos;&apos;||schemaTablePatternList||&apos;&apos;&apos;)]&apos;;
+			END IF;
+			-- Set the schema procedure patterns
+			IF (schemaProcedurePatternList IS NOT NULL) THEN
+				IF (vSchemaAttributes IS NOT NULL AND CARDINALITY(vSchemaAttributes) &gt; 0) THEN
+					SET vSchemaAttributes = EXTEND(vSchemaAttributes, 1);
+					SET j = CARDINALITY(vSchemaAttributes);
+					SET vSchemaAttributes[j].name = &apos;procedurePatterns&apos;;
+					SET vSchemaAttributes[j].&quot;type&quot; = &apos;STRING&apos;;
+					SET vSchemaAttributes[j].&quot;value&quot; = schemaProcedurePatternList;
+					SET vSchemaAttributesString = SUBSTRING(vSchemaAttributesString, 1, LENGTH(vSchemaAttributesString)-1) || &apos;,(&apos;&apos;procedurePatterns&apos;&apos;,  &apos;&apos;STRING&apos;&apos;, &apos;&apos;&apos;||schemaProcedurePatternList||&apos;&apos;&apos;)]&apos;;
+				ELSE
+					SET vSchemaAttributes = VECTOR[(&apos;procedurePatterns&apos;,  &apos;STRING&apos;, schemaProcedurePatternList)];
+					SET vSchemaAttributesString = vSchemaAttributesString || &apos;vSchemaAttributes[(&apos;&apos;procedurePatterns&apos;&apos;,  &apos;&apos;STRING&apos;&apos;, &apos;&apos;&apos;||schemaProcedurePatternList||&apos;&apos;&apos;)]&apos;;
+				END IF;
+			END IF;
+
+			-- Set up the schema entry vector
+			SET vTablesEntities = EXTEND(vTablesEntities, 1);
+			SET i = i + 1;
+			SET vTablesEntities[i].&quot;path&quot; = schemaEntryPath;
+			SET vTablesEntities[i].&quot;type&quot; = schemaEntryType;
+			SET vTablesEntities[i].&quot;subtype&quot; = schemaEntrySubtype;
+			-- Determine the &quot;action&quot; to take based on whether there are any table names, procedure names or schema attributes present
+			IF (schemaTableNameList IS NOT NULL OR schemaProcedureNameList IS NOT NULL OR vSchemaAttributes IS NOT NULL) THEN
+				SET vTablesEntities[i].&quot;action&quot; = &apos;ADD_OR_UPDATE&apos;;
+			ELSE
+				SET vTablesEntities[i].&quot;action&quot; = &apos;ADD_OR_UPDATE_RECURSIVELY&apos;;
+			END IF;
+			-- Assign the schema attributes
+			SET vTablesEntities[i].attributes = vSchemaAttributes;
+			-- Create the debug string.
+			IF (vSchemaAttributes IS NULL) THEN
+				IF (LENGTH(vTablesEntitiesString) &gt; 0) THEN
+					SET vTablesEntitiesString = vTablesEntitiesString || &apos;,&apos;||CHR(10);
+				END IF;
+				SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||schemaEntryPath||&apos;&apos;&apos;, &apos;&apos;&apos;||schemaEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||schemaEntrySubtype||&apos;&apos;&apos;, &apos;&apos;&apos;||vTablesEntities[i].&quot;action&quot;||&apos;&apos;&apos;, NULL)&apos;;
+			ELSE
+				IF (LENGTH(vTablesEntitiesString) &gt; 0) THEN
+					SET vTablesEntitiesString = vTablesEntitiesString || &apos;,&apos;||CHR(10);
+				END IF;
+				SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||schemaEntryPath||&apos;&apos;&apos;, &apos;&apos;&apos;||schemaEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||schemaEntrySubtype||&apos;&apos;&apos;, &apos;&apos;&apos;||vTablesEntities[i].&quot;action&quot;||&apos;&apos;&apos;, &apos;|| vSchemaAttributesString;
+			END IF;
+		END IF;
+
+
+		/***** ADD TABLES *****/
+		-- Add the list of tables for the extracted schema
+		FOR t AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(schemaTableNameList, sep, 0, 0, 0, 0, 0) DO
+			SET tableName = t.object;
+			-- Construct the table name path
+			SET tableEntryPath = schemaEntryPath || tableName;
+			-- Set up the table entry vector
+			SET vTablesEntities = EXTEND(vTablesEntities, 1);
+			SET i = i + 1;
+			SET vTablesEntities[i].&quot;path&quot; = tableEntryPath;
+			SET vTablesEntities[i].&quot;type&quot; = tableEntryType;
+			SET vTablesEntities[i].&quot;subtype&quot; = tableEntrySubtype;
+			SET vTablesEntities[i].&quot;action&quot; = &apos;ADD_OR_UPDATE&apos;;
+			SET vTablesEntities[i].attributes = null;
+			IF (LENGTH(vTablesEntitiesString) &gt; 0) THEN
+				SET vTablesEntitiesString = vTablesEntitiesString || &apos;,&apos;||CHR(10);
+			END IF;
+			SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||tableEntryPath||&apos;&apos;&apos;, &apos;&apos;&apos;||tableEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||tableEntrySubtype||&apos;&apos;&apos;, &apos;&apos;ADD_OR_UPDATE&apos;&apos;, NULL)&apos;;
+		END FOR;
+
+		/***** ADD PROCEDURES *****/
+		-- Add the list of procedures for the extracted schema
+		FOR o AS SELECT * FROM /shared/ASAssets/Utilities/string/extractDelimitedText(schemaProcedureNameList, sep, 0, 0, 0, 0, 0) DO
+			SET procedureName = o.object;
+			IF (LENGTH(schemaEntryPath) &gt; 0) THEN
+				SET tableEntryPath = schemaEntryPath || procedureName;
+			ELSE
+				SET tableEntryPath = procedureName;
+			END IF;
+			SET vTablesEntities = EXTEND(vTablesEntities, 1);
+			SET i = i + 1;
+			SET vTablesEntities[i].&quot;path&quot; = tableEntryPath;
+			SET vTablesEntities[i].&quot;type&quot; = procEntryType;
+			SET vTablesEntities[i].&quot;subtype&quot; = procEntrySubtype;
+			SET vTablesEntities[i].&quot;action&quot; = &apos;ADD_OR_UPDATE&apos;;
+			SET vTablesEntities[i].attributes = null;
+			IF (LENGTH(vTablesEntitiesString) &gt; 0) THEN
+				SET vTablesEntitiesString = vTablesEntitiesString || &apos;,&apos;||CHR(10);
+			END IF;
+			SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||tableEntryPath||&apos;&apos;&apos;, &apos;&apos;&apos;||procEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||procEntrySubtype||&apos;&apos;&apos;, &apos;&apos;ADD_OR_UPDATE&apos;&apos;, NULL)&apos;;
+		END FOR;
+	END FOR;
+
+	-- If there are no table entries then use the default to introspect the data source with ADD_OR_UPDATE_RECURSIVELY
+	IF (vTablesEntities IS NULL OR CARDINALITY(vTablesEntities) = 0) THEN
+		SET tableEntryPath = null;
+		SET tableEntryType = &apos;DATA_SOURCE&apos;;
+		SET tableEntrySubtype = &apos;NONE&apos;;
+		SET vTablesEntities = VECTOR[(tableEntryPath, tableEntryType, tableEntrySubtype, &apos;ADD_OR_UPDATE_RECURSIVELY&apos;, null)];
+		SET vTablesEntitiesString = vTablesEntitiesString || &apos;(&apos;&apos;&apos;||NVL(tableEntryPath,&apos;null&apos;)||&apos;&apos;&apos;, &apos;&apos;&apos;||tableEntryType||&apos;&apos;&apos;, &apos;&apos;&apos;||tableEntrySubtype||&apos;&apos;&apos;, &apos;&apos;ADD_OR_UPDATE_RECURSIVELY&apos;&apos;, NULL)&apos;||CHR(10);
+	END IF;
+
+	IF (debug = &apos;Y&apos;) THEN
+		CALL PRINT(moduleName||&apos; : INTROSPECT REQUEST:&apos;);
+		CALL PRINT(moduleName||&apos; :   dsPath=&apos;||NVL(dsPath,&apos;UNKNOWN&apos;));
+		CALL PRINT(moduleName||&apos; :   vDSAttributes[&apos;||vDSAttributesString||&apos;]&apos;);
+		CALL PRINT(moduleName||&apos; :   vTablesEntities[&apos;||CHR(10)||SUBSTRING(vTablesEntitiesString,1,63900)||&apos;]&apos;);
+	END IF;
+
+	/*****************************************************
+	 * STEP 3: Start the introspection task transaction
+	 *****************************************************/
+	CALL /shared/ASAssets/Utilities/repository/lowerLevelProcedures/introspectResourcesTask(
+		dsPath,
+		updateAllIntrospectedResources,
+		failFast,
+		commitOnFailure,
+		autoRollback,
+		scanForNewResourcesToAutoAdd,
+		runInBackgroundTransaction,
+		vTablesEntities, 
+		vDSAttributes, 
+		taskId, 
+		totalResults, 
+		isCompleted
+	);
+
+	IF (debug = &apos;Y&apos;) THEN
+		CALL PRINT(moduleName||&apos; : INTROSPECT REQUEST: Waiting on introspection report for tables with task ID=&apos; || taskId||
+			&apos;  totalResults=&apos;||NVL(CAST(totalResults AS VARCHAR),&apos;null&apos;)||&apos;  isCompleted=&apos;||NVL(CAST(isCompleted AS VARCHAR),&apos;null&apos;));
+		CALL PRINT(&apos;---------------------------------------------------------------------------------------------------&apos;);
+	END IF;
+
+	SET introspectionResult = &apos;&apos;;
+	SET introspectionEntry = &apos;&apos;;
+	SET resultMessage = &apos;&apos;;
+	SET srcPathVect = VECTOR[(dsPath, &apos;DATA_SOURCE&apos;)];
+	SET destPathsVect = VECTOR[];
+	SET numVect = 0;
+	SET privlegePathReady = false;
+	SET currContainer = null;
+	SET prevContainer = null;
+	SET i = 0;
+
+	/*****************************************************
+	 * STEP 4: Complete the introspection task transaction
+	 *****************************************************/
+	FOR r AS SELECT * FROM /shared/ASAssets/Utilities/repository/lowerLevelProcedures/introspectResourcesResult(dsPath, taskId, block, pageSize, pageStart) DO
+		SET errStatus = NVL(r.status, &apos;SUCCESS&apos;);
+		SET currentPath = r.&quot;path&quot;;
+		SET currentSubtype = r.subtype;
+		-- Capture the current container so that it can be compared with the previous container
+		IF (r.&quot;type&quot; = &apos;CONTAINER&apos;) THEN
+			SET currContainer = currentPath;
+			IF (prevContainer IS NOT NULL AND INSTR(currContainer||&apos;/&apos;, prevContainer||&apos;/&apos;) = 0) THEN
+				-- When the container path lineage changes, then reset the privileges path ready so this new path can be registered
+				--		as a destination for copying privileges.
+				SET privlegePathReady = false;
+			END IF;
+		END IF;
+
+		IF (r.&quot;type&quot; IS NOT NULL AND r.&quot;type&quot; = &apos;DATA_SOURCE&apos; AND currentSubtype IS NOT NULL AND currentSubtype = &apos;NONE&apos;) THEN 
+			SET currentSubtype = dataSourceSubtype;
+		END IF;
+		IF (debug2 = &apos;Y&apos;) THEN
+			call print(&apos;previousPath=&apos;||NVL(previousPath,&apos;null&apos;)||&apos;  current type=&apos;||NVL(r.&quot;type&quot;,&apos;null&apos;)||&apos;  currentPath=&apos;||NVL(currentPath,&apos;null&apos;));
+		END IF;
+
+		-- Capture the unique row under these circumstances.
+		--		Note: A row as designated by the &quot;path&quot;, &quot;type&quot; and subtype may have multiple rows dues to any number of message records.
+		--			  The message records are consolidated into a single message entry delineated by info:[&lt;message&gt;].
+		IF ( (currentPath IS NULL AND previousPath IS NOT NULL) OR
+			 (currentPath IS NOT NULL AND previousPath IS NULL) OR 
+			 (currentPath IS NOT NULL AND currentPath &lt;&gt; previousPath) ) THEN
+			-- Check the previous introspection entry and replace the message before initializing the message.
+			IF (INSTR(introspectionEntry, &apos;message=&lt;replace message&gt;&apos;) &gt; 0) THEN
+				SET introspectionEntry = REPLACE(introspectionEntry, &apos;message=&lt;replace message&gt;&apos;, &apos;message=&apos;||NVL(resultMessage,&apos;null&apos;));
+				SET introspectionResult = introspectionResult || introspectionEntry;
+			END IF;
+			IF (debug = &apos;Y&apos; AND LENGTH(TRIM(introspectionEntry)) &gt; 0) THEN
+				CALL PRINT(moduleName||&apos; : resultMessage=&apos;||SUBSTRING(TRIM(NVL(resultMessage,&apos;  &apos;)),1,63900));
+				CALL PRINT(moduleName||&apos; : &apos;||SUBSTRING(TRIM(NVL(introspectionEntry,&apos;  &apos;)),1,63900));
+			END IF;
+			-- Initialize the result message
+			SET resultMessage = &apos;&apos;;
+			IF (r.message IS NOT NULL) THEN
+				SET resultMessage = &apos;info:[&apos;||r.message||&apos;] &apos;;
+			END IF;
+			SET i = i + 1;
+			SET introspectionEntry =  
+                &apos;introspection entry=&apos;||i||&apos;  path=&apos;||NVL(currentPath,&apos;NULL&apos;)||&apos;,
+                 status=&apos;||NVL(CAST(r.status AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 introspectorVersion=&apos;||NVL(CAST(r.introspectorVersion AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 startTime=&apos;||NVL(CAST(r.startTime AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 endTime=&apos;||NVL(CAST(r.endTime AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 addedCount=&apos;||NVL(CAST(r.addedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 removedCount=&apos;||NVL(CAST(r.removedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 updatedCount=&apos;||NVL(CAST(r.updatedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 skippedCount=&apos;||NVL(CAST(r.skippedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 totalCompletedCount=&apos;||NVL(CAST(r.totalCompletedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 toBeAddedCount=&apos;||NVL(CAST(r.toBeAddedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 toBeRemovedCount=&apos;||NVL(CAST(r.toBeRemovedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 toBeUpdatedCount=&apos;||NVL(CAST(r.toBeUpdatedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 totalToBeCompletedCount=&apos;||NVL(CAST(r.totalToBeCompletedCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 warningCount=&apos;||NVL(CAST(r.warningCount AS VARCHAR),&apos;NULL&apos;)||&apos;,
+                 errorCount=&apos;||NVL(CAST(r.errorCount AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 &quot;path&quot;=&apos;||NVL(CAST(r.&quot;path&quot; AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 &quot;type&quot;=&apos;||NVL(CAST(r.&quot;type&quot; AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 subtype=&apos;||NVL(CAST(currentSubtype AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 &quot;action&quot;=&apos;||NVL(CAST(r.&quot;action&quot; AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 durationMs=&apos;||NVL(CAST(r.durationMs AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 entryStatus=&apos;||NVL(CAST(r.entryStatus AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 code=&apos;||NVL(CAST(r.code AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 name=&apos;||NVL(CAST(r.name AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 message=&lt;replace message&gt;
+                 detail=&apos;||NVL(CAST(r.detail AS VARCHAR),&apos;NULL&apos;)||&apos;
+                 severity=&apos;||NVL(CAST(r.severity AS VARCHAR),&apos;NULL&apos;)|| CHR(10);
+
+			-- Setup the copy privilege vector destination path
+			IF (r.&quot;action&quot; = &apos;ADD&apos; AND NOT privlegePathReady) THEN
+				IF (r.&quot;type&quot; = &apos;CONTAINER&apos;) THEN
+					-- Since privileges will be applied recursively to children, it is only necessary to capture the container path.
+					SET privlegePathReady = true;
+				END IF;
+				-- Add the resource to the destination vector
+				SET destPathsVect = EXTEND(destPathsVect, 1);
+				SET numVect = numVect + 1;
+				SET destPathsVect[numVect].&quot;path&quot; = dsPath || &apos;/&apos; || r.&quot;path&quot;;
+				SET destPathsVect[numVect].&quot;type&quot; = r.&quot;type&quot;;
+			END IF;
+
+			-- Check for an error
+			IF (r.entryStatus is not null and r.entryStatus = &apos;ERROR&apos;) THEN
+				RAISE exIntrospectionError VALUE &apos;INTROSPECTION ERROR DETECTED.  ERROR=&apos;||TRIM(NVL2(r.message,r.message,&apos; &apos;))||&apos;  DETAIL=&apos;||TRIM(NVL2(r.detail,r.detail,&apos; &apos;));
+			END IF;
+		ELSE
+			IF (r.message IS NOT NULL) THEN
+				SET resultMessage = resultMessage || &apos;info:[&apos;||r.message||&apos;] &apos;;
+			END IF;
+		END IF;
+
+		SET previousPath = currentPath;
+		SET prevContainer = currContainer;
+	END FOR;
+	-- Modify the final introspection entry
+	IF (INSTR(introspectionEntry, &apos;message=&lt;replace message&gt;&apos;) &gt; 0) THEN
+		SET introspectionEntry = REPLACE(introspectionEntry, &apos;message=&lt;replace message&gt;&apos;, &apos;message=&apos;||NVL(resultMessage,&apos;null&apos;));
+		SET introspectionResult = introspectionResult || introspectionEntry;
+	END IF;
+	IF (debug = &apos;Y&apos; AND LENGTH(TRIM(introspectionEntry)) &gt; 0) THEN
+		CALL PRINT(moduleName||&apos; : resultMessage=&apos;||SUBSTRING(TRIM(NVL(resultMessage,&apos;  &apos;)),1,63900));
+		CALL PRINT(moduleName||&apos; : &apos;||SUBSTRING(TRIM(NVL(introspectionEntry,&apos;  &apos;)),1,63900));
+		CALL PRINT(&apos;---------------------------------------------------------------------------------------------------&apos;);
+	END IF;
+	SET introspectionResult = &apos;Total Entries=&apos;||i||CHR(10)||introspectionResult;
+
+	END;
+
+	/*****************************************************
+	 * STEP 5: Copy Privileges to the introspected resources
+	 *****************************************************/
+	BEGIN INDEPENDENT TRANSACTION
+		SET numVect = CARDINALITY(destPathsVect);
+		IF (numVect &gt; 0) THEN
+			IF (debug = &apos;Y&apos;) THEN
+				CALL PRINT(moduleName||&apos; : Setting privileges for &apos;||numVect||&apos; destination resource(s).&apos;);
+				CALL PRINT(&apos;   Privilege Source=[&apos;||srcPathVect[1].&quot;path&quot;||&apos;]  Type=[&apos;||srcPathVect[1].&quot;type&quot;||&apos;]&apos;);
+				SET i = 1;
+				WHILE (i &lt;= numVect) DO
+					CALL PRINT(&apos;   Privilege Destination=[&apos;||destPathsVect[i].&quot;path&quot;||&apos;]  Type=[&apos;||destPathsVect[i].&quot;type&quot;||&apos;]&apos;);
+					SET i = i + 1;
+				END WHILE;
+			END IF;
+			SET copyPrivilegeEntry = VECTOR[(srcPathVect, destPathsVect)];
+			CALL /shared/ASAssets/Utilities/repository/copyResourcesPrivileges(updatePrivilegesRecursively, copyPrivilegeMode, copyPrivilegeEntry, success, faultResponse);
+			IF (faultResponse is not null) THEN
+				RAISE exCopyPrivilegeError VALUE CAST(faultResponse AS LONGVARCHAR);
+			END IF;
+		ELSE
+			IF (debug = &apos;Y&apos;) THEN
+				CALL PRINT(moduleName||&apos; : No destination privileges to set.&apos;);
+			END IF;
+		END IF;
+	END;
+
+	SET errMessage = NULL;
+	IF (debug = &apos;Y&apos;) THEN
+		CALL PRINT(moduleName||&apos; : Successfully completed introspection.&apos;);
+		CALL PRINT(moduleName||&apos; :&apos;);
+	END IF;
+
+EXCEPTION
+	WHEN exResourceNotFound THEN
+		SET errMessage = CURRENT_EXCEPTION.MESSAGE;
+		IF (debug = &apos;Y&apos;) THEN
+			CALL PRINT(moduleName||&apos; : errMessage=&apos;||SUBSTRING(TRIM(NVL(errMessage,&apos;  &apos;)),1,63900));
+		END IF;
+		SET errStatus = &apos;FAILED&apos;;
+	WHEN exNotNullParameter THEN
+		SET errMessage = CURRENT_EXCEPTION.MESSAGE;
+		IF (debug = &apos;Y&apos;) THEN
+			CALL PRINT(moduleName||&apos; : errMessage=&apos;||SUBSTRING(TRIM(NVL(errMessage,&apos;  &apos;)),1,63900));
+		END IF;
+		SET errStatus = &apos;FAILED&apos;;
+	WHEN exIntrospectionError THEN
+		SET errMessage = CURRENT_EXCEPTION.MESSAGE;
+		IF (debug = &apos;Y&apos;) THEN
+			CALL PRINT(moduleName||&apos; : errMessage=&apos;||SUBSTRING(TRIM(NVL(errMessage,&apos;  &apos;)),1,63900));
+		END IF;
+		SET errStatus = &apos;FAILED&apos;;
+	ELSE
+		SET errMessage = CURRENT_EXCEPTION.TRACE;
+		IF (debug = &apos;Y&apos;) THEN
+			CALL PRINT(moduleName||&apos; : errMessage=&apos;||SUBSTRING(TRIM(NVL(errMessage,&apos;  &apos;)),1,63900));
+		END IF;
+		SET errStatus = &apos;FAILED&apos;;
+END</attribute>
+  <attribute name="creationDate" type="LONG">1398383331017</attribute>
+  <attribute name="creatorUserDomain" type="STRING">ldap</attribute>
+  <attribute name="creatorUserName" type="STRING">nbklsvb</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1522427956942</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="native_only" type="STRING">false</attribute>
+  <attribute name="references" type="MAP">
+    <item>
+      <key type="STRING">9/432</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/750</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/434</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/433</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">11/718</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/701</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/700</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/552</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/699</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/555</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/577</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/629</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/554</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/729</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/553</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/744</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/290</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/762</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/736</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/579</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/737</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/266</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/288</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/265</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/264</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/714</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/263</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/715</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/269</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/268</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/267</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/289</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/436</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/435</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/438</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/614</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/437</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">10/630</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/756</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/262</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">8/261</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+  </attribute>
+</metadata>

@@ -1,0 +1,128 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="updateProduct" path="/shared/MyDemo/CRUDProduct/updateProduct" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="InProductID" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InProductName" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="50"/>
+    </parameter>
+    <parameter name="InProductDescription" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="InCategoryID" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InSerialNumber" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="50"/>
+    </parameter>
+    <parameter name="InUnitPrice" direction="IN" nullable="true">
+      <datatype name="DECIMAL" type="DECIMAL" maxDigits="12" maxFractionalDigits="2"/>
+    </parameter>
+    <parameter name="InReorderLevel" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InLeadTime" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="30"/>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/MyDemo/CRUDProduct/Product_View" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="productid">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="productname">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="productdescription">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="categoryid">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="serialnumber">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="unitprice">
+        <datatype type="DECIMAL" maxDigits="12" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="reorderlevel">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="leadtime">
+        <datatype type="STRING" maxLength="30"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/examples/ds_inventory/tutorial/products" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="productid" nullable="false">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="productname">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="productdescription">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="categoryid">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="serialnumber">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="unitprice">
+        <datatype type="DECIMAL" maxDigits="12" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="reorderlevel">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="leadtime">
+        <datatype type="STRING" maxLength="30"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="Script" type="STRING">-- CIS Procedure: updateProduct
+--
+-- DESC: Update a product view with supplied values. This example assumes all values 
+--	 are supplied by the caller.
+--
+-- USAGE: Publish this procedure as a web service and call it using a SOAP request.
+
+PROCEDURE updateProduct(
+	IN	InProductID		INTEGER,
+	IN	InProductName		VARCHAR(50),
+	IN	InProductDescription	VARCHAR(255),
+	IN	InCategoryID		INTEGER,
+	IN	InSerialNumber		VARCHAR(50),
+	IN	InUnitPrice		DECIMAL(12,2),
+	IN	InReorderLevel		INTEGER,
+	IN	InLeadTime		VARCHAR(30)	
+)
+BEGIN
+
+	UPDATE /shared/MyDemo/CRUDProduct/Product_View 
+		SET 	ProductName 		= InProductName,
+			ProductDescription 	= InProductDescription,
+			CategoryID 		= InCategoryID,
+			SerialNumber		= InSerialNumber,
+			UnitPrice		= InUnitPrice,
+			ReorderLevel		= InReorderLevel,
+			LeadTime		= InLeadTime
+	WHERE ProductID = InProductID;
+
+END</attribute>
+  <attribute name="creationDate" type="LONG">0</attribute>
+  <attribute name="creatorUserDomain" type="STRING"/>
+  <attribute name="creatorUserName" type="STRING"/>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1375198986625</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="references" type="NULL"/>
+</metadata>

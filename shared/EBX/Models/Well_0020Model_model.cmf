@@ -1,0 +1,286 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="Well Model" path="/shared/EBX/Models/Well Model" type="MODEL" subtype="NONE" changeToken="0">
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/EBX/H2" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/EBX/H2/REPOSITORY/PUBLIC/EBX_EMPLOYEE" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="T_LAST_USER_ID">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="T_CREATOR_ID">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="T_CREATION_DATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="T_LAST_WRITE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="EMPLOYEE_ID" nullable="false">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="NAME">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="SS_NUMBER">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="DATE_OF_HIRE00">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/EBX/H2/REPOSITORY/PUBLIC/EBX_WELL" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="T_LAST_USER_ID">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="T_CREATOR_ID">
+        <datatype type="STRING" maxLength="50"/>
+      </element>
+      <element name="T_CREATION_DATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="T_LAST_WRITE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="UWI" nullable="false">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="ALTERNATEIDS_WELLID">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="ALTERNATEIDS_ENTITYID">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="STATUS_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="DATE_SPUDDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="DATE_COMPLETIONDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="DATE_ONPRODUCTIONDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="BOTTOMHOLE_LATITUDE">
+        <datatype type="DECIMAL" maxDigits="65535" maxFractionalDigits="32767"/>
+      </element>
+      <element name="BOTTOMHOLE_LONGITUDE">
+        <datatype type="DECIMAL" maxDigits="65535" maxFractionalDigits="32767"/>
+      </element>
+      <element name="LATITUDE">
+        <datatype type="DECIMAL" maxDigits="65535" maxFractionalDigits="32767"/>
+      </element>
+      <element name="LONGITUDE">
+        <datatype type="DECIMAL" maxDigits="65535" maxFractionalDigits="32767"/>
+      </element>
+      <element name="TYPE_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="FLUID_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="OPERATOR_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="REGION_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="SHALE_">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="IDENTIFIER">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="ID">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="POROSITY">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+      <element name="PERMEABILITY">
+        <datatype type="STRING" maxLength="256"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/shared/EBX/Well Operations" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/shared/EBX/Well Operations/DemoExamples/dbo/WellOperations" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="UWI">
+        <datatype type="STRING" maxLength="20"/>
+      </element>
+      <element name="ALTERNATEIDS_WELLID">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="ALTERNATEIDS_ENTITYID">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="DATE_SPUDDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="DATE_COMPLETIONDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="DATE_ONPRODUCTIONDATE">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="BOTTOMHOLE_LATITUDE">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="BOTTOMHOLE_LONGITUDE">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Latitude">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Longitude">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="DATE_NOTE">
+        <datatype type="STRING" maxLength="30"/>
+      </element>
+      <element name="TYPE_">
+        <datatype type="STRING" maxLength="16"/>
+      </element>
+      <element name="FLUID_">
+        <datatype type="STRING" maxLength="16"/>
+      </element>
+      <element name="SHALE_">
+        <datatype type="STRING" maxLength="16"/>
+      </element>
+      <element name="Type">
+        <datatype type="STRING" maxLength="16"/>
+      </element>
+      <element name="Identifier">
+        <datatype type="STRING" maxLength="28"/>
+      </element>
+      <element name="6 month IP Gas _mcf_">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Id">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Porosity ___">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+      <element name="Permeability _mD_">
+        <datatype type="FLOAT" minValue="2.2250738585072014E-308" maxValue="1.7976931348623157E308"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="creationDate" type="LONG">1548972261208</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="crossModelBlob" type="BYTE_ARRAY">rO0ABXcBAx+LCAAAAAAAAAC9VV2IG1UUPjP5YdPs/7bu1mXFn9WX6gQUobCis0k3u7Gx1u66tWyx
+nWRukrGTzHTmZicR1LSCCioi2jfFrdg+aJ/sS1HQKggr6KMvCiIi4oOFvoiPes6dmSSbbF3B4oV7
+5/6cc+733fudO5euQcxLyJIEALGkzOHholVVsNqWa3DmekrdUKqWzkzmKOsG8xSHmRo3rJpbMWxl
+RSuY7BAuH2GaaTzLHG9BimIoSU6qB68CFXX/MdFRV1V/fP/lFnSVz68HnfTHAPPn3hF9DoML6adO
+LFRt02oy5kUlXZJcB4ae0dY1RfO4krVq/KvzD/76zY+rbgTiOdhbwpll5hgCiH5A49oqc1xEmoWE
+bRm4iPM5iLriE3N502R52F06wk7XmcuZPs+5YxTqyJrDnjztlKpzw0wtaW6FE9G5PERrWpVxGPeX
+Ta1WTi2jV60817CJ97xPcpD6iHdC4KUoSjvKxKcjd9/x6C9XIiBnYZdpaXpWK3LLyUGCVxzmVixT
+b9iP+IEGvAFsk1gjGG66TZ/IKiuswdugTzXefW3ot6GsDNBwICUsORoobQs9U9Ec3Io5Oawabjnb
+XjtzG7/n28XJ4zJIAcnT8DxEGzaHeEmrGmYTOwfwbK0yh1m3XvMRaKH/umbiISo6Kxk1pp84xZoI
+d0yAoENScjXOyswZ/3njgz/PvLwft8ErEE4IdrRjd6heLTDnpUvnZpJv//QqcbFBhRdcQjOAEDxm
+lCscY490fLJ4hvz7a1+//8ND13/HyNkwMjmN0DmK3mAD3YbbJ5ixTMuRLky+OPrGA3UZYlkiatoV
+LQSWB7mISpj2rxpdUkVySQnHZVsrsrk1SJScckGYc5DXsmsYRIxow0khCfgLi+0XLxKVo7aXAHXU
+17zgtUdYvffRKFp0TbRaLeEzlVnCxAiyJJMSH4kStsv28sU3yXS3vxvIqakwvZIyWUFXXj6xsTUv
+H2vtkJdmd14OUF4eZabp5yQFj1EztS0/WtlLza1dPDIlDPpZhwetT3dhn+lg53Bn0392KgZK1ilW
+msqiY9XtLW9ONhqSCz1DMqqxddxLThKY2uTih59M53MZpFbC54ZwyX1JTbPx/uyk6V1CZtQMCbNh
+ki51xsRwoluKnbvD2iuPsHSsntM3SUQ0ng2OMr0U3M+HvUc5ph4LaK8EgWxPwoojVQlWbvDdqeAe
+krgm6btF/4p65XUwCBjK6+g/3wCkr3TfwDBJ63Gbnif6x/w3kakbvSfTEdliCMRnMHPzRBTRC9b/
+oCBq79pJNWB/EqhmX49qrvadzY1Uc/JmquaP8WAq6k+DnJTwjQ2S/LBlNvP4A1nQy53sjkvxrayC
+p9KLEXb0Tra9He4lpC83/R3IXvFul9Kb3UAkeGvfybPhGHcns3vDTWhwXxDY908QSPjC7sSj8fxm
+J179afkV6keI1b+ItxO+188enxDYtonX93vYDutmGPuWPqzi+zfZEGaP9AkAAA==</attribute>
+  <attribute name="crossModelProperties" type="STRING_ARRAY">
+    <item>modeler.view.relationship.action.toggleNavigator</item>
+    <item>true</item>
+    <item>modeler.view.relationship.currentLayoutStyle</item>
+    <item>ORTHOGONAL</item>
+  </attribute>
+  <attribute name="descendentResourceRefs" type="SET">
+    <item type="OBJECT">rO0ABXNyACpjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUGF0aFR5cGUAABnTDJQk
+yQIAAlMABHR5cGVMAARwYXRodAAoTGNvbS9jb21wb3NpdGVzdy9jb21tb24vcmVwb3NpdG9yeS9Q
+YXRoO3hwAAJzcgAmY29tLmNvbXBvc2l0ZXN3LmNvbW1vbi5yZXBvc2l0b3J5LlBhdGhACAIJ5hQ4
+OAIAAloACGFic29sdXRlTAAFcGFydHN0ABBMamF2YS91dGlsL0xpc3Q7eHABc3IAE2phdmEudXRp
+bC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAZ3BAAAAAZ0AAZzaGFyZWR0AANFQlh0
+AA9XZWxsIE9wZXJhdGlvbnN0AAxEZW1vRXhhbXBsZXN0AANkYm90AA5XZWxsT3BlcmF0aW9uc3g=</item>
+    <item type="OBJECT">rO0ABXNyACpjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUGF0aFR5cGUAABnTDJQk
+yQIAAlMABHR5cGVMAARwYXRodAAoTGNvbS9jb21wb3NpdGVzdy9jb21tb24vcmVwb3NpdG9yeS9Q
+YXRoO3hwAAJzcgAmY29tLmNvbXBvc2l0ZXN3LmNvbW1vbi5yZXBvc2l0b3J5LlBhdGhACAIJ5hQ4
+OAIAAloACGFic29sdXRlTAAFcGFydHN0ABBMamF2YS91dGlsL0xpc3Q7eHABc3IAE2phdmEudXRp
+bC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAZ3BAAAAAZ0AAZzaGFyZWR0AANFQlh0
+AAJIMnQAClJFUE9TSVRPUll0AAZQVUJMSUN0AAxFQlhfRU1QTE9ZRUV4</item>
+    <item type="OBJECT">rO0ABXNyACpjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUGF0aFR5cGUAABnTDJQk
+yQIAAlMABHR5cGVMAARwYXRodAAoTGNvbS9jb21wb3NpdGVzdy9jb21tb24vcmVwb3NpdG9yeS9Q
+YXRoO3hwAAJzcgAmY29tLmNvbXBvc2l0ZXN3LmNvbW1vbi5yZXBvc2l0b3J5LlBhdGhACAIJ5hQ4
+OAIAAloACGFic29sdXRlTAAFcGFydHN0ABBMamF2YS91dGlsL0xpc3Q7eHABc3IAE2phdmEudXRp
+bC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAZ3BAAAAAZ0AAZzaGFyZWR0AANFQlh0
+AAJIMnQAClJFUE9TSVRPUll0AAZQVUJMSUN0AAhFQlhfV0VMTHg=</item>
+  </attribute>
+  <attribute name="lastModifiedDate" type="LONG">1548972729569</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="memberResourceRefs" type="SET">
+    <item type="OBJECT">rO0ABXNyACpjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUGF0aFR5cGUAABnTDJQk
+yQIAAlMABHR5cGVMAARwYXRodAAoTGNvbS9jb21wb3NpdGVzdy9jb21tb24vcmVwb3NpdG9yeS9Q
+YXRoO3hwAAhzcgAmY29tLmNvbXBvc2l0ZXN3LmNvbW1vbi5yZXBvc2l0b3J5LlBhdGhACAIJ5hQ4
+OAIAAloACGFic29sdXRlTAAFcGFydHN0ABBMamF2YS91dGlsL0xpc3Q7eHABc3IAE2phdmEudXRp
+bC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAN3BAAAAAN0AAZzaGFyZWR0AANFQlh0
+AAJIMng=</item>
+    <item type="OBJECT">rO0ABXNyACpjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUGF0aFR5cGUAABnTDJQk
+yQIAAlMABHR5cGVMAARwYXRodAAoTGNvbS9jb21wb3NpdGVzdy9jb21tb24vcmVwb3NpdG9yeS9Q
+YXRoO3hwAAhzcgAmY29tLmNvbXBvc2l0ZXN3LmNvbW1vbi5yZXBvc2l0b3J5LlBhdGhACAIJ5hQ4
+OAIAAloACGFic29sdXRlTAAFcGFydHN0ABBMamF2YS91dGlsL0xpc3Q7eHABc3IAE2phdmEudXRp
+bC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAN3BAAAAAN0AAZzaGFyZWR0AANFQlh0
+AA9XZWxsIE9wZXJhdGlvbnN4</item>
+  </attribute>
+  <attribute name="modelBlob" type="BYTE_ARRAY">rO0ABXcBAx+LCAAAAAAAAAC1VUtsG0UYnl3bUYzjJDQtSZuHKKRckNYqqBIoCPyo3aR1m9C0aSGl
+6cQ7tpeuvZvdcdbmAGkQBQkI4tEbiIKAC72Ucqjg0KQSCkhw4FokhAhCCFGpUoXgBv/M2s4+miYN
+YqXZndn5/2++73/sXriOQlZYROxqiYgUPZ7TShIMXTMVSkxLqihSSZOJSgxpViGWZBAVU0Urm0VF
+l47gaZUcgu3DBKvKc8Sw0kIQoAQxEt/PQVF8z6U5/jxeXz9krxvXlRv1SXIRocS5d/mcorZ08vhU
++uBYdvSpdNoKCrIgmAaKPotnsYQtKmW0Mv3qgz2/fvvjhBlALSNoex7ejBND4UTkvZjiCWKYwDSD
+wrqmwCa8H0FBkz9CJq2pJIu25g+TmQoxKZETlBrKdAVUU7Qty06KVaiixoaxWaRM6FAWBcu4RCja
+Ym+ruFyIjYNXuTBU1ZnuRJzzb2Nz4NvF+TIUqYnS9WXHrp37f7kcQGIG3aVqWM7gHNWMERSmRYOY
+RU2Vq/oTNlCr1Qr3CIwAwPU25TOx0hFSpU3Sp6vvvRb9LZqBXFYNFOOWFAykpoWcKmIDjiLGCAwM
+Rw42984M0Ae+29d9QkRCXeQMeh4FqzpFLXlcUtQaTPZCbLUCRYNmpWwzwA3/WaxCECWZ5JUykadO
+kxrQvZuTYEGSRsqUFIix5efzH/115uVH4BhIAXcCsp2rdocqpWlinL1wrj/yzk+vMi06iqMXTMam
+FShYRCkUKWB3rPpkIIb02vVvPvzhsRt/AHKmgcycOlgc+aytCm7tzQimNFUzhI+7X+x84+GKiEIZ
+JlTVi7hBLIvEHFRCr51qcInlmEuMO47rOEeGJlE4bxSmuTlF4mRmEkD4ih3YzUsC/QOXbl9WICgG
+dSuM4p12zXNd27gV0r8AC8eLubk57tOTGobGgC5JXVtZSKHlPlZbguByvvTJm8y0HQm/v9JorIjI
+9pGjIw8sujtyIr5OR37m78iSrmo1QuyOZAeE2K1nPXXvf9oJFmy9w6no5spCcpjbckVsvxdUiLGe
+tVWMnXerGFtcR8VZp4pWpuJYOpvdkAK2s93HOg+gt2AtrMyvzfpJD+uDc+uwVv2siapumHX/rVjX
+L0+s+9dmfQC5WR9D67C+7GTdzhiP6uxbw34Y/yHio8t9zspvRvzPrv+HO8O6d/Ox5nC+CtkBsd7n
+OJn9JAIwxIgAn5ma/Xsd09RaFr6habmw+lNtEVqYg6+frBBDB+9I09ugVlhgJgndPvd+a4Cvl/R6
+8pHw9oOn5vmMxY0L3Nk4gi3uq8Pa3n40psyBVjkpsm9OCEawgXYPRxOTX0McPof8PQ19vrLw6EbQ
+r15c7nOgvz5/guVYdKL7w/H3W4M8HNGoA5khuZBfOnrUgQzZmF4DmS0GLTEKNYysgBMSIFyQu11k
+ATJ3W0iBP3c1ny7s3W66Sxe92Kc2jb3kCYWnIAAbbxrbm8CEj7d8W2x30hIepklfhE/eAVrSE9Ok
+rwSm7gTNk/2kT+kzdTTkaYTU9zPLvBFurjYCLzB/OJOuAGwVrg57UjVw5V8u1K8NtQsAAA==</attribute>
+  <attribute name="modelProperties" type="STRING_ARRAY">
+    <item>modeler.view.relationship.action.hierarchicalLayout</item>
+    <item>true</item>
+    <item>modeler.view.relationship.action.toggleNavigator</item>
+    <item>true</item>
+    <item>modeler.view.relationship.currentLayoutStyle</item>
+    <item>HIERARCHICAL</item>
+  </attribute>
+  <attribute name="relatedResourceRefs" type="SET"></attribute>
+  <attribute name="relationshipCriteria" type="OBJECT">rO0ABXNyADZjb20uY29tcG9zaXRlc3cuY29tbW9uLnJlcG9zaXRvcnkuUmVsYXRpb25zaGlwQ3Jp
+dGVyaWEAAAAV30W50QIAB0kACG1heENvdW50RAAIbWF4U2NvcmVEAAhtaW5TY29yZUkADHNjYW5J
+ZEZpbHRlclsADWNhcmRpbmFsaXRpZXN0AAJbSVsACHN0YXR1c2VzcQB+AAFbAAV0eXBlc3EAfgAB
+eHB/////f+////////8/5mZmZmZmZv////91cgACW0lNumAmduqypQIAAHhwAAAABQAAAAQAAAAD
+AAAAAgAAAAEAAAAAdXEAfgADAAAABAAAAAEAAAACAAAAAAAAAANw</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1548972261208</attribute>
+  <attribute name="tableModelProperties" type="STRING_ARRAY"></attribute>
+</metadata>

@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="ElasticSearchLocalhost" path="/shared/ElasticSearch/Physical/ElasticSearchLocalhost" type="DATA_SOURCE" subtype="RELATIONAL" changeToken="-7082005148133752727">
+  <security>
+    <owner user="admin" domain="composite"/>
+    <privilege group="daycaregroup" domain="composite" privileges="READ SELECT"/>
+  </security>
+  <attribute name="authscheme" type="STRING">NONE</attribute>
+  <attribute name="commitOnFetchDone" type="BOOLEAN">true</attribute>
+  <attribute name="connPoolMaxSize" type="INTEGER">100</attribute>
+  <attribute name="connPoolMinSize" type="INTEGER">0</attribute>
+  <attribute name="connPoolTimeout" type="INTEGER">30</attribute>
+  <attribute name="connStaleTimeout" type="INTEGER">60</attribute>
+  <attribute name="creationDate" type="LONG">1543607283923</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="driverName" type="STRING">Elasticsearch</attribute>
+  <attribute name="ds.conn_checkout_timeout" type="INTEGER">45</attribute>
+  <attribute name="execTimeout" type="INTEGER">0</attribute>
+  <attribute name="firewalltype" type="STRING">NONE</attribute>
+  <attribute name="flattenobjects" type="BOOLEAN">true</attribute>
+  <attribute name="generateschemafiles" type="STRING">Never</attribute>
+  <attribute name="isEnabled" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.comparisons_case_insensitive" type="BOOLEAN">false</attribute>
+  <attribute name="jdbcds.ignore_case_sensitivity_mismatch" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.ignore_trailing_spaces_mismatch" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.no_support_query_timeout" type="BOOLEAN">true</attribute>
+  <attribute name="jdbcds.trailing_spaces_included_in_comparison" type="BOOLEAN">true</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1543607283923</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="maxresults" type="STRING">10000</attribute>
+  <attribute name="name" type="STRING">ElasticSearchLocalhost</attribute>
+  <attribute name="pagesize" type="STRING">10000</attribute>
+  <attribute name="port" type="STRING">9200</attribute>
+  <attribute name="proxyauthscheme" type="STRING">BASIC</attribute>
+  <attribute name="proxyautodetect" type="BOOLEAN">true</attribute>
+  <attribute name="proxyport" type="STRING">80</attribute>
+  <attribute name="proxyssltype" type="STRING">AUTO</attribute>
+  <attribute name="querypassthrough" type="BOOLEAN">false</attribute>
+  <attribute name="readonly" type="BOOLEAN">false</attribute>
+  <attribute name="region" type="STRING">NORTHERNVIRGINIA</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1543607283923</attribute>
+  <attribute name="rowscandepth" type="STRING">100</attribute>
+  <attribute name="scrollduration" type="STRING">1m</attribute>
+  <attribute name="server" type="STRING">localhost</attribute>
+  <attribute name="sslclientcertsubject" type="STRING">*</attribute>
+  <attribute name="timeout" type="STRING">60</attribute>
+  <attribute name="txnIsolationLevel" type="STRING">Read Committed</attribute>
+  <attribute name="type" type="STRING">cloud_nosql</attribute>
+</metadata>

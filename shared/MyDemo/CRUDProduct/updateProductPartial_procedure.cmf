@@ -1,0 +1,156 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="updateProductPartial" path="/shared/MyDemo/CRUDProduct/updateProductPartial" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="InProductID" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InProductName" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="50"/>
+    </parameter>
+    <parameter name="InProductDescription" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="InCategoryID" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InSerialNumber" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="50"/>
+    </parameter>
+    <parameter name="InUnitPrice" direction="IN" nullable="true">
+      <datatype name="DECIMAL" type="DECIMAL" maxDigits="12" maxFractionalDigits="2"/>
+    </parameter>
+    <parameter name="InReorderLevel" direction="IN" nullable="true">
+      <datatype name="INTEGER" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+    </parameter>
+    <parameter name="InLeadTime" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="30"/>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/lib/debug/Log" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToLog" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/debug/Print" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToPrint" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="Script" type="STRING">-- CIS Procedure: updateProductPartial
+--
+-- DESC: Update a product view with supplied values. This example checks to see which
+--	 input values have been supplied and only updates those supplied values.
+--
+-- USAGE: Publish this procedure as a web service and call it using a SOAP request.
+
+PROCEDURE updateProductPartial(
+	IN	InProductID		INTEGER,
+	IN	InProductName		VARCHAR(50),
+	IN	InProductDescription	VARCHAR(255),
+	IN	InCategoryID		INTEGER,
+	IN	InSerialNumber		VARCHAR(50),
+	IN	InUnitPrice		DECIMAL(12,2),
+	IN	InReorderLevel		INTEGER,
+	IN	InLeadTime		VARCHAR(30)	
+)
+label1:
+BEGIN
+
+	DECLARE sqlcmd VARCHAR(4096);
+	SET  sqlcmd = &apos;&apos;;
+	-- Check to see if a new product name was supplied
+	IF ( InProductName &lt;&gt; NULL OR length(InProductName) &gt; 0) THEN
+		SET sqlcmd = sqlcmd || &apos; ProductName = &apos;&apos;&apos; || InProductName || &apos;&apos;&apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new product desc was supplied
+	IF ( InProductDescription &lt;&gt; NULL OR length(InProductDescription) &gt; 0) THEN
+		SET sqlcmd = sqlcmd || &apos; ProductDescription = &apos;&apos;&apos; || InProductDescription || &apos;&apos;&apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new category id was supplied
+	
+	IF ( InCategoryID &gt; 0 ) THEN
+		SET sqlcmd = sqlcmd || &apos; CategoryID = &apos; || InCategoryID || &apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new serial number was supplied
+	IF ( InSerialNumber &lt;&gt; NULL OR length(InSerialNumber) &gt; 0) THEN
+		SET sqlcmd = sqlcmd || &apos; SerialNumber = &apos;&apos;&apos; || InSerialNumber || &apos;&apos;&apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new unit price was supplied
+	
+	IF ( InUnitPrice &gt; 0 ) THEN
+		SET sqlcmd = sqlcmd || &apos; UnitPrice = &apos; || InUnitPrice || &apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new reorder level was supplied
+	IF ( InReorderLevel &lt;&gt; NULL ) THEN
+	SET sqlcmd = sqlcmd || &apos; InReorderLevel = &apos; || InReorderLevel || &apos;,&apos;;
+	END IF;
+
+	-- Check to see if a new lead time was supplied
+	IF ( InLeadTime &lt;&gt; NULL OR length(InLeadTime) &gt; 0) THEN
+		SET sqlcmd = sqlcmd || &apos; LeadTime = &apos;&apos;&apos; || InLeadTime || &apos;&apos;&apos;,&apos;;
+	END IF;
+
+
+	-- If nothing to process, leave routine
+	
+	IF (sqlcmd = NULL OR sqlcmd = &apos;&apos;) THEN
+		LEAVE label1;
+	END IF;
+
+	SET	 sqlcmd = &apos;UPDATE /shared/MyDemo/CRUDProduct/Product_View SET &apos; || sqlcmd;
+	
+	-- remove trailing comma
+	SET sqlcmd = SUBSTRING(sqlcmd, 0, length(sqlcmd));
+
+	SET sqlcmd = sqlcmd || &apos; WHERE ProductID = &apos;&apos;&apos; || InProductID || &apos;&apos;&apos;&apos;;
+
+	-- print to the console
+	CALL print(sqlcmd);
+
+	-- log to the ./CIS 4.6.0/logs/cs_server.log file
+	CALL log(sqlcmd);
+
+	EXECUTE IMMEDIATE sqlcmd;
+
+END</attribute>
+  <attribute name="creationDate" type="LONG">0</attribute>
+  <attribute name="creatorUserDomain" type="STRING"/>
+  <attribute name="creatorUserName" type="STRING"/>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1555165478432</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="native_only" type="STRING">false</attribute>
+  <attribute name="references" type="MAP">
+    <item>
+      <key type="STRING">7/78</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Log</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">7/75</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+  </attribute>
+</metadata>

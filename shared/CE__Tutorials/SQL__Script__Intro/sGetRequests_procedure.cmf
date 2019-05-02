@@ -1,0 +1,224 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="sGetRequests" path="/shared/CE_Tutorials/SQL_Script_Intro/sGetRequests" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
+  <parameters>
+    <parameter name="userDesiredIdentity" direction="IN" nullable="true">
+      <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+    </parameter>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype name="result" type="TABLE" refId="1">
+        <element name="REQUEST_ID">
+          <datatype name="BIGINT" type="INTEGER"/>
+        </element>
+        <element name="OWNER">
+          <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+        </element>
+        <element name="REQUEST_TYPE">
+          <datatype name="VARCHAR" type="STRING" maxLength="255"/>
+        </element>
+        <element name="STATUS">
+          <datatype name="VARCHAR" type="STRING" maxLength="20"/>
+        </element>
+        <element name="DESCRIPTION">
+          <datatype name="VARCHAR" type="STRING" maxLength="65535"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/lib/debug/Log" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToLog" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/debug/Print" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="textToPrint" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="MessageValue" type="STRING" maxLength="64000"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/util/GetProperty" type="PROCEDURE">
+    <datatype type="PROCEDURE" refId="1">
+      <element name="property" direction="IN">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="PropertyName" type="STRING" maxLength="255"/>
+      </element>
+      <element name="result" direction="OUT">
+        <datatype referenceDefinitionSet="/lib/util/System" referenceType="PropertyValue" type="STRING" maxLength="4096"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/services/databases/system/SYS_REQUESTS" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REQUEST_ID">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="PARENT_ID">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="SESSION_ID">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="TRANSACTION_ID">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="OWNER_ID">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="OWNER">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="REQUEST_TYPE">
+        <datatype type="STRING" maxLength="255"/>
+      </element>
+      <element name="STATUS">
+        <datatype type="STRING" maxLength="24"/>
+      </element>
+      <element name="DESCRIPTION">
+        <datatype type="STRING" maxLength="65535"/>
+      </element>
+      <element name="START_TIME">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="END_TIME">
+        <datatype type="DATETIME"/>
+      </element>
+      <element name="TOTAL_DURATION">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="SERVER_DURATION">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="ROWS_AFFECTED">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="MAX_MEMORY">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="MAX_DISK">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="CURRENT_MEMORY">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="CURRENT_DISK">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="MESSAGE">
+        <datatype type="STRING" maxLength="65535"/>
+      </element>
+      <element name="MAX_USED_MEMORY">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="CURRENT_USED_MEMORY">
+        <datatype type="INTEGER"/>
+      </element>
+    </datatype>
+  </dependency>
+  <attribute name="Script" type="STRING">PROCEDURE sGetRequests(
+--
+-- Input parameter is the name of the user for whom we want to 
+-- retrieve System Requests.
+--
+	IN userDesiredIdentity VARCHAR(255),
+--
+-- Output parameter is a cursor showing selected columns from
+-- the System Requests for the desired user.
+--
+	OUT result CURSOR(
+		REQUEST_ID 		BIGINT,
+		OWNER 			VARCHAR(255),
+		REQUEST_TYPE 	VARCHAR(255),
+		STATUS			VARCHAR(20),
+		DESCRIPTION 	VARCHAR(65535)	
+	)
+)
+BEGIN
+  
+	DECLARE userActualIdentity VARCHAR(255);
+	DECLARE illegal_access_attempt_ex EXCEPTION;
+	DECLARE illegal_access_message VARCHAR(255);
+--
+-- Retrieve the name of the user invoking this script
+--
+	CALL /lib/util/GetProperty( &apos;CURRENT_USER_NAME&apos;, userActualIdentity );
+--
+-- The user named &apos;admin&apos; can retrieve anyone&apos;s System Request data.
+--
+	IF userActualIdentity = &apos;admin&apos;
+		THEN
+			OPEN result FOR 
+				SELECT TOP 100
+					REQUEST_ID,
+					OWNER,
+					REQUEST_TYPE,
+					STATUS,
+					DESCRIPTION
+				FROM /services/databases/system/SYS_REQUESTS
+				WHERE OWNER = userDesiredIdentity;
+--
+-- Users other than &apos;admin&apos; can only retrieve their own System Request data.
+--
+		ELSEIF userDesiredIdentity = userActualIdentity
+			THEN
+				OPEN result FOR
+					SELECT TOP 100
+						REQUEST_ID,
+						OWNER,
+						REQUEST_TYPE,
+						STATUS,
+						DESCRIPTION
+					FROM /services/databases/system/SYS_REQUESTS
+					WHERE OWNER = userActualIdentity;
+--
+-- If a user not named &apos;admin&apos; tries to get someone else&apos;s System Requests,
+-- raise an Exception.
+--					
+		ELSE
+			SET illegal_access_message = &apos;User &apos; || userActualIdentity || &apos; tried to read System Requests for User &apos; || userDesiredIdentity;
+			RAISE illegal_access_attempt_ex VALUE illegal_access_message;
+	END IF;
+--
+-- Handle the Exception by printing to console and writing to CIS Log.
+-- NOTE that illegal_access_message is VISIBLE within the Exception Block.
+--
+	EXCEPTION
+		WHEN illegal_access_attempt_ex THEN
+			CALL PRINT( illegal_access_message );
+			CALL LOG( illegal_access_message );
+END</attribute>
+  <attribute name="creationDate" type="LONG">1488826430109</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1488891192261</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="model" type="NULL"/>
+  <attribute name="native_only" type="STRING">false</attribute>
+  <attribute name="references" type="MAP">
+    <item>
+      <key type="STRING">9/70</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Print</item>
+      </value>
+    </item>
+    <item>
+      <key type="STRING">9/71</key>
+      <value type="STRING_ARRAY">
+        <item>lib</item>
+        <item>debug</item>
+        <item>Log</item>
+      </value>
+    </item>
+  </attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1488826430109</attribute>
+</metadata>

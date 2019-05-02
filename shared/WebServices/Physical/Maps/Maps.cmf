@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<metadata name="Maps" path="/shared/WebServices/Physical/Maps" type="DATA_SOURCE" subtype="NONE" changeToken="0">
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/WebServices/Physical/Maps/laodjsonDefinitions" type="DEFINITION_SET">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="BadgerFish" type="STRING">false</attribute>
+  <attribute name="JSONFormat" type="STRING">true</attribute>
+  <attribute name="OAuthConfig" type="NULL"/>
+  <attribute name="PackageName" type="STRING">pkg</attribute>
+  <attribute name="PrimitiveValue" type="STRING">false</attribute>
+  <attribute name="RestOperations" type="STRING">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;bindingModel&gt;&lt;portBindings&gt;&lt;portBinding xsi:type=&quot;restfulPortBinding&quot; serviceName=&quot;laodjson&quot; jsonWrappedTable=&quot;true&quot; jsonWrappedCursor=&quot;true&quot; jsonValidateXml=&quot;true&quot; jsonUseProcParamName=&quot;false&quot; jsonFieldAsString=&quot;false&quot; jsonBareValue=&quot;false&quot; enabled=&quot;false&quot; bindingStyles=&quot;&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;operationBindings&gt;&lt;operationBinding xsi:type=&quot;restfulProcedureBinding&quot; operationPathTemplate=&quot;coder.json?country=US&amp;amp;state=NY&amp;amp;maporamakey=072I29QgDJZ2qc8qjKchgg==&quot; httpMethod=&quot;GET&quot; resourceName=&quot;laodjson&quot; requestWrapperQName=&quot;&quot; parameterStyle=&quot;BARE&quot; responseWrapperQName=&quot;&quot;&gt;&lt;parameterBindings&gt;&lt;parameterBinding xsi:type=&quot;restfulParameterBinding&quot; xml=&quot;false&quot; parameterFormat=&quot;XML&quot; nulLable=&quot;false&quot; name=&quot;OUT&quot; definitionName=&quot;wrap&quot; inOut=&quot;OUT&quot; dataType=&quot;DEFINITION&quot; isUrl=&quot;false&quot; location=&quot;Body&quot; definitionStr=&quot;shared/WebServices/Physical/Maps/laodjsonDefinitions/&amp;quot;wrap&amp;quot;&quot;/&gt;&lt;/parameterBindings&gt;&lt;/operationBinding&gt;&lt;/operationBindings&gt;&lt;/portBinding&gt;&lt;/portBindings&gt;&lt;/bindingModel&gt;</attribute>
+  <attribute name="accessToken" type="STRING"/>
+  <attribute name="authentication" type="STRING">BASIC</attribute>
+  <attribute name="autoAddChildren" type="BOOLEAN">true</attribute>
+  <attribute name="cacheStatusAndTrackingDS" type="STRING"/>
+  <attribute name="cacheStatusTable" type="STRING"/>
+  <attribute name="cacheTrackingTable" type="STRING"/>
+  <attribute name="creationDate" type="LONG">1523050382671</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="domain" type="STRING"/>
+  <attribute name="driverName" type="STRING">REST</attribute>
+  <attribute name="encodeUrl" type="BOOLEAN">true</attribute>
+  <attribute name="environmentPassThrough" type="STRING"/>
+  <attribute name="execTimeout" type="LONG">0</attribute>
+  <attribute name="isPassThrough" type="STRING">Disabled</attribute>
+  <attribute name="jsonResponseWrapper" type="STRING">wrap</attribute>
+  <attribute name="keystore" type="MAP"></attribute>
+  <attribute name="lastModifiedDate" type="LONG">1523050487277</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="login" type="STRING"/>
+  <attribute name="name" type="STRING">Maps</attribute>
+  <attribute name="persistPassword" type="BOOLEAN">true</attribute>
+  <attribute name="propertyPassThrough" type="STRING"/>
+  <attribute name="reintrospection_recommended" type="BOOLEAN">true</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1523050382671</attribute>
+  <attribute name="retrieveToken" type="STRING">true</attribute>
+  <attribute name="spn" type="STRING"/>
+  <attribute name="type" type="STRING">Rest</attribute>
+  <attribute name="url" type="STRING">http://geowebservices.maporama.com/athiagar</attribute>
+  <attribute name="userDeletedSet" type="SET"></attribute>
+</metadata>
