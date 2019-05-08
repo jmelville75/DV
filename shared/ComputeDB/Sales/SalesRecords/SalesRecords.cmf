@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:957255c4-1081-4592-ae4b-fb39bddd3b2a -->
+<!-- salt:5628730d-82e4-4e09-a3ba-1bb7b019f801 -->
 <metadata name="SalesRecords" path="/shared/ComputeDB/Sales/SalesRecords" type="DATA_SOURCE" subtype="RELATIONAL" changeToken="0">
   <security>
     <owner user="admin" domain="composite"/>
@@ -36,7 +36,7 @@
   <attribute name="minTargetToSourceRatioForSJ" type="STRING"/>
   <attribute name="name" type="STRING">SalesRecords</attribute>
   <attribute name="nativeDataLoadingEnabled" type="BOOLEAN">true</attribute>
-  <attribute name="password" type="PASSWORD_STRING">ENC(ydcg2xp8P6PV3aunsld0fQ==$RCGJdd/WGr9C/NZfmr647g==)</attribute>
+  <attribute name="password" type="PASSWORD_STRING">ENC(qriUdZBn8gQVo93PVN0glw==$gCvDnlXaJj9TiMpUlqzRdw==)</attribute>
   <attribute name="patternSeparator" type="STRING">,</attribute>
   <attribute name="persistPassword" type="BOOLEAN">true</attribute>
   <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556632332073</attribute>
