@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:adc4331e-801d-41d3-a28c-1dc6d648e7c4 -->
+<!-- salt:38300bee-4a77-482a-8c73-1eac6f99e3f8 -->
 <metadata name="SalesRegionAggregationsAvg" path="/shared/ComputeDB/Sales/SalesRegionAggregationsAvg" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
   <columns>
     <column name="REGION" nullable="true">
@@ -103,10 +103,170 @@
   <foreignKeys></foreignKeys>
   <security>
     <owner user="admin" domain="composite"/>
+    <privilege group="all" domain="dynamic" privileges="READ SELECT"/>
     <privilege group="united states of america" domain="composite" privileges="READ SELECT"/>
     <privilege group="north america" domain="composite" privileges="READ SELECT"/>
     <privilege group="regional" domain="composite" privileges="READ SELECT"/>
   </security>
+  <dependency target="/lib/sources/defaultCacheDataSource" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view210112_0" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view210112_1" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
+  <dependency target="/lib/sources/defaultCacheDataSource/ciscache/view210112_2" type="TABLE">
+    <datatype type="TABLE" refId="1">
+      <element name="REGION">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ITEMTYPE">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="SALESCHANNEL">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="ORDERPRIORITY">
+        <datatype type="STRING" maxLength="4000"/>
+      </element>
+      <element name="avg_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="avg_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="avg_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="sum_unitssold">
+        <datatype type="INTEGER"/>
+      </element>
+      <element name="sum_unitprice">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_unitcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalrevenue">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalcost">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="sum_totalprofit">
+        <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+    </datatype>
+  </dependency>
   <dependency target="/shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records" type="TABLE">
     <datatype type="TABLE" refId="1">
       <element name="REGION">
@@ -176,6 +336,38 @@ GROUP BY
     records.region, records.itemtype, records.saleschannel, records.orderpriority  
 ORDER BY 
 	records.region, records.itemtype, records.saleschannel, records.orderpriority</attribute>
+  <attribute name="cacheBucketMode" type="STRING">AUTO_GEN</attribute>
+  <attribute name="cacheBucketPrefix" type="STRING">view210112_</attribute>
+  <attribute name="cacheBucketSchema" type="STRING">ciscache</attribute>
+  <attribute name="cacheClearRule" type="STRING">MANUAL</attribute>
+  <attribute name="cacheConfigured" type="BOOLEAN">true</attribute>
+  <attribute name="cacheDeltaLoader" type="NULL"/>
+  <attribute name="cacheDropCreateIdx" type="BOOLEAN">true</attribute>
+  <attribute name="cacheEnabled" type="BOOLEAN">true</attribute>
+  <attribute name="cacheIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheLastTracking" type="STRING">/lib/sources/defaultCacheDataSource/ciscache/cstracking</attribute>
+  <attribute name="cacheNumBuckets" type="INTEGER">3</attribute>
+  <attribute name="cachePostRefreshCallback" type="NULL"/>
+  <attribute name="cachePreRefreshCallback" type="NULL"/>
+  <attribute name="cachePullBasedIncremental" type="BOOLEAN">false</attribute>
+  <attribute name="cacheRefreshMode" type="STRING">MANUAL</attribute>
+  <attribute name="cacheSnapshotLoader" type="NULL"/>
+  <attribute name="cacheStorageSource" type="STRING">/lib/sources/defaultCacheDataSource</attribute>
+  <attribute name="cacheStorageTargets" type="MAP">
+    <item>
+      <key type="STRING">result</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view210112_0</value>
+    </item>
+    <item>
+      <key type="STRING">result1</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view210112_1</value>
+    </item>
+    <item>
+      <key type="STRING">result2</key>
+      <value type="STRING">/lib/sources/defaultCacheDataSource/ciscache/view210112_2</value>
+    </item>
+  </attribute>
+  <attribute name="cacheStorageType" type="STRING">DATA_SOURCE_OTPS</attribute>
   <attribute name="creationDate" type="LONG">1556041787249</attribute>
   <attribute name="creatorUserDomain" type="STRING">composite</attribute>
   <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
@@ -183,10 +375,123 @@ ORDER BY
   <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
   <attribute name="impactLevel" type="INTEGER">0</attribute>
   <attribute name="impactMessage" type="NULL"/>
-  <attribute name="lastModifiedDate" type="LONG">1557321680854</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1557323462241</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
   <attribute name="model" type="NULL"/>
   <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556041787249</attribute>
+  <trigger>
+    <security>
+      <owner user="admin" domain="composite"/>
+    </security>
+    <dependency target="/lib/resource/RefreshResourceCache" type="PROCEDURE">
+      <datatype name="Tree" type="TREE" refId="1"></datatype>
+    </dependency>
+    <dependency target="/shared/ComputeDB/Sales/SalesRegionAggregationsAvg" type="TABLE">
+      <datatype type="TABLE" refId="1">
+        <element name="REGION">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="ITEMTYPE">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="SALESCHANNEL">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="ORDERPRIORITY">
+          <datatype type="STRING" maxLength="4000"/>
+        </element>
+        <element name="avg_unitssold">
+          <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="avg_unitprice">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_unitcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalcost">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="avg_totalprofit">
+          <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_unitssold">
+          <datatype type="INTEGER"/>
+        </element>
+        <element name="sum_unitprice">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_unitcost">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalrevenue">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalcost">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+        <element name="sum_totalprofit">
+          <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+        </element>
+      </datatype>
+    </dependency>
+    <attribute name="actionProperties" type="MAP">
+      <item>
+        <key type="STRING">PATH</key>
+        <value type="STRING">/lib/resource/RefreshResourceCache</value>
+      </item>
+      <item>
+        <key type="STRING">PARAMETERS</key>
+        <value type="STRING">&apos;/shared/ComputeDB/Sales/SalesRegionAggregationsAvg&apos;,&apos;TABLE&apos;</value>
+      </item>
+    </attribute>
+    <attribute name="actionType" type="STRING">PROCEDURE</attribute>
+    <attribute name="conditionSchedule" type="MAP">
+      <item>
+        <key type="STRING">mode</key>
+        <value type="STRING">CALENDAR</value>
+      </item>
+      <item>
+        <key type="STRING">period</key>
+        <value type="INTEGER">2</value>
+      </item>
+      <item>
+        <key type="STRING">count</key>
+        <value type="INTEGER">1</value>
+      </item>
+      <item>
+        <key type="STRING">startTime</key>
+        <value type="LONG">1557323386000</value>
+      </item>
+      <item>
+        <key type="STRING">interval</key>
+        <value type="INTEGER">0</value>
+      </item>
+      <item>
+        <key type="STRING">endTime</key>
+        <value type="LONG">0</value>
+      </item>
+      <item>
+        <key type="STRING">isCluster</key>
+        <value type="BOOLEAN">false</value>
+      </item>
+    </attribute>
+    <attribute name="conditionType" type="STRING">TIMER</attribute>
+    <attribute name="creationDate" type="LONG">1557323395762</attribute>
+    <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+    <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+    <attribute name="creatorUserName" type="STRING">admin</attribute>
+    <attribute name="enabled" type="BOOLEAN">false</attribute>
+    <attribute name="isChildTrigger" type="BOOLEAN">true</attribute>
+    <attribute name="lastModifiedDate" type="LONG">1557323462241</attribute>
+    <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+    <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+    <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+    <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1557323395762</attribute>
+  </trigger>
 </metadata>
