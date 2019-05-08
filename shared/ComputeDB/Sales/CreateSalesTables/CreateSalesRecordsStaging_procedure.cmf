@@ -1,50 +1,50 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:a9299d5e-ec83-4f8d-adbb-1242ce92deb8 -->
-<metadata name="CreateSalesRecords" path="/shared/ComputeDB/Sales/CreateSalesRecords" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+<!-- salt:a6dc8c83-d549-4146-a24e-f578376b2438 -->
+<metadata name="CreateSalesRecordsStaging" path="/shared/ComputeDB/Sales/CreateSalesTables/CreateSalesRecordsStaging" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
   <annotation/>
   <parameters>
     <parameter name="result" direction="OUT" nullable="true">
       <datatype type="TABLE" refId="1">
-        <element name="REGION">
+        <element name="Region">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="COUNTRY">
+        <element name="Country">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="ITEMTYPE">
+        <element name="ItemType">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="SALESCHANNEL">
+        <element name="SalesChannel">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="ORDERPRIORITY">
+        <element name="OrderPriority">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="ORDERDATE">
+        <element name="OrderDate">
           <datatype name="DATE" extendedName="DATE" subType="DATASOURCE_TYPE" type="DATE"/>
         </element>
-        <element name="ORDERID">
+        <element name="OrderID">
           <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
         </element>
-        <element name="SHIPDATE">
+        <element name="ShipDate">
           <datatype name="DATE" extendedName="DATE" subType="DATASOURCE_TYPE" type="DATE"/>
         </element>
-        <element name="UNITSSOLD">
+        <element name="UnitsSold">
           <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
         </element>
-        <element name="UNITPRICE">
+        <element name="UnitPrice">
           <datatype name="DECIMAL" extendedName="DECIMAL(10,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="10" maxFractionalDigits="2"/>
         </element>
-        <element name="UNITCOST">
+        <element name="UnitCost">
           <datatype name="DECIMAL" extendedName="DECIMAL(10,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="10" maxFractionalDigits="2"/>
         </element>
-        <element name="TOTALREVENUE">
+        <element name="TotalRevenue">
           <datatype name="DECIMAL" extendedName="DECIMAL(10,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="10" maxFractionalDigits="2"/>
         </element>
-        <element name="TOTALCOST">
+        <element name="TotalCost">
           <datatype name="DECIMAL" extendedName="DECIMAL(10,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="10" maxFractionalDigits="2"/>
         </element>
-        <element name="TOTALPROFIT">
+        <element name="TotalProfit">
           <datatype name="DECIMAL" extendedName="DECIMAL(10,2)" subType="DATASOURCE_TYPE" type="DECIMAL" maxDigits="10" maxFractionalDigits="2"/>
         </element>
       </datatype>
@@ -57,22 +57,23 @@
     <datatype name="Tree" type="TREE" refId="1"></datatype>
   </dependency>
   <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
-DROP TABLE IF EXISTS SALES.RecordsNew; ;
-CREATE TABLE SALES.RecordsNew
-USING COLUMN OPTIONS (BUCKETS &apos;7&apos;, PARTITION_BY &apos;REGION&apos;, PERSISTENCE &apos;SYNCHRONOUS&apos;)
-AS (SELECT * FROM SALES.staging_records); ;	  
-SELECT * FROM SALES.RecordsNew LIMIT 1; ;</attribute>
-  <attribute name="creationDate" type="LONG">1557317580388</attribute>
+DROP TABLE IF EXISTS SALES.staging_records; ;
+CREATE EXTERNAL TABLE SALES.staging_records using jdbc options 
+( url &apos;jdbc:sqlserver://tibcodmdd.csmbi1n37an1.us-east-1.rds.amazonaws.com:1433&apos;, 
+driver &apos;com.microsoft.sqlserver.jdbc.SQLServerDriver&apos; , 
+dbtable &apos;demodb.dbo.salesrecords&apos;, user &apos;DMDDadmin&apos;, password &apos;DMDD4dm1n&apos; ); ;
+select * from SALES.staging_records limit 1; ;</attribute>
+  <attribute name="creationDate" type="LONG">1557318053934</attribute>
   <attribute name="creatorUserDomain" type="STRING">composite</attribute>
   <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
   <attribute name="creatorUserName" type="STRING">admin</attribute>
   <attribute name="impactLevel" type="INTEGER">0</attribute>
   <attribute name="impactMessage" type="NULL"/>
   <attribute name="isSingleSelect" type="STRING">false</attribute>
-  <attribute name="lastModifiedDate" type="LONG">1557317902186</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1557318391058</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
   <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBJDBC</attribute>
-  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1557317580388</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1557318053934</attribute>
 </metadata>
