@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<!-- salt:957255c4-1081-4592-ae4b-fb39bddd3b2a -->
 <metadata name="SalesRecords" path="/shared/ComputeDB/Sales/SalesRecords" type="DATA_SOURCE" subtype="RELATIONAL" changeToken="0">
   <security>
     <owner user="admin" domain="composite"/>
@@ -7,7 +7,9 @@
     <privilege group="north america" domain="composite" privileges="READ EXECUTE SELECT"/>
     <privilege group="regional" domain="composite" privileges="READ EXECUTE SELECT"/>
   </security>
+  <attribute name="anyCharWildcard" type="STRING">%</attribute>
   <attribute name="authentication" type="STRING">BASIC</attribute>
+  <attribute name="autoAddChildren" type="BOOLEAN">false</attribute>
   <attribute name="collationSensitive" type="BOOLEAN">false</attribute>
   <attribute name="commitOnFetchDone" type="BOOLEAN">true</attribute>
   <attribute name="concurrentRequestLimit" type="INTEGER">0</attribute>
@@ -34,9 +36,13 @@
   <attribute name="minTargetToSourceRatioForSJ" type="STRING"/>
   <attribute name="name" type="STRING">SalesRecords</attribute>
   <attribute name="nativeDataLoadingEnabled" type="BOOLEAN">true</attribute>
-  <attribute name="password" type="PASSWORD_STRING">ENC(sGW2JiJMrlKVuAOfHTMufg==$9cO6G4+DX3MPpjuJYL1lsg==)</attribute>
+  <attribute name="password" type="PASSWORD_STRING">ENC(ydcg2xp8P6PV3aunsld0fQ==$RCGJdd/WGr9C/NZfmr647g==)</attribute>
+  <attribute name="patternSeparator" type="STRING">,</attribute>
   <attribute name="persistPassword" type="BOOLEAN">true</attribute>
   <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556632332073</attribute>
+  <attribute name="searchCaseSensitively" type="BOOLEAN">false</attribute>
+  <attribute name="searchEscape" type="STRING">\</attribute>
+  <attribute name="singleCharWildcard" type="STRING">_</attribute>
   <attribute name="supportsStarSchema" type="BOOLEAN">false</attribute>
   <attribute name="type" type="STRING">Hive2</attribute>
   <attribute name="urlDatabaseName" type="STRING">default</attribute>
