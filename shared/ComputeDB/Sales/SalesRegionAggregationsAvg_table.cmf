@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<!-- salt:adc4331e-801d-41d3-a28c-1dc6d648e7c4 -->
 <metadata name="SalesRegionAggregationsAvg" path="/shared/ComputeDB/Sales/SalesRegionAggregationsAvg" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
   <columns>
     <column name="REGION" nullable="true">
@@ -58,6 +58,42 @@
     </column>
     <column name="avg_totalprofit" nullable="true">
       <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitssold" nullable="true">
+      <datatype type="INTEGER"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="sum_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
       <security>
         <owner user="admin" domain="composite"/>
       </security>
@@ -127,7 +163,13 @@
     avg(records.UNITCOST) as avg_unitcost, 
     avg(records.TOTALREVENUE) as avg_totalrevenue, 
     avg(records.TOTALCOST) as avg_totalcost, 
-    avg(records.TOTALPROFIT) as avg_totalprofit
+    avg(records.TOTALPROFIT) as avg_totalprofit,
+	sum(records.UNITSSOLD) as sum_unitssold, 
+    sum(records.UNITPRICE) as sum_unitprice, 
+    sum(records.UNITCOST) as sum_unitcost, 
+    sum(records.TOTALREVENUE) as sum_totalrevenue, 
+    sum(records.TOTALCOST) as sum_totalcost, 
+    sum(records.TOTALPROFIT) as sum_totalprofit
 FROM      
     /shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records records
 GROUP BY 
@@ -141,7 +183,7 @@ ORDER BY
   <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
   <attribute name="impactLevel" type="INTEGER">0</attribute>
   <attribute name="impactMessage" type="NULL"/>
-  <attribute name="lastModifiedDate" type="LONG">1556317935839</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1557321680854</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
