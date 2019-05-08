@@ -1,8 +1,9 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<!-- salt:f43970f0-81d6-4b4c-8e1c-5d0a8834aa8c -->
 <metadata name="Sales" path="/shared/ComputeDB/Sales" type="CONTAINER" subtype="FOLDER" changeToken="0">
   <security>
     <owner user="admin" domain="composite"/>
+    <privilege group="all" domain="composite" privileges="READ SELECT"/>
     <privilege group="united states of america" domain="composite" privileges="READ EXECUTE SELECT"/>
     <privilege group="north america" domain="composite" privileges="READ EXECUTE SELECT"/>
     <privilege group="regional" domain="composite" privileges="READ WRITE GRANT"/>
