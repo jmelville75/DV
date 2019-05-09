@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:38300bee-4a77-482a-8c73-1eac6f99e3f8 -->
+<!-- salt:807befd6-f365-4ee0-b9ed-3c0e5853c1cd -->
 <metadata name="SalesRegionAggregationsAvg" path="/shared/ComputeDB/Sales/SalesRegionAggregationsAvg" type="TABLE" subtype="SQL_TABLE" changeToken="0" tableType="VIEW">
   <columns>
     <column name="REGION" nullable="true">
@@ -92,8 +92,44 @@
         <owner user="admin" domain="composite"/>
       </security>
     </column>
-    <column name="sum_totalprofit" nullable="true">
+    <column name="sum_totalprofi" nullable="true">
       <datatype type="DECIMAL" maxDigits="44" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitssold" nullable="true">
+      <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitprice" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_unitcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalrevenue" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalcost" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
+      <security>
+        <owner user="admin" domain="composite"/>
+      </security>
+    </column>
+    <column name="min_totalprofit" nullable="true">
+      <datatype type="DECIMAL" maxDigits="38" maxFractionalDigits="2"/>
       <security>
         <owner user="admin" domain="composite"/>
       </security>
@@ -158,8 +194,26 @@
       <element name="sum_totalcost">
         <datatype type="CLOB" maxLength="2147483647"/>
       </element>
-      <element name="sum_totalprofit">
+      <element name="sum_totalprofi">
         <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
       </element>
     </datatype>
   </dependency>
@@ -210,8 +264,26 @@
       <element name="sum_totalcost">
         <datatype type="CLOB" maxLength="2147483647"/>
       </element>
-      <element name="sum_totalprofit">
+      <element name="sum_totalprofi">
         <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
       </element>
     </datatype>
   </dependency>
@@ -262,8 +334,26 @@
       <element name="sum_totalcost">
         <datatype type="CLOB" maxLength="2147483647"/>
       </element>
-      <element name="sum_totalprofit">
+      <element name="sum_totalprofi">
         <datatype type="CLOB" maxLength="2147483647"/>
+      </element>
+      <element name="min_unitssold">
+        <datatype type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+      </element>
+      <element name="min_unitprice">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_unitcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalrevenue">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalcost">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
+      </element>
+      <element name="min_totalprofit">
+        <datatype type="DECIMAL" maxDigits="38" minFractionalDigits="2" maxFractionalDigits="2"/>
       </element>
     </datatype>
   </dependency>
@@ -329,7 +419,13 @@
     sum(records.UNITCOST) as sum_unitcost, 
     sum(records.TOTALREVENUE) as sum_totalrevenue, 
     sum(records.TOTALCOST) as sum_totalcost, 
-    sum(records.TOTALPROFIT) as sum_totalprofit
+    sum(records.TOTALPROFIT) as sum_totalprofi,
+min(records.UNITSSOLD) as min_unitssold, 
+    min(records.UNITPRICE) as min_unitprice, 
+    min(records.UNITCOST) as min_unitcost, 
+    min(records.TOTALREVENUE) as min_totalrevenue, 
+    min(records.TOTALCOST) as min_totalcost, 
+    min(records.TOTALPROFIT) as min_totalprofit
 FROM      
     /shared/ComputeDB/Sales/SalesRecordsConnection/SALES/records records
 GROUP BY 
@@ -375,7 +471,7 @@ ORDER BY
   <attribute name="explicitly.designed" type="BOOLEAN">false</attribute>
   <attribute name="impactLevel" type="INTEGER">0</attribute>
   <attribute name="impactMessage" type="NULL"/>
-  <attribute name="lastModifiedDate" type="LONG">1557323462241</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1557430845685</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
@@ -488,7 +584,7 @@ ORDER BY
     <attribute name="creatorUserName" type="STRING">admin</attribute>
     <attribute name="enabled" type="BOOLEAN">false</attribute>
     <attribute name="isChildTrigger" type="BOOLEAN">true</attribute>
-    <attribute name="lastModifiedDate" type="LONG">1557323462241</attribute>
+    <attribute name="lastModifiedDate" type="LONG">1557430843753</attribute>
     <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
     <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
     <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
