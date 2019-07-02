@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
-<metadata name="CreateSampleTablePackaged" path="/shared/ComputeDB/Airline/CreateSampleTablePackaged" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+<!-- salt:7c791406-3a4e-4e70-ba9b-cbaf1ad7bed9 -->
+<metadata name="CreateAirlineDestinationExternalTable" path="/shared/ComputeDB/Airline/CreateAirlineTables/CreateAirlineDestinationExternalTable" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
   <annotation/>
   <parameters>
     <parameter name="result" direction="OUT" nullable="true">
@@ -18,8 +18,8 @@
     <datatype name="Tree" type="TREE" refId="1"></datatype>
   </dependency>
   <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
-DROP TABLE IF EXISTS AIRLINE_DESTINATION_STAGING_TEST; ;
-CREATE EXTERNAL TABLE AIRLINE_DESTINATION_STAGING_TEST (
+DROP TABLE IF EXISTS AIRLINE_DESTINATION; ;
+CREATE EXTERNAL TABLE AIRLINE_DESTINATION (
 DestOpenFlightsID INTEGER NOT NULL,
 DestAirportName VARCHAR(100),
 DestCity VARCHAR(50),
@@ -35,7 +35,7 @@ DestTZTimeZone VARCHAR(30),
 DestAirportType VARCHAR(16),
 DestAirportDataSource VARCHAR(16))
 USING csv OPTIONS(path &apos;../../data/airline/DestinationAirports.csv&apos;); ;
-SELECT DestOpenFlightsID from AIRLINE_DESTINATION_STAGING_TEST LIMIT 1; ;</attribute>
+SELECT DestOpenFlightsID from AIRLINE_DESTINATION LIMIT 1; ;</attribute>
   <attribute name="creationDate" type="LONG">1556563221773</attribute>
   <attribute name="creatorUserDomain" type="STRING">composite</attribute>
   <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
@@ -43,7 +43,7 @@ SELECT DestOpenFlightsID from AIRLINE_DESTINATION_STAGING_TEST LIMIT 1; ;</attri
   <attribute name="impactLevel" type="INTEGER">0</attribute>
   <attribute name="impactMessage" type="NULL"/>
   <attribute name="isSingleSelect" type="STRING">false</attribute>
-  <attribute name="lastModifiedDate" type="LONG">1556629691271</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1558724495556</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>

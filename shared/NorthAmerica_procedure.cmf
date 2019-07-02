@@ -1,5 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:2d215042-d2d9-4904-9a79-484dfd6a2f1a -->
+<!-- salt:7c791406-3a4e-4e70-ba9b-cbaf1ad7bed9 -->
 <metadata name="NorthAmerica" path="/shared/NorthAmerica" type="PROCEDURE" subtype="SQL_SCRIPT_PROCEDURE" changeToken="0">
   <annotation>Row Level Security Filter Policy
 
@@ -44,7 +44,7 @@ Inputs:
       </element>
     </datatype>
   </dependency>
-  <attribute name="RbsFilterPolicy" type="STRING">&lt;ns1:FilterPolicy xmlns:ns1=&quot;http://www.compositesw.com/services/system/util/security&quot;&gt;&lt;ns1:name&gt;NorthAmerica&lt;/ns1:name&gt;&lt;ns1:folder&gt;/shared&lt;/ns1:folder&gt;&lt;ns1:enabled&gt;true&lt;/ns1:enabled&gt;&lt;ns1:form&gt;RULE&lt;/ns1:form&gt;&lt;ns1:policyGroup&gt;&lt;ns1:joinType&gt;ANY&lt;/ns1:joinType&gt;&lt;/ns1:policyGroup&gt;&lt;ns1:defaultRule&gt;&lt;ns1:filter&gt;ALL&lt;/ns1:filter&gt;&lt;/ns1:defaultRule&gt;&lt;ns1:memberRuleList&gt;&lt;ns1:memberRule&gt;&lt;ns1:member&gt;&lt;ns1:domain&gt;composite&lt;/ns1:domain&gt;&lt;ns1:name&gt;north america&lt;/ns1:name&gt;&lt;ns1:type&gt;GROUP&lt;/ns1:type&gt;&lt;/ns1:member&gt;&lt;ns1:filter&gt;PREDICATE&lt;/ns1:filter&gt;&lt;ns1:data&gt;REGION = &amp;apos;North America&amp;apos;&lt;/ns1:data&gt;&lt;/ns1:memberRule&gt;&lt;/ns1:memberRuleList&gt;&lt;ns1:assignmentList&gt;&lt;ns1:assignment&gt;/shared/ComputeDB/Sales/SalesRecords&lt;/ns1:assignment&gt;&lt;/ns1:assignmentList&gt;&lt;/ns1:FilterPolicy&gt;</attribute>
+  <attribute name="RbsFilterPolicy" type="STRING">&lt;ns1:FilterPolicy xmlns:ns1=&quot;http://www.compositesw.com/services/system/util/security&quot;&gt;&lt;ns1:name&gt;NorthAmerica&lt;/ns1:name&gt;&lt;ns1:folder&gt;/shared&lt;/ns1:folder&gt;&lt;ns1:enabled&gt;true&lt;/ns1:enabled&gt;&lt;ns1:form&gt;RULE&lt;/ns1:form&gt;&lt;ns1:policyGroup&gt;&lt;ns1:joinType&gt;ANY&lt;/ns1:joinType&gt;&lt;/ns1:policyGroup&gt;&lt;ns1:defaultRule&gt;&lt;ns1:filter&gt;ALL&lt;/ns1:filter&gt;&lt;/ns1:defaultRule&gt;&lt;ns1:memberRuleList&gt;&lt;ns1:memberRule&gt;&lt;ns1:member&gt;&lt;ns1:domain&gt;composite&lt;/ns1:domain&gt;&lt;ns1:name&gt;north america&lt;/ns1:name&gt;&lt;ns1:type&gt;GROUP&lt;/ns1:type&gt;&lt;/ns1:member&gt;&lt;ns1:filter&gt;PREDICATE&lt;/ns1:filter&gt;&lt;ns1:data&gt;REGION = &amp;apos;North America&amp;apos;&lt;/ns1:data&gt;&lt;/ns1:memberRule&gt;&lt;/ns1:memberRuleList&gt;&lt;ns1:assignmentList&gt;&lt;ns1:assignment&gt;/shared/ComputeDB/Sales/SalesRecords&lt;/ns1:assignment&gt;&lt;ns1:assignment&gt;/shared/ComputeDB/Sales/SalesCountryAggregationsSum&lt;/ns1:assignment&gt;&lt;/ns1:assignmentList&gt;&lt;/ns1:FilterPolicy&gt;</attribute>
   <attribute name="Script" type="STRING">PROCEDURE &quot;NorthAmerica&quot; (IN alias VARCHAR, IN resource VARCHAR(16384), OUT result VARCHAR(16384))
 BEGIN
 	DECLARE temp VARCHAR;
@@ -65,7 +65,7 @@ END
   <attribute name="creatorUserName" type="STRING">admin</attribute>
   <attribute name="disallowUIEditing" type="BOOLEAN">true</attribute>
   <attribute name="impactLevel" type="INTEGER">0</attribute>
-  <attribute name="lastModifiedDate" type="LONG">1556747582774</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1556889924589</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>

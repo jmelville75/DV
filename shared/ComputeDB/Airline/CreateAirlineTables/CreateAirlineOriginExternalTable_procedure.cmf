@@ -1,0 +1,89 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:7c791406-3a4e-4e70-ba9b-cbaf1ad7bed9 -->
+<metadata name="CreateAirlineOriginExternalTable" path="/shared/ComputeDB/Airline/CreateAirlineTables/CreateAirlineOriginExternalTable" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+  <annotation/>
+  <parameters>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype type="TABLE" refId="1">
+        <element name="ORIGINOPENFLIGHTSID">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="ORIGINAIRPORTNAME">
+          <datatype name="VARCHAR" extendedName="VARCHAR(100)" subType="DATASOURCE_TYPE" type="STRING" maxLength="100"/>
+        </element>
+        <element name="ORIGINCITY">
+          <datatype name="VARCHAR" extendedName="VARCHAR(50)" subType="DATASOURCE_TYPE" type="STRING" maxLength="50"/>
+        </element>
+        <element name="ORIGINCOUNTRY">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32"/>
+        </element>
+        <element name="ORIGINIATA">
+          <datatype name="VARCHAR" extendedName="VARCHAR(16)" subType="DATASOURCE_TYPE" type="STRING" maxLength="16"/>
+        </element>
+        <element name="ORIGINICAO">
+          <datatype name="VARCHAR" extendedName="VARCHAR(16)" subType="DATASOURCE_TYPE" type="STRING" maxLength="16"/>
+        </element>
+        <element name="ORIGINLATITUDE">
+          <datatype name="REAL" extendedName="REAL" subType="DATASOURCE_TYPE" type="FLOAT" minValue="1.1754943508222875E-38" maxValue="3.4028234663852886E38"/>
+        </element>
+        <element name="ORIGINLONGITUDE">
+          <datatype name="REAL" extendedName="REAL" subType="DATASOURCE_TYPE" type="FLOAT" minValue="1.1754943508222875E-38" maxValue="3.4028234663852886E38"/>
+        </element>
+        <element name="ORIGINALTITUDE">
+          <datatype name="REAL" extendedName="REAL" subType="DATASOURCE_TYPE" type="FLOAT" minValue="1.1754943508222875E-38" maxValue="3.4028234663852886E38"/>
+        </element>
+        <element name="ORIGINTIMEZONEUTC">
+          <datatype name="REAL" extendedName="REAL" subType="DATASOURCE_TYPE" type="FLOAT" minValue="1.1754943508222875E-38" maxValue="3.4028234663852886E38"/>
+        </element>
+        <element name="ORIGINDST">
+          <datatype name="VARCHAR" extendedName="VARCHAR(16)" subType="DATASOURCE_TYPE" type="STRING" maxLength="16"/>
+        </element>
+        <element name="ORIGINTZTIMEZONE">
+          <datatype name="VARCHAR" extendedName="VARCHAR(30)" subType="DATASOURCE_TYPE" type="STRING" maxLength="30"/>
+        </element>
+        <element name="ORIGINAIRPORTTYPE">
+          <datatype name="VARCHAR" extendedName="VARCHAR(16)" subType="DATASOURCE_TYPE" type="STRING" maxLength="16"/>
+        </element>
+        <element name="ORIGINAIRPORTDATASOURCE">
+          <datatype name="VARCHAR" extendedName="VARCHAR(16)" subType="DATASOURCE_TYPE" type="STRING" maxLength="16"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBJDBC" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
+DROP TABLE IF EXISTS AIRLINE_ORIGIN; ;
+CREATE EXTERNAL TABLE AIRLINE_ORIGIN (
+OriginOpenFlightsID INTEGER NOT NULL,
+OriginAirportName VARCHAR(100),
+OriginCity VARCHAR(50),
+OriginCountry VARCHAR(32),
+OriginIATA VARCHAR(16),
+OriginICAO VARCHAR(16),
+OriginLatitude REAL,
+OriginLongitude REAL,
+OriginAltitude REAL,
+OriginTimezoneUTC REAL,
+OriginDST VARCHAR(16),
+OriginTZTimeZone VARCHAR(30),
+OriginAirportType VARCHAR(16),
+OriginAirportDataSource VARCHAR(16))
+USING csv OPTIONS(path &apos;../../data/airline/OriginAirports.csv&apos;); ;
+SELECT * from AIRLINE_ORIGIN LIMIT 1; ;</attribute>
+  <attribute name="creationDate" type="LONG">1556563221773</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="isSingleSelect" type="STRING">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1558724506376</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBJDBC</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556563221773</attribute>
+</metadata>

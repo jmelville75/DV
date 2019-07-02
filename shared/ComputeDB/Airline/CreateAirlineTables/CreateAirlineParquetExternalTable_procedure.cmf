@@ -1,0 +1,123 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- salt:7c791406-3a4e-4e70-ba9b-cbaf1ad7bed9 -->
+<metadata name="CreateAirlineParquetExternalTable" path="/shared/ComputeDB/Airline/CreateAirlineTables/CreateAirlineParquetExternalTable" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+  <annotation/>
+  <parameters>
+    <parameter name="result" direction="OUT" nullable="true">
+      <datatype type="TABLE" refId="1">
+        <element name="Year">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="Month">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="DayOfMonth">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="DayOfWeek">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="DepTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="CRSDepTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="ArrTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="CRSArrTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="UniqueCarrier">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="FlightNum">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="TailNum">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="ActualElapsedTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="CRSElapsedTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="AirTime">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="ArrDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="DepDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="Origin">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="Dest">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="Distance">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="TaxiIn">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="TaxiOut">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="Cancelled">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="CancellationCode">
+          <datatype name="VARCHAR" extendedName="VARCHAR(32672)" subType="DATASOURCE_TYPE" type="STRING" maxLength="32672"/>
+        </element>
+        <element name="Diverted">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="CarrierDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="WeatherDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="NASDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="SecurityDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="LateAircraftDelay">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+        <element name="ArrDelaySlot">
+          <datatype name="INTEGER" extendedName="INTEGER" subType="DATASOURCE_TYPE" type="INTEGER" minValue="-2147483648" maxValue="2147483647"/>
+        </element>
+      </datatype>
+    </parameter>
+  </parameters>
+  <security>
+    <owner user="admin" domain="composite"/>
+  </security>
+  <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBJDBC" type="DATA_SOURCE">
+    <datatype name="Tree" type="TREE" refId="1"></datatype>
+  </dependency>
+  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
+DROP TABLE IF EXISTS AIRLINE_PARQUET_STAGING; ;
+CREATE EXTERNAL TABLE AIRLINE_PARQUET_STAGING
+USING parquet OPTIONS(path &apos;/opt/TIB_compute_1.1.0_linux/quickstart/data/airlineParquetData&apos;); ;
+SELECT * from AIRLINE_PARQUET_STAGING LIMIT 1; ;</attribute>
+  <attribute name="creationDate" type="LONG">1556563221773</attribute>
+  <attribute name="creatorUserDomain" type="STRING">composite</attribute>
+  <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
+  <attribute name="creatorUserName" type="STRING">admin</attribute>
+  <attribute name="isSingleSelect" type="STRING">false</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1558724976402</attribute>
+  <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
+  <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
+  <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
+  <attribute name="passThroughSource" type="STRING">/shared/ComputeDB/Airline/AirlineComputeDBJDBC</attribute>
+  <attribute name="resourceModifiedDateOnSourceCISSite" type="LONG">1556563221773</attribute>
+</metadata>

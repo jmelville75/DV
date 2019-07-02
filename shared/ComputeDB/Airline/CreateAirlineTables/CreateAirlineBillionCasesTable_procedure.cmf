@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- salt:6e953d6a-d4b7-4976-bafc-493599df4168 -->
-<metadata name="CreateAirlineS3ExternalTable" path="/shared/ComputeDB/Airline/CreateAirlineS3ExternalTable" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
+<!-- salt:7c791406-3a4e-4e70-ba9b-cbaf1ad7bed9 -->
+<metadata name="CreateAirlineBillionCasesTable" path="/shared/ComputeDB/Airline/CreateAirlineTables/CreateAirlineBillionCasesTable" type="PROCEDURE" subtype="EXTERNAL_SQL_PROCEDURE" changeToken="0">
   <annotation/>
   <parameters>
     <parameter name="result" direction="OUT" nullable="true">
@@ -53,17 +53,18 @@
   <dependency target="/shared/ComputeDB/Airline/AirlineComputeDBJDBC" type="DATA_SOURCE">
     <datatype name="Tree" type="TREE" refId="1"></datatype>
   </dependency>
-  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;
-DROP TABLE IF EXISTS AIRLINE; ;
-CREATE EXTERNAL TABLE AIRLINE USING PARQUET 
-OPTIONS( path &apos;s3a://AKIAJ73BL2H66NACKJNQ:WdXRSski53xmmtQ3zZQnU1iTL+wqm5XCLSBAMrvf@zeppelindemo/airlinedata_cleaned_1b&apos;); ;
-SELECT * from AIRLINE LIMIT 1; ;</attribute>
+  <attribute name="SQL" type="STRING">&lt;version 2&gt; multipartseparator=;+;		   
+DROP TABLE IF EXISTS AIRLINE_BILLION_CASES; ;
+CREATE TABLE AIRLINE_BILLION_CASES using column 
+options (PARTITION_BY &apos;UNIQUECARRIER&apos;, buckets &apos;11&apos;) as 
+(select * from airline order by year_, month_, dayofweek, DEPTIME, ID); ;
+SELECT * from AIRLINE_BILLION_CASES LIMIT 1; ;</attribute>
   <attribute name="creationDate" type="LONG">1556563221773</attribute>
   <attribute name="creatorUserDomain" type="STRING">composite</attribute>
   <attribute name="creatorUserId" type="INTEGER">-1973</attribute>
   <attribute name="creatorUserName" type="STRING">admin</attribute>
   <attribute name="isSingleSelect" type="STRING">false</attribute>
-  <attribute name="lastModifiedDate" type="LONG">1558450960744</attribute>
+  <attribute name="lastModifiedDate" type="LONG">1558724488727</attribute>
   <attribute name="lastModifiedUserDomain" type="STRING">composite</attribute>
   <attribute name="lastModifiedUserId" type="INTEGER">-1973</attribute>
   <attribute name="lastModifiedUserName" type="STRING">admin</attribute>
